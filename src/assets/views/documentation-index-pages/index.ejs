@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html style="box-sizing: border-box;overflow: -moz-scrollbars-vertical;overflow-y: scroll;">
+
+<head>
+  <title>Rest API</title>
+  <link rel="icon" href="/assets/images/favicon.ico">
+</head>
+
+<body style="margin: 0; background: #fafafa;">
+  <div style="padding: 10px 0 6px 0;background-color: #1b1b1b;">
+    <div style="width: 100%;max-width: 1460px;margin: 0 auto;padding: 0 20px;box-sizing: border-box;">
+      <a>
+        <img height="50"
+          src="data:image/png;base64,<%- headerImage %>"
+          alt="">
+      </a>
+      <span style="font-size: xx-large; vertical-align: top; margin-left: 16px; color: #FFFFFF; line-height: 48px;">FZTracker</span>
+    </div>
+  </div>
+
+  <div style="width: 100%;max-width: 1460px;margin: 0 auto;padding: 0 20px;box-sizing: border-box;">
+    <div style="margin: 50px 0;">
+      <h2 style="font-size: 36px;margin: 0;font-family: sans-serif;color: #3b4151;">Rest API</h2>
+      <div style="margin: 0 0 5px; font-family: sans-serif;">
+        <p>This page describes all available endpoints and configuration.</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="width: 100%;max-width: 1460px;margin: 0 auto;padding: 0 20px;box-sizing: border-box;">
+    <div style="width: 55%; float:left">
+      <table
+        style="border-collapse: collapse; box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);">
+        <thead>
+          <tr role="row">
+            <th
+              style="font-family: sans-serif;padding-bottom: 1rem;padding-top: 1rem;padding-left: .75rem;vertical-align: bottom;color: white;background-color: rgba(0, 0, 0, 0.54);text-align:left;"
+              rowspan="1" colspan="1">Name</th>
+            <th
+              style="font-family: sans-serif;padding-bottom: 1rem;padding-top: 1rem;padding-left: .75rem;vertical-align: bottom;color: white;background-color: rgba(0, 0, 0, 0.54);text-align:left;"
+              rowspan="1" colspan="1">Description</th>
+            <th
+              style="font-family: sans-serif;padding:1rem;vertical-align: bottom;color: white;background-color: rgba(0, 0, 0, 0.54);text-align:left;"
+              rowspan="1" colspan="1">Versions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% routes.forEach(function(route){ %>
+          <tr role="row" style="border-bottom: 0.5px solid #ddd;">
+            <td rowspan="1" colspan="1"
+              style="font-family: sans-serif;padding: 1rem;vertical-align: top;text-align: left;">
+              <%= route.name %>
+            </td>
+            <td rowspan="1" colspan="1"
+              style="font-family: sans-serif;padding: 1rem;vertical-align: top;text-align: left;">
+              <%= route.description %>
+            </td>
+            <td rowspan="1" colspan="1"
+              style="font-family: sans-serif;padding: 1rem;vertical-align: top;text-align: left">
+              <% route.children.forEach(function(child){ %>
+              <a style="margin: 0 0 15px; text-decoration: none; color: #0090d4;" href="api/<%= child.path %>">
+                <%= child.version %>
+              </a>
+              <% }); %>
+            </td>
+          </tr>
+          <% }); %>
+        </tbody>
+
+      </table>
+    </div>
+  </div>
+</body>
+
+</html>
