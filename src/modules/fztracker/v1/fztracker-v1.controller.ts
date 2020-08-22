@@ -90,7 +90,7 @@ export class FZtrackerV1Controller {
   @ApiOperation({summary: 'Update user info'})
   @ApiCreatedResponse({description: 'Successfully updated user info', type: SuccessResponseModel})
   @ApiUnauthorizedResponse({description: 'Invalid credentials'})
-  async postHello(
+  async postUser(
     @Body('email') email: string, 
     @Body('name') name: string, 
     @Body('isActive') isActive: boolean, 
@@ -133,6 +133,8 @@ export class FZtrackerV1Controller {
       const filter = {authId};
 
       const cards = await this.cardService.find(filter);
+
+      global['io'].emit('card', {uid: 'cardId'});
 
       const response = getResponse(200, {data: {cards}});
       return res.status(200).send(response);
@@ -328,6 +330,8 @@ export class FZtrackerV1Controller {
       entity = await this.entityService.updateOne(entity);
 
       const response = getResponse(200, {data: {movement}});
+
+      global['io'].emit(`movement/${movement.location}`, movement);
 
       return res.status(200).send(response);
     } catch (error) {
