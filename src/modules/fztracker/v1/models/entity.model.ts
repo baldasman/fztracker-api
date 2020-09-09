@@ -109,3 +109,7 @@ export class EntityImportModel {
   resource4: string;
   
 }
+
+export class ImportEntityRequest {
+  @IsNotEmpty() file: string;
+}

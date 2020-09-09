@@ -5,12 +5,12 @@ import { AuthGuard } from '../../core/guards/auth.guard';
 import { getResponse } from '../../core/helpers/response.helper';
 import { SuccessResponseModel } from '../../core/models/success-response.model';
 import { CardLogModel, CardModel, CardReadingModel } from './models/card.model';
-import { EntityLogModel, EntityModel, EntityMovementModel, EntityImportModel, EntityResource } from './models/entity.model';
+import { EntityImportModel, EntityLogModel, EntityModel, EntityMovementModel, EntityResource, ImportEntityRequest } from './models/entity.model';
 import { CardService } from './services/card.service';
 import { EntityService } from './services/entity.service';
 import { ParseService } from './services/parser.service';
 import { UserService } from './services/user.service';
-import { Constants } from '../../../config/constants';
+
 
 @Controller('fztracker/v1')
 @ApiBearerAuth()
@@ -347,15 +347,17 @@ export class FZtrackerV1Controller {
     }
   }
 
+
+
   @Post('entities/import')
   @ApiOperation({ summary: 'Import entities from CSV' })
   @ApiCreatedResponse({ description: 'Successfully imported entities from csv', type: SuccessResponseModel })
   @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
   async importEntities(
-    @Body('file') file: string,
+    @Body() body: ImportEntityRequest,
     @Res() res: Response
   ): Promise<object> {
-    console.log('file', file);
+    console.log('file', body.file);
     try {
       // Parse csv file
       const headers = [
@@ -364,7 +366,7 @@ export class FZtrackerV1Controller {
 
       let data;
       // const dataFile = join(__dirname, '../../../assets', 'import', file);
-      const dataFile = file;
+      const dataFile = body.file;
       console.log(dataFile, dataFile);
 
       data = await this.parserService.parseEntities(dataFile, headers, ';');
@@ -380,11 +382,11 @@ export class FZtrackerV1Controller {
       if (data) {
         for (let i = 0; i < data.list.length; i++) {
           const entityToImport: EntityImportModel = data.list[i];
-          
+
           if (!entityToImport.serial) {
             continue;
           }
-          
+
           // Find entity by serial
           let entity = await this.entityService.findOne({ 'permanent.serial': entityToImport.serial });
           let update = true;
@@ -408,7 +410,7 @@ export class FZtrackerV1Controller {
           if (!entity.resources) {
             entity.resources = [];
           }
-          
+
           if (entityToImport.resource1 && entityToImport.resource1.trim() !== '') {
             entity.resources.push(new EntityResource(entityToImport.resource1.trim(), 'VEHICLE'));
           }
@@ -431,13 +433,13 @@ export class FZtrackerV1Controller {
             } else {
               await this.entityService.add(entity);
             }
-          } catch(e) {
-            console.error('Failed to import entity #' + i, entityToImport, e);      
+          } catch (e) {
+            console.error('Failed to import entity #' + i, entityToImport, e);
           }
         }
       }
 
-      const response = {message: `${data.total} entities imported.`}
+      const response = { message: `${data.total} entities imported.` }
       return res.status(200).send(response);
     } catch (e) {
       console.error('Failed to import entities.', e);
