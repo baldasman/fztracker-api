@@ -9,6 +9,8 @@ import { EntitySchema } from './schemas/entity.schema';
 import { CardService } from './services/card.service';
 import { UserService } from './services/user.service';
 import { EntityService } from './services/entity.service';
+import { ParseService } from './services/parser.service';
+import { CsvParser } from 'nest-csv-parser';
 
 
 @Module({
@@ -19,7 +21,7 @@ import { EntityService } from './services/entity.service';
   ],
   controllers: [FZtrackerV1Controller],
   providers:
-      [MailSenderService, UserService, CardService, EntityService],
+      [MailSenderService, UserService, CardService, EntityService, CsvParser, ParseService],
   exports: []
 })
 export class FZtrackerV1Module implements NestModule {

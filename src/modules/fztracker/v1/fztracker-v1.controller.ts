@@ -1,15 +1,16 @@
-import {Body, Controller, Get, Logger, Post, Query, Req, Res, UseGuards} from '@nestjs/common';
-import {ApiBearerAuth, ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiQuery, ApiTags, ApiUnauthorizedResponse} from '@nestjs/swagger';
-import {Response} from 'express';
-import {AuthGuard} from '../../core/guards/auth.guard';
-import {getResponse} from '../../core/helpers/response.helper';
-import {SuccessResponseModel} from '../../core/models/success-response.model';
-import {CardLogModel, CardModel, CardReadingModel} from './models/card.model';
-import {EntityLogModel, EntityModel, EntityMovementModel} from './models/entity.model';
-import {CardService} from './services/card.service';
-import {EntityService} from './services/entity.service';
-import {UserService} from './services/user.service';
-
+import { Body, Controller, Get, Logger, Post, Query, Req, Res, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiQuery, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
+import { Response } from 'express';
+import { AuthGuard } from '../../core/guards/auth.guard';
+import { getResponse } from '../../core/helpers/response.helper';
+import { SuccessResponseModel } from '../../core/models/success-response.model';
+import { CardLogModel, CardModel, CardReadingModel } from './models/card.model';
+import { EntityLogModel, EntityModel, EntityMovementModel, EntityImportModel, EntityResource } from './models/entity.model';
+import { CardService } from './services/card.service';
+import { EntityService } from './services/entity.service';
+import { ParseService } from './services/parser.service';
+import { UserService } from './services/user.service';
+import { Constants } from '../../../config/constants';
 
 @Controller('fztracker/v1')
 @ApiBearerAuth()
@@ -17,10 +18,11 @@ import {UserService} from './services/user.service';
 @ApiTags('FZtracker')
 export class FZtrackerV1Controller {
   constructor(
-      private readonly logger: Logger,
-      private readonly cardService: CardService,
-      private readonly entityService: EntityService,
-      private readonly userService: UserService) {
+    private readonly logger: Logger,
+    private readonly cardService: CardService,
+    private readonly entityService: EntityService,
+    private readonly userService: UserService,
+    private readonly parserService: ParseService) {
     this.logger.log('Init fztracker controller', FZtrackerV1Controller.name);
   }
 
@@ -38,7 +40,7 @@ export class FZtrackerV1Controller {
 
     // TODO: read from mongo
 
-    const response = {data: {authId, isActive: true, languageKey: 'en'}};
+    const response = { data: { authId, isActive: true, languageKey: 'en' } };
     return res.status(200).send(response);
   }
 
@@ -52,11 +54,11 @@ export class FZtrackerV1Controller {
     @Res() res: Response
   ): Promise<object> {
     const exp = new RegExp('.*' + name + '.*', 'i');
-    const filter = name ? {'name': {$regex: exp}} : {};
+    const filter = name ? { 'name': { $regex: exp } } : {};
 
     const users = await this.userService.getAll(filter);
 
-    const response = {data: {rows: users.length, users}};
+    const response = { data: { rows: users.length, users } };
     return res.status(200).send(response);
   }
 
@@ -70,7 +72,7 @@ export class FZtrackerV1Controller {
     @Res() res: Response
   ): Promise<object> {
     const exp = new RegExp('.*' + name + '.*', 'i');
-    const filter = name ? {'name': {$regex: exp}} : {};
+    const filter = name ? { 'name': { $regex: exp } } : {};
 
     const users = await this.userService.getAll(filter);
 
@@ -87,20 +89,20 @@ export class FZtrackerV1Controller {
   }
 
   @Post('user')
-  @ApiOperation({summary: 'Update user info'})
-  @ApiCreatedResponse({description: 'Successfully updated user info', type: SuccessResponseModel})
-  @ApiUnauthorizedResponse({description: 'Invalid credentials'})
+  @ApiOperation({ summary: 'Update user info' })
+  @ApiCreatedResponse({ description: 'Successfully updated user info', type: SuccessResponseModel })
+  @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
   async postUser(
-    @Body('email') email: string, 
-    @Body('name') name: string, 
-    @Body('isActive') isActive: boolean, 
+    @Body('email') email: string,
+    @Body('name') name: string,
+    @Body('isActive') isActive: boolean,
     @Res() res: Response
   ):
-      Promise<object> {
+    Promise<object> {
     const changes: any = {};
 
     if (!email) {
-      return res.status(400).send({error: 'Field "email" is required.'});
+      return res.status(400).send({ error: 'Field "email" is required.' });
     }
 
     if (name) {
@@ -113,16 +115,16 @@ export class FZtrackerV1Controller {
 
     const status = await this.userService.update(email, changes);
     const user = await this.userService.get(email);
-    const response = {data: {user, status}};
+    const response = { data: { user, status } };
 
     return res.status(200).send(response);
   }
 
   @Get('cards')
   @ApiBearerAuth()
-  @ApiOperation({summary: 'Get all cards'})
-  @ApiCreatedResponse({description: 'Successfully returned card list', type: SuccessResponseModel})
-  @ApiUnauthorizedResponse({description: 'Invalid credentials'})
+  @ApiOperation({ summary: 'Get all cards' })
+  @ApiCreatedResponse({ description: 'Successfully returned card list', type: SuccessResponseModel })
+  @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
   async getCards(
     @Req() req: any,
     @Res() res: Response
@@ -130,29 +132,29 @@ export class FZtrackerV1Controller {
     const authId = req.context.authId;
 
     try {
-      const filter = {authId};
+      const filter = { authId };
 
       const cards = await this.cardService.find(filter);
 
-      global['io'].emit('card', {uid: 'cardId'});
+      global['io'].emit('card', { uid: 'cardId' });
 
-      const response = getResponse(200, {data: {cards}});
+      const response = getResponse(200, { data: { cards } });
       return res.status(200).send(response);
     } catch (error) {
       console.error(error);
-      return res.status(400).send({error: error.errmsg});
+      return res.status(400).send({ error: error.errmsg });
     }
   }
 
   @Post('cards')
-  @ApiOperation({summary: 'Add new card'})
-  @ApiCreatedResponse({description: 'Successfully created card', type: SuccessResponseModel})
-  @ApiUnauthorizedResponse({description: 'Invalid credentials'})
+  @ApiOperation({ summary: 'Add new card' })
+  @ApiCreatedResponse({ description: 'Successfully created card', type: SuccessResponseModel })
+  @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
   async addCard(
     @Body() card: CardModel,
     @Res() res: Response
   ):
-      Promise<object> {
+    Promise<object> {
 
     try {
       // Add log
@@ -162,37 +164,37 @@ export class FZtrackerV1Controller {
       card.log.push(log);
 
       const newCard = await this.cardService.add(card);
-      const response = getResponse(200, {data: {card: newCard}});
+      const response = getResponse(200, { data: { card: newCard } });
 
       return res.status(200).send(response);
     } catch (error) {
       console.error(error);
 
       if (error.code == 11000) {
-        return res.status(400).send({error: error.errmsg});
+        return res.status(400).send({ error: error.errmsg });
       }
 
-      return res.status(400).send({error: error});
+      return res.status(400).send({ error: error });
     }
   }
 
   @Post('cards/assign')
-  @ApiOperation({summary: 'Assign card to entity'})
-  @ApiCreatedResponse({description: 'Successfully assigned card to entity', type: SuccessResponseModel})
-  @ApiUnauthorizedResponse({description: 'Invalid credentials'})
+  @ApiOperation({ summary: 'Assign card to entity' })
+  @ApiCreatedResponse({ description: 'Successfully assigned card to entity', type: SuccessResponseModel })
+  @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
   async assignCard(
     @Body('cardNumber') cardNumber: string,
     @Body('entitySerial') entitySerial: string,
     @Req() req: any,
     @Res() res: Response
   ):
-      Promise<object> {
+    Promise<object> {
     console.log('cardNumber', cardNumber);
     console.log('entitySerial', entitySerial);
 
     try {
       // Find card
-      let card = await this.cardService.findOne({cardNumber});
+      let card = await this.cardService.findOne({ cardNumber });
 
       if (!card) {
         throw 'Card not found';
@@ -204,7 +206,7 @@ export class FZtrackerV1Controller {
 
       // Find entity
       let entity =
-          await this.entityService.findOne({'permanent.serial': entitySerial});
+        await this.entityService.findOne({ 'permanent.serial': entitySerial });
 
       if (!entity) {
         throw 'Entity not found';
@@ -238,56 +240,56 @@ export class FZtrackerV1Controller {
       card = await this.cardService.updateOne(card);
       entity = await this.entityService.updateOne(entity);
 
-      const response = getResponse(200, {data: {success: true}});
+      const response = getResponse(200, { data: { success: true } });
 
       return res.status(200).send(response);
     } catch (error) {
       console.error(error);
 
       if (error.code == 11000) {
-        return res.status(400).send({error: error.errmsg});
+        return res.status(400).send({ error: error.errmsg });
       }
 
-      return res.status(400).send({error: error});
+      return res.status(400).send({ error: error });
     }
   }
 
   @Post('entities')
-  @ApiOperation({summary: 'Add new entity'})
-  @ApiCreatedResponse({description: 'Successfully created entity', type: SuccessResponseModel})
-  @ApiUnauthorizedResponse({description: 'Invalid credentials'})
+  @ApiOperation({ summary: 'Add new entity' })
+  @ApiCreatedResponse({ description: 'Successfully created entity', type: SuccessResponseModel })
+  @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
   async addEntity(
     @Body() entity: EntityModel,
     @Res() res: Response
   ):
-      Promise<object> {
+    Promise<object> {
     console.log('entity', entity);
 
     try {
       const newEntity = await this.entityService.add(entity);
-      const response = getResponse(200, {data: {entity: newEntity}});
+      const response = getResponse(200, { data: { entity: newEntity } });
 
       return res.status(200).send(response);
     } catch (error) {
       console.error(error);
 
       if (error.code == 11000) {
-        return res.status(400).send({error: error.errmsg});
+        return res.status(400).send({ error: error.errmsg });
       }
 
-      return res.status(400).send({error: error});
+      return res.status(400).send({ error: error });
     }
   }
 
   @Post('entities/movement')
-  @ApiOperation({summary: 'Add new entity movement'})
-  @ApiCreatedResponse({description: 'Successfully created entity movement', type: SuccessResponseModel})
-  @ApiUnauthorizedResponse({description: 'Invalid credentials'})
+  @ApiOperation({ summary: 'Add new entity movement' })
+  @ApiCreatedResponse({ description: 'Successfully created entity movement', type: SuccessResponseModel })
+  @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
   async add(
     @Body() movement: EntityMovementModel,
     @Res() res: Response
   ):
-      Promise<object> {
+    Promise<object> {
     console.log('movement', movement);
 
     try {
@@ -295,14 +297,14 @@ export class FZtrackerV1Controller {
 
       if (movement.manual) {
         entity = await this.entityService.findOne(
-            {'cardNumber': movement.cardNumber});
+          { 'cardNumber': movement.cardNumber });
       } else {
-        entity = await this.entityService.findOne({'cardId': movement.cardId});
+        entity = await this.entityService.findOne({ 'cardId': movement.cardId });
       }
 
       if (!entity) {
         throw `No entity assigned to card "${
-            movement.manual ? movement.cardNumber : movement.cardId}"`;
+        movement.manual ? movement.cardNumber : movement.cardId}"`;
       }
 
       // TODO: validate last movement timestamp
@@ -312,7 +314,7 @@ export class FZtrackerV1Controller {
 
       // Find card
       let card =
-          await this.cardService.findOne({cardNumber: entity.cardNumber});
+        await this.cardService.findOne({ cardNumber: entity.cardNumber });
 
       if (!card) {
         throw 'Card not found';
@@ -329,7 +331,7 @@ export class FZtrackerV1Controller {
       card = await this.cardService.updateOne(card);
       entity = await this.entityService.updateOne(entity);
 
-      const response = getResponse(200, {data: {movement}});
+      const response = getResponse(200, { data: { movement } });
 
       global['io'].emit(`movement/${movement.location}`, movement);
 
@@ -338,10 +340,110 @@ export class FZtrackerV1Controller {
       console.error(error);
 
       if (error.code == 11000) {
-        return res.status(400).send({error: error.errmsg});
+        return res.status(400).send({ error: error.errmsg });
       }
 
-      return res.status(400).send({error: error});
+      return res.status(400).send({ error: error });
+    }
+  }
+
+  @Post('entities/import')
+  @ApiOperation({ summary: 'Import entities from CSV' })
+  @ApiCreatedResponse({ description: 'Successfully imported entities from csv', type: SuccessResponseModel })
+  @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
+  async importEntities(
+    @Body('file') file: string,
+    @Res() res: Response
+  ): Promise<object> {
+    console.log('file', file);
+    try {
+      // Parse csv file
+      const headers = [
+        'serial', 'rank', 'class', 'name', 'location', 'unit', 'type', 'resource1', 'resource2', 'resource3', 'resource4', 'other'
+      ];
+
+      let data;
+      // const dataFile = join(__dirname, '../../../assets', 'import', file);
+      const dataFile = file;
+      console.log(dataFile, dataFile);
+
+      data = await this.parserService.parseEntities(dataFile, headers, ';');
+      /**
+       list: T[];
+        total: number;
+        count: number | null;
+        offset: number | null;
+       */
+
+      // console.log('data', data);
+
+      if (data) {
+        for (let i = 0; i < data.list.length; i++) {
+          const entityToImport: EntityImportModel = data.list[i];
+          
+          if (!entityToImport.serial) {
+            continue;
+          }
+          
+          // Find entity by serial
+          let entity = await this.entityService.findOne({ 'permanent.serial': entityToImport.serial });
+          let update = true;
+
+          if (!entity) {
+            update = false;
+
+            // create new entity
+            entity = new EntityModel();
+            entity.permanent.serial = entityToImport.serial;
+            entity.state = EntityModel.STATE_ACTIVE;
+          }
+
+          entity.nopermanent.rank = entityToImport.rank;
+          entity.permanent.class = entityToImport.class;
+          entity.permanent.name = entityToImport.name;
+          entity.nopermanent.location = entityToImport.location;
+          entity.nopermanent.unit = entityToImport.unit;
+          entity.permanent.type = entityToImport.type;
+
+          if (!entity.resources) {
+            entity.resources = [];
+          }
+          
+          if (entityToImport.resource1 && entityToImport.resource1.trim() !== '') {
+            entity.resources.push(new EntityResource(entityToImport.resource1.trim(), 'VEHICLE'));
+          }
+
+          if (entityToImport.resource2 && entityToImport.resource2.trim() !== '') {
+            entity.resources.push(new EntityResource(entityToImport.resource2.trim(), 'VEHICLE'));
+          }
+
+          if (entityToImport.resource3 && entityToImport.resource3.trim() !== '') {
+            entity.resources.push(new EntityResource(entityToImport.resource3.trim(), 'VEHICLE'));
+          }
+
+          if (entityToImport.resource4 && entityToImport.resource4.trim() !== '') {
+            entity.resources.push(new EntityResource(entityToImport.resource4.trim(), 'VEHICLE'));
+          }
+
+          try {
+            if (update) {
+              await this.entityService.updateOne(entity);
+            } else {
+              await this.entityService.add(entity);
+            }
+          } catch(e) {
+            console.error('Failed to import entity #' + i, entityToImport, e);      
+          }
+        }
+      }
+
+      const response = {message: `${data.total} entities imported.`}
+      return res.status(200).send(response);
+    } catch (e) {
+      console.error('Failed to import entities.', e);
+
+      // return res.status(200).send(response);
+      return res.status(400).send({ error: e, message: 'Failed to import entities.' });
     }
   }
 }

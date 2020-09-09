@@ -1,4 +1,4 @@
-﻿serial;      rank  ;       class                  ;                                  name;           location;               unit;             type   ;resources;resources;resources;resources;
+﻿serial;rank;class;name;location;unit;type;resource1;resource2;resource3;resource4;
 20104;1TEN;1TEN;RIBEIRO FERREIRA;ALF;DAE ;#NOME?;33-OE-52;;;;
 20109;2TEN;FZ;ESTEVES PACHECO;ALF;BF2;MILITAR;;;;;
 20110;2TEN;FZ;SOUSA TELES;ALF;DAG;MILITAR;79-DP-72;;;;

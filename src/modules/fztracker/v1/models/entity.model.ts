@@ -21,6 +21,11 @@ export class PermanentModel {
 export class EntityResource {
   serial: string;
   type: string;
+
+  constructor(serial?: string, type?: string) {
+    this.serial = serial;
+    this.type = type;
+  }
 }
 
 export class NoPermanentModel {
@@ -65,6 +70,9 @@ export class EntityLogModel {
 }
 
 export class EntityModel {
+  static STATE_ACTIVE = 'ACTIVE';
+  static STATE_INACTIVE = 'INACTIVE';
+
   @IsNotEmpty() permanent: PermanentModel;
 
   nopermanent: NoPermanentModel;
@@ -78,8 +86,26 @@ export class EntityModel {
   resources: EntityResource[];
 
   constructor() {
+    this.permanent = new PermanentModel();
+    this.nopermanent = new NoPermanentModel();
+
     this.inOut = true;
     this.lastMovementDate = new Date();
     this.movements = [];
   }
+}
+
+export class EntityImportModel {
+  serial: string;
+  rank: string;
+  class: string;
+  name: string;
+  location: string;
+  unit: string;
+  type: string;
+  resource1: string;
+  resource2: string;
+  resource3: string;
+  resource4: string;
+  
 }
