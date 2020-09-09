@@ -1,0 +1,8 @@
+﻿id;cardNumber;state;cardtype
+05125451284;M0001;activo;Militar
+05125451285;M0002;activo;Militar
+05125451283;M0003;activo;Militar
+05125451285;C0001;activo;Civil
+05125451286;C0002;activo;Civil
+05125451287;C0003;activo;Civil
+05125451288;A0001;activo;Aluno
