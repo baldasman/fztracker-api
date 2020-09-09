@@ -4,7 +4,7 @@ import { Response } from 'express';
 import { AuthGuard } from '../../core/guards/auth.guard';
 import { getResponse } from '../../core/helpers/response.helper';
 import { SuccessResponseModel } from '../../core/models/success-response.model';
-import { CardLogModel, CardModel, CardReadingModel, ImportCardRequest, CardImportModel } from './models/card.model';
+import { CardImportModel, CardLogModel, CardModel, CardReadingModel, ImportCardRequest } from './models/card.model';
 import { EntityImportModel, EntityLogModel, EntityModel, EntityMovementModel, EntityResource, ImportEntityRequest } from './models/entity.model';
 import { CardService } from './services/card.service';
 import { EntityService } from './services/entity.service';
@@ -411,19 +411,27 @@ export class FZtrackerV1Controller {
           }
 
           if (entityToImport.resource1 && entityToImport.resource1.trim() !== '') {
-            entity.resources.push(new EntityResource(entityToImport.resource1.trim(), 'VEHICLE'));
+            if (!entity.resources.find(r => r.serial = entityToImport.resource1.trim())) {
+              entity.resources.push(new EntityResource(entityToImport.resource1.trim(), 'VEHICLE'));
+            }
           }
 
           if (entityToImport.resource2 && entityToImport.resource2.trim() !== '') {
-            entity.resources.push(new EntityResource(entityToImport.resource2.trim(), 'VEHICLE'));
+            if (!entity.resources.find(r => r.serial = entityToImport.resource2.trim())) {
+              entity.resources.push(new EntityResource(entityToImport.resource2.trim(), 'VEHICLE'));
+            }
           }
 
           if (entityToImport.resource3 && entityToImport.resource3.trim() !== '') {
-            entity.resources.push(new EntityResource(entityToImport.resource3.trim(), 'VEHICLE'));
+            if (!entity.resources.find(r => r.serial = entityToImport.resource3.trim())) {
+              entity.resources.push(new EntityResource(entityToImport.resource3.trim(), 'VEHICLE'));
+            }
           }
 
           if (entityToImport.resource4 && entityToImport.resource4.trim() !== '') {
-            entity.resources.push(new EntityResource(entityToImport.resource4.trim(), 'VEHICLE'));
+            if (!entity.resources.find(r => r.serial = entityToImport.resource4.trim())) {
+              entity.resources.push(new EntityResource(entityToImport.resource4.trim(), 'VEHICLE'));
+            }
           }
 
           try {
@@ -495,7 +503,12 @@ export class FZtrackerV1Controller {
           }
 
           card.cardNumber = cardToImport.cardNumber;
-          card.state = CardModel.STATE_ACTIVE;
+          if (cardToImport.state.toLowerCase() == 'activo') {
+            card.state = CardModel.STATE_ACTIVE;
+          } else {
+            card.state = CardModel.STATE_INACTIVE;
+          }
+
           card.entityType = cardToImport.cardType;
 
           try {
@@ -520,5 +533,5 @@ export class FZtrackerV1Controller {
       // return res.status(200).send(response);
       return res.status(400).send({ error: e, message: 'Failed to import cards.' });
     }
-  }  
+  }
 }
