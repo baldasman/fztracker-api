@@ -503,7 +503,7 @@ export class FZtrackerV1Controller {
           }
 
           card.cardNumber = cardToImport.cardNumber;
-          if (cardToImport.state.toLowerCase() == 'activo') {
+          if (cardToImport.state.toLowerCase() == 'active') {
             card.state = CardModel.STATE_ACTIVE;
           } else {
             card.state = CardModel.STATE_INACTIVE;
