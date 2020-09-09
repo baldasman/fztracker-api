@@ -2,7 +2,7 @@ import { Schema } from 'mongoose';
 
 export const CardSchema = new Schema({
   id: {type: String, required: true},
-  cardNumber: {type: Number, required: false},
+  cardNumber: {type: String, required: false},
   state: {type: String, required: true},
   lastChangeDate: {type: Date, default: Date.now},
   entitySerial: {type: String},

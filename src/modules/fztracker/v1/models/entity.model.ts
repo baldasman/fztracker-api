@@ -80,7 +80,7 @@ export class EntityModel {
   inOut: boolean;
   lastMovementDate: Date;
   cardId: string;
-  cardNumber: number;
+  cardNumber: string;
   movements: EntityMovementModel[];
   log: EntityLogModel[];
   resources: EntityResource[];

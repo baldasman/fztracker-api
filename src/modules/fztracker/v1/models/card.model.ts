@@ -35,10 +35,13 @@ export class CardReadingModel {
 }
 
 export class CardModel {
+  static STATE_ACTIVE = 'ACTIVE';
+  static STATE_INACTIVE = 'INACTIVE';
+
   @IsNotEmpty() id: string;
   @IsNotEmpty() state: string;
   
-  cardNumber: number;
+  cardNumber: string;
   lastChangeDate: Date;
   entitySerial: string;
   entityType: string;
@@ -50,4 +53,15 @@ export class CardModel {
     this.log = [];
     this.readings = [];
   }
+}
+
+export class CardImportModel {
+  id: string;
+  cardNumber: string;
+  state: string;
+  cardType: string;
+}
+
+export class ImportCardRequest {
+  @IsNotEmpty() file: string;
 }

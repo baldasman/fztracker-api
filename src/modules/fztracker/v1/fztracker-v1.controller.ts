@@ -4,7 +4,7 @@ import { Response } from 'express';
 import { AuthGuard } from '../../core/guards/auth.guard';
 import { getResponse } from '../../core/helpers/response.helper';
 import { SuccessResponseModel } from '../../core/models/success-response.model';
-import { CardLogModel, CardModel, CardReadingModel } from './models/card.model';
+import { CardLogModel, CardModel, CardReadingModel, ImportCardRequest, CardImportModel } from './models/card.model';
 import { EntityImportModel, EntityLogModel, EntityModel, EntityMovementModel, EntityResource, ImportEntityRequest } from './models/entity.model';
 import { CardService } from './services/card.service';
 import { EntityService } from './services/entity.service';
@@ -347,8 +347,6 @@ export class FZtrackerV1Controller {
     }
   }
 
-
-
   @Post('entities/import')
   @ApiOperation({ summary: 'Import entities from CSV' })
   @ApiCreatedResponse({ description: 'Successfully imported entities from csv', type: SuccessResponseModel })
@@ -364,6 +362,7 @@ export class FZtrackerV1Controller {
         'serial', 'rank', 'class', 'name', 'location', 'unit', 'type', 'resource1', 'resource2', 'resource3', 'resource4', 'other'
       ];
 
+      let successCounter = 0;
       let data;
       // const dataFile = join(__dirname, '../../../assets', 'import', file);
       const dataFile = body.file;
@@ -433,13 +432,15 @@ export class FZtrackerV1Controller {
             } else {
               await this.entityService.add(entity);
             }
+
+            successCounter++;
           } catch (e) {
             console.error('Failed to import entity #' + i, entityToImport, e);
           }
         }
       }
 
-      const response = { message: `${data.total} entities imported.` }
+      const response = { message: `${successCounter}/${data.total} entities imported.` }
       return res.status(200).send(response);
     } catch (e) {
       console.error('Failed to import entities.', e);
@@ -448,4 +449,76 @@ export class FZtrackerV1Controller {
       return res.status(400).send({ error: e, message: 'Failed to import entities.' });
     }
   }
+
+  @Post('cards/import')
+  @ApiOperation({ summary: 'Import cards from CSV' })
+  @ApiCreatedResponse({ description: 'Successfully imported cards from csv', type: SuccessResponseModel })
+  @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
+  async importCards(
+    @Body() body: ImportCardRequest,
+    @Res() res: Response
+  ): Promise<object> {
+    console.log('file', body.file);
+    try {
+      // Parse csv file
+      const headers = [
+        'id', 'cardNumber', 'state', 'cardType'
+      ];
+
+      let successCounter = 0;
+      let data;
+      // const dataFile = join(__dirname, '../../../assets', 'import', file);
+      const dataFile = body.file;
+      console.log(dataFile, dataFile);
+
+      data = await this.parserService.parseCards(dataFile, headers, ';');
+      console.log('data', data);
+
+      if (data) {
+        for (let i = 0; i < data.list.length; i++) {
+          const cardToImport: CardImportModel = data.list[i];
+
+          if (!cardToImport.id) {
+            continue;
+          }
+
+          // Find entity by serial
+          let card = await this.cardService.findOne({ id: cardToImport.id });
+          let update = true;
+
+          if (!card) {
+            update = false;
+
+            // create new entity
+            card = new CardModel();
+            card.id = cardToImport.id;
+          }
+
+          card.cardNumber = cardToImport.cardNumber;
+          card.state = CardModel.STATE_ACTIVE;
+          card.entityType = cardToImport.cardType;
+
+          try {
+            if (update) {
+              await this.cardService.updateOne(card);
+            } else {
+              await this.cardService.add(card);
+            }
+
+            successCounter++;
+          } catch (e) {
+            console.error('Failed to import card #' + i, cardToImport, e);
+          }
+        }
+      }
+
+      const response = { message: `${successCounter}/${data.total} cards imported.` }
+      return res.status(200).send(response);
+    } catch (e) {
+      console.error('Failed to import cards.', e);
+
+      // return res.status(200).send(response);
+      return res.status(400).send({ error: e, message: 'Failed to import cards.' });
+    }
+  }  
 }

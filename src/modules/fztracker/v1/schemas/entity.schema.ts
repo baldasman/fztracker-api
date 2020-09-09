@@ -36,7 +36,7 @@ export const EntitySchema = new Schema({
   },
   lastMovementDate: {type: Date, default: Date.now},
   cardId: {type: String},
-  cardNumber: {type: Number},
+  cardNumber: {type: String},
   movements: [{
     id: {
       type: String,
