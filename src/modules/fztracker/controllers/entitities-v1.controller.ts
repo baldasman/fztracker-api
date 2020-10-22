@@ -30,13 +30,23 @@ export class EntitiesV1Controller {
   @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
   async getCards(
     // @Req() req: any,
-    @Query('search') search: string,
+    @Query('serial') serial: string,
+    @Query('cardumber') cardNumber: string,
     @Query('page') page: number,
     @Query('rows') rows: number,
     @Res() res: Response
   ): Promise<object> {
     try {
-      const filter = { 'permanent.serial': search };
+      let filter = {  };
+
+      if (serial && serial.trim().length > 0) {
+        filter = { ...filter, 'permanent.serial': serial };
+      }
+      
+      if (cardNumber && cardNumber.trim().length > 0) {
+        filter = { ...filter, cardNumber };
+      }
+      
       const entities = await this.entityService.find(filter, rows || 10, page || 1);
 
       const response = getResponse(200, { data: { records: entities.length, entities } });
