@@ -1,4 +1,4 @@
-import { Body, Controller, Logger, Post, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Logger, Post, Res, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiCreatedResponse, ApiOperation, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { Response } from 'express';
 import { AuthGuard } from '../../core/guards/auth.guard';
@@ -9,6 +9,7 @@ import { EntityImportModel, EntityModel, EntityMovementModel, EntityResource, Im
 import { CardService } from '../services/card.service';
 import { EntityService } from '../services/entity.service';
 import { ParseService } from '../services/parser.service';
+import { LogModel } from '../models/log.model';
 
 
 @Controller('fztracker/entities/v1')
@@ -23,6 +24,34 @@ export class EntitiesV1Controller {
     private readonly parserService: ParseService) {
     this.logger.log('Init Entities@1.0.0 controller', EntitiesV1Controller.name);
   }
+
+
+  @Get('')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Get all Entitys' })
+  @ApiCreatedResponse({ description: 'Successfully returned entity list', type: SuccessResponseModel })
+  @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
+  async getCards(
+   // @Req() req: any,
+    @Res() res: Response
+  ): Promise<object> {
+    try {
+      const filter = { };
+      const entitys = await this.entityService.find(filter);
+
+            const response = getResponse(200, { data: { entitys } });
+      return res.status(200).send(response);
+    } catch (error) {
+      console.error(error);
+      return res.status(400).send({ error: error.errmsg });
+    }
+  }
+
+
+
+
+
+
 
   @Post('')
   @ApiOperation({ summary: 'Add new entity' })
