@@ -9,8 +9,6 @@ import { EntityImportModel, EntityModel, EntityMovementModel, EntityResource, Im
 import { CardService } from '../services/card.service';
 import { EntityService } from '../services/entity.service';
 import { ParseService } from '../services/parser.service';
-import { LogModel } from '../models/log.model';
-
 
 @Controller('fztracker/entities/v1')
 @ApiBearerAuth()
@@ -25,7 +23,6 @@ export class EntitiesV1Controller {
     this.logger.log('Init Entities@1.0.0 controller', EntitiesV1Controller.name);
   }
 
-
   @Get('')
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Get all Entitys' })
@@ -33,12 +30,13 @@ export class EntitiesV1Controller {
   @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
   async getCards(
     // @Req() req: any,
+    @Query('search') search: string,
     @Query('page') page: number,
     @Query('rows') rows: number,
     @Res() res: Response
   ): Promise<object> {
     try {
-      const filter = {};
+      const filter = { 'permanent.serial': search };
       const entities = await this.entityService.find(filter, rows || 10, page || 1);
 
       const response = getResponse(200, { data: { records: entities.length, entities } });
@@ -48,12 +46,6 @@ export class EntitiesV1Controller {
       return res.status(400).send({ error: error.errmsg });
     }
   }
-
-
-
-
-
-
 
   @Post('')
   @ApiOperation({ summary: 'Add new entity' })

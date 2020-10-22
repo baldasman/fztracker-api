@@ -6,7 +6,8 @@ export const CardSchema = new Schema({
   state: { type: String, required: true },
   lastChangeDate: { type: Date, default: Date.now },
   entitySerial: { type: String },
-  entityType: { type: String }
+  entityType: { type: String },
+  entityDesc: { type: String }
 });
 
 CardSchema.index({ cardNumber: 1 });

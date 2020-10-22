@@ -27,6 +27,7 @@ export class CardModel {
   lastChangeDate: Date;
   entitySerial: string;
   entityType: string;
+  entityDesc: string;
 
   constructor() {
 
