@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Logger, Post, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Logger, Post, Query, Res, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiCreatedResponse, ApiOperation, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { Response } from 'express';
 import { AuthGuard } from '../../core/guards/auth.guard';
@@ -32,14 +32,16 @@ export class EntitiesV1Controller {
   @ApiCreatedResponse({ description: 'Successfully returned entity list', type: SuccessResponseModel })
   @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
   async getCards(
-   // @Req() req: any,
+    // @Req() req: any,
+    @Query('page') page: number,
+    @Query('rows') rows: number,
     @Res() res: Response
   ): Promise<object> {
     try {
-      const filter = { };
-      const entitys = await this.entityService.find(filter);
+      const filter = {};
+      const entities = await this.entityService.find(filter, rows || 10, page || 1);
 
-            const response = getResponse(200, { data: { entitys } });
+      const response = getResponse(200, { data: { records: entities.length, entities } });
       return res.status(200).send(response);
     } catch (error) {
       console.error(error);

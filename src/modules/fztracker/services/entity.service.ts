@@ -12,8 +12,9 @@ export class EntityService {
     this.logger.setContext(EntityService.name);
   }
 
-  async find(filter: any): Promise<[EntityModel]> {
-    return this.entityModel.find(filter).exec();
+  async find(filter: any, rows: number, page: number): Promise<[EntityModel]> {
+    const offset = (page - 1) * rows;
+    return this.entityModel.find(filter).limit(rows).skip(offset).exec();
   }
 
   async findOne(filter: object): Promise<EntityModel> {
