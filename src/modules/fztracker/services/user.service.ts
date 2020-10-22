@@ -2,7 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
-import { AuthModel } from '../../../core/models/auth.model';
+import { AuthModel } from '../../core/models/auth.model';
 
 @Injectable()
 export class UserService {

@@ -10,7 +10,7 @@ import { MailSenderService } from '../core/services/mailsender.service';
 import * as fs from 'fs';
 import * as PdfPrinter from 'pdfmake';
 import * as uuid from 'uuid/v4';
-import { UserService } from '../fztracker/v1/services/user.service';
+import { UserService } from '../fztracker/services/user.service';
 
 @Controller('admin')
 @ApiBearerAuth()
