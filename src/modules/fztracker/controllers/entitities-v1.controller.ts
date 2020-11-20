@@ -284,7 +284,7 @@ export class EntitiesV1Controller {
       }
 
       if (entity.cardNumber) {
-        return res.status(409).send({ error: `Entity '${entity.permanent.serial}' already assigned to card '${entity.cardNumber}'`, cardNumber: entity.cardNumber });
+        return res.status(400).send(getResponse(400, { data: { error: `Entity '${entity.permanent.serial}' already assigned to card '${entity.cardNumber}'`, cardNumber: entity.cardNumber } }));
       }
 
       // Find card
