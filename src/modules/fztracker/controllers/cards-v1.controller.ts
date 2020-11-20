@@ -5,10 +5,10 @@ import { AuthGuard } from '../../core/guards/auth.guard';
 import { getResponse } from '../../core/helpers/response.helper';
 import { SuccessResponseModel } from '../../core/models/success-response.model';
 import { CardImportModel, CardModel, ImportCardRequest } from '../models/card.model';
-import { EntityLogModel } from '../models/entity.model';
 import { LogModel } from '../models/log.model';
 import { CardService } from '../services/card.service';
 import { EntityService } from '../services/entity.service';
+import { LogService } from '../services/log.service';
 import { ParseService } from '../services/parser.service';
 
 
@@ -21,6 +21,7 @@ export class CardsV1Controller {
     private readonly logger: Logger,
     private readonly cardService: CardService,
     private readonly entityService: EntityService,
+    private readonly logService: LogService,
     private readonly parserService: ParseService) {
     this.logger.log('Init Cards@1.0.0 controller', CardsV1Controller.name);
   }
@@ -35,7 +36,7 @@ export class CardsV1Controller {
     @Res() res: Response
   ): Promise<object> {
     try {
-      const filter = { };
+      const filter = {};
       const cards = await this.cardService.find(filter);
 
       // global['io'].emit('card', { uid: 'cardId' });
@@ -59,89 +60,15 @@ export class CardsV1Controller {
     Promise<object> {
 
     try {
+      const newCard = await this.cardService.add(card);
+
       // Add log
       const log = new LogModel();
-      log.action = LogModel.ACTION_CREATED;
-      // TODO: save log
+      log.action = LogModel.ACTION_CARD_CREATED;
+      log.obs = `${card.cardNumber}`;
+      this.logService.add(log);
 
-      const newCard = await this.cardService.add(card);
       const response = getResponse(200, { data: { card: newCard } });
-
-      return res.status(200).send(response);
-    } catch (error) {
-      console.error(error);
-
-      if (error.code == 11000) {
-        return res.status(400).send({ error: error.errmsg });
-      }
-
-      return res.status(400).send({ error: error });
-    }
-  }
-
-  @Post('assign')
-  @ApiOperation({ summary: 'Assign card to entity' })
-  @ApiCreatedResponse({ description: 'Successfully assigned card to entity', type: SuccessResponseModel })
-  @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
-  async assignCard(
-    @Body('cardNumber') cardNumber: string,
-    @Body('entitySerial') entitySerial: string,
-    @Req() req: any,
-    @Res() res: Response
-  ):
-    Promise<object> {
-    console.log('cardNumber', cardNumber);
-    console.log('entitySerial', entitySerial);
-
-    try {
-      // Find card
-      let card = await this.cardService.findOne({ cardNumber });
-
-      if (!card) {
-        throw 'Card not found';
-      }
-
-      if (card.entitySerial) {
-        throw `Card already assigned to ${card.entitySerial}`;
-      }
-
-      // Find entity
-      let entity =
-        await this.entityService.findOne({ 'permanent.serial': entitySerial });
-
-      if (!entity) {
-        throw 'Entity not found';
-      }
-
-      if (entity.cardNumber) {
-        throw `Entity already assigned to card ${entity.cardNumber}`;
-      }
-
-      // Assign entity to card
-      card.entitySerial = entity.permanent.serial;
-      card.entityType = entity.permanent.type;
-
-      // Add card log
-      const log = new LogModel();
-      log.action = LogModel.ACTION_ASSIGNED;
-      log.obs = `${entitySerial}`;
-      log.userId = req.context.session.authId;
-      // TODO: save log
-
-      entity.cardId = card.uid;
-      entity.cardNumber = card.cardNumber;
-
-      const entityLog = new EntityLogModel();
-      entityLog.action = EntityLogModel.ACTION_EDIT;
-      entityLog.obs = `assign card ${card.cardNumber}`;
-      entityLog.userId = req.context.session.authId;
-      entity.log.push(entityLog);
-
-      // Save models
-      await this.cardService.updateOne(card);
-      await this.entityService.updateOne(entity);
-
-      const response = getResponse(200, { data: { success: true } });
 
       return res.status(200).send(response);
     } catch (error) {

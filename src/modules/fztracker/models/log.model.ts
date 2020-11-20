@@ -12,12 +12,12 @@ export class LogModel {
   cardNumber: string;
   userId: string;
 
-  static ACTION_CREATED = 'CREATED';
-  static ACTION_EDITED = 'EDITED';
-  static ACTION_CANCELED = 'CANCELED';
-  static ACTION_DELETED = 'DELETED';
-  static ACTION_ASSIGNED = 'ASSIGNED';
-  static ACTION_RELEASED = 'RELEASED';
+  static ACTION_CARD_CREATED = 'CARD_CREATED';
+  static ACTION_CARD_EDITED = 'CARD_EDITED';
+  static ACTION_CARD_CANCELED = 'CARD_CANCELED';
+  static ACTION_CARD_DELETED = 'CARD_DELETED';
+  static ACTION_CARD_ASSIGNED = 'CARD_ASSIGNED';
+  static ACTION_CARD_RELEASED = 'CARD_RELEASED';
 
   constructor() {
     this.uid = uuidv4();

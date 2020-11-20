@@ -16,4 +16,4 @@ export const LogSchema = new Schema({
   cardNumber: { type: String }
 });
 
-LogSchema.index({ logDate: -1 });
+LogSchema.index({ logDate: -1, action: true, entitySerial: 1, cardNumber: 1 });

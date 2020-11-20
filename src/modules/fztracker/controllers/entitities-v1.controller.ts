@@ -1,13 +1,15 @@
-import { Body, Controller, Get, Logger, Post, Query, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Logger, Param, Post, Query, Req, Res, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiCreatedResponse, ApiOperation, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { Response } from 'express';
 import { AuthGuard } from '../../core/guards/auth.guard';
 import { getResponse } from '../../core/helpers/response.helper';
 import { SuccessResponseModel } from '../../core/models/success-response.model';
 import { CardReadingModel } from '../models/card.model';
-import { EntityImportModel, EntityModel, EntityMovementModel, EntityResource, ImportEntityRequest } from '../models/entity.model';
+import { EntityImportModel, EntityLogModel, EntityModel, EntityMovementModel, EntityResource, ImportEntityRequest } from '../models/entity.model';
+import { LogModel } from '../models/log.model';
 import { CardService } from '../services/card.service';
 import { EntityService } from '../services/entity.service';
+import { LogService } from '../services/log.service';
 import { ParseService } from '../services/parser.service';
 
 @Controller('fztracker/entities/v1')
@@ -19,6 +21,7 @@ export class EntitiesV1Controller {
     private readonly logger: Logger,
     private readonly cardService: CardService,
     private readonly entityService: EntityService,
+    private readonly logService: LogService,
     private readonly parserService: ParseService) {
     this.logger.log('Init Entities@1.0.0 controller', EntitiesV1Controller.name);
   }
@@ -28,7 +31,7 @@ export class EntitiesV1Controller {
   @ApiOperation({ summary: 'Get all Entitys' })
   @ApiCreatedResponse({ description: 'Successfully returned entity list', type: SuccessResponseModel })
   @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
-  async getCards(
+  async getEntities(
     // @Req() req: any,
     @Query('serial') serial: string,
     @Query('cardumber') cardNumber: string,
@@ -37,16 +40,16 @@ export class EntitiesV1Controller {
     @Res() res: Response
   ): Promise<object> {
     try {
-      let filter = {  };
+      let filter = {};
 
       if (serial && serial.trim().length > 0) {
         filter = { ...filter, 'permanent.serial': serial };
       }
-      
+
       if (cardNumber && cardNumber.trim().length > 0) {
         filter = { ...filter, cardNumber };
       }
-      
+
       const entities = await this.entityService.find(filter, rows || 10, page || 1);
 
       const response = getResponse(200, { data: { records: entities.length, entities } });
@@ -88,7 +91,7 @@ export class EntitiesV1Controller {
   @ApiOperation({ summary: 'Add new entity movement' })
   @ApiCreatedResponse({ description: 'Successfully created entity movement', type: SuccessResponseModel })
   @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
-  async add(
+  async addMovement(
     @Body() movement: EntityMovementModel,
     @Res() res: Response
   ):
@@ -112,7 +115,7 @@ export class EntitiesV1Controller {
       // TODO: validate last movement timestamp
       entity.inOut = entity.inOut ? false : true;
       movement.inOut = entity.inOut;
-      entity.movements.push(movement);
+      // entity.movements.push(movement);
 
       // Find card
       let card =
@@ -260,5 +263,67 @@ export class EntitiesV1Controller {
     }
   }
 
+  @Post(':entitySerial/assign-card')
+  @ApiOperation({ summary: 'Add new entity movement' })
+  @ApiCreatedResponse({ description: 'Successfully created entity movement', type: SuccessResponseModel })
+  @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
+  async aassignCard(
+    @Param('entitySerial') entitySerial: string,
+    @Body('cardNumber') cardNumber: string,
+    @Req() req: any,
+    @Res() res: Response
+  ):
+    Promise<object> {
+    console.log('aassignCard:', entitySerial, cardNumber);
 
+    try {
+      let entity: EntityModel;
+      entity = await this.entityService.findOne({ 'permanent.serial': entitySerial });
+      if (!entity) {
+        return res.status(404).send({ error: `Entity '${entitySerial}' not fouund.` });
+      }
+
+      if (entity.cardNumber) {
+        return res.status(409).send({ error: `Entity '${entity.permanent.serial}' already assigned to card '${entity.cardNumber}'`, cardNumber: entity.cardNumber });
+      }
+
+      // Find card
+      let card = await this.cardService.findOne({ cardNumber });
+      if (!card) {
+        return res.status(404).send({ error: `Card '${cardNumber}' not found.` });
+      }
+
+      // Update card info
+      card.entitySerial = entity.permanent.serial;
+      card.entityType = entity.permanent.type;
+      card.entityDesc = entity.permanent.name;
+      card.lastChangeDate = new Date();
+
+      // Update entity
+      entity.cardId = card.uid;
+      entity.cardNumber = card.cardNumber;
+
+      // Save models
+      card = await this.cardService.updateOne(card);
+      entity = await this.entityService.updateOne(entity);
+
+      // Add card log
+      const log = new LogModel();
+      log.action = LogModel.ACTION_CARD_ASSIGNED;
+      log.obs = `${entitySerial}`;
+      log.userId = req.context.session.authId;
+      this.logService.add(log);
+
+      const response = getResponse(200, { data: { card, entity } });
+      return res.status(200).send(response);
+    } catch (error) {
+      console.error(error);
+
+      if (error.code == 11000) {
+        return res.status(400).send({ error: error.errmsg });
+      }
+
+      return res.status(400).send({ error: error });
+    }
+  }
 }

@@ -81,8 +81,6 @@ export class EntityModel {
   lastMovementDate: Date;
   cardId: string;
   cardNumber: string;
-  movements: EntityMovementModel[];
-  log: EntityLogModel[];
   resources: EntityResource[];
 
   constructor() {
@@ -91,7 +89,6 @@ export class EntityModel {
 
     this.inOut = true;
     this.lastMovementDate = new Date();
-    this.movements = [];
   }
 }
 
