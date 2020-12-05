@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Logger, Param, Post, Query, Req, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Logger, Param, Post, Query, Req, Res, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiCreatedResponse, ApiOperation, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { Response } from 'express';
 import { AuthGuard } from '../../core/guards/auth.guard';
@@ -267,7 +267,7 @@ export class EntitiesV1Controller {
   @ApiOperation({ summary: 'Add new entity movement' })
   @ApiCreatedResponse({ description: 'Successfully created entity movement', type: SuccessResponseModel })
   @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
-  async aassignCard(
+  async assignCard(
     @Param('entitySerial') entitySerial: string,
     @Body('cardNumber') cardNumber: string,
     @Req() req: any,
@@ -310,6 +310,69 @@ export class EntitiesV1Controller {
       // Add card log
       const log = new LogModel();
       log.action = LogModel.ACTION_CARD_ASSIGNED;
+      log.obs = `${entitySerial}`;
+      log.userId = req.context.session.authId;
+      this.logService.add(log);
+
+      const response = getResponse(200, { data: { card, entity } });
+      return res.status(200).send(response);
+    } catch (error) {
+      console.error(error);
+
+      if (error.code == 11000) {
+        return res.status(400).send({ error: error.errmsg });
+      }
+
+      return res.status(400).send({ error: error });
+    }
+  }
+
+  @Post(':entitySerial/remove-card')
+  @ApiOperation({ summary: 'Add new entity movement' })
+  @ApiCreatedResponse({ description: 'Successfully created entity movement', type: SuccessResponseModel })
+  @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
+  async removeCard(
+    @Param('entitySerial') entitySerial: string,
+    @Req() req: any,
+    @Res() res: Response
+  ):
+    Promise<object> {
+    console.log('removeCard:', entitySerial);
+
+    try {
+      let entity: EntityModel;
+      entity = await this.entityService.findOne({ 'permanent.serial': entitySerial });
+      if (!entity) {
+        return res.status(404).send({ error: `Entity '${entitySerial}' not fouund.` });
+      }
+
+      if (!entity.cardNumber) {
+        return res.status(HttpStatus.OK).send(getResponse(HttpStatus.OK, { data: {  } }));
+      }
+
+      // Find card
+      let card = await this.cardService.findOne({ cardNumber: entity.cardNumber });
+      if (!card) {
+        return res.status(404).send({ error: `Card '${entity.cardNumber}' not found.` });
+      }
+
+      // Update card info
+      card.entitySerial = null;
+      card.entityType = null;
+      card.entityDesc = null;
+      card.lastChangeDate = new Date();
+
+      // Update entity
+      entity.cardId = null;
+      entity.cardNumber = null;
+
+      // Save models
+      card = await this.cardService.updateOne(card);
+      entity = await this.entityService.updateOne(entity);
+
+      // Add card log
+      const log = new LogModel();
+      log.action = LogModel.ACTION_CARD_RELEASED;
       log.obs = `${entitySerial}`;
       log.userId = req.context.session.authId;
       this.logService.add(log);
