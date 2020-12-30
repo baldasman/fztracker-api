@@ -1,5 +1,4 @@
 import { Schema } from 'mongoose';
-import { EntityResource } from '../models/entity.model';
 
 export const EntitySchema = new Schema({
   permanent: {
@@ -39,7 +38,7 @@ export const EntitySchema = new Schema({
   lastMovementDate: { type: Date, default: Date.now },
   cardId: { type: String },
   cardNumber: { type: String },
-  resources: [{serial: String, type: String}]
+  resources: [{}]
 });
 
 EntitySchema.index({ 'permanent.serial': 1, cardId: 1, cardNumber: true });

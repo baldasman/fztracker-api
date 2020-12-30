@@ -1,10 +1,10 @@
-import { Body, Controller, Get, HttpStatus, Logger, Param, Post, Query, Req, Res, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, HttpStatus, Logger, NotFoundException, Param, Post, Query, Req, Res, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiCreatedResponse, ApiOperation, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { Response } from 'express';
 import { AuthGuard } from '../../core/guards/auth.guard';
 import { getResponse } from '../../core/helpers/response.helper';
 import { SuccessResponseModel } from '../../core/models/success-response.model';
-import { CardReadingModel } from '../models/card.model';
+import { CardModel, CardReadingModel } from '../models/card.model';
 import { EntityImportModel, EntityLogModel, EntityModel, EntityMovementModel, EntityResource, ImportEntityRequest } from '../models/entity.model';
 import { LogModel } from '../models/log.model';
 import { CardService } from '../services/card.service';
@@ -34,7 +34,7 @@ export class EntitiesV1Controller {
   async getEntities(
     // @Req() req: any,
     @Query('serial') serial: string,
-    @Query('cardumber') cardNumber: string,
+    @Query('cardNumber') cardNumber: string,
     @Query('page') page: number,
     @Query('rows') rows: number,
     @Res() res: Response
@@ -171,7 +171,6 @@ export class EntitiesV1Controller {
       let data;
       // const dataFile = join(__dirname, '../../../assets', 'import', file);
       const dataFile = body.file;
-      console.log(dataFile, dataFile);
 
       data = await this.parserService.parseEntities(dataFile, headers, ';');
       /**
@@ -276,27 +275,37 @@ export class EntitiesV1Controller {
     Promise<object> {
     console.log('aassignCard:', entitySerial, cardNumber);
 
-    try {
-      let entity: EntityModel;
-      entity = await this.entityService.findOne({ 'permanent.serial': entitySerial });
-      if (!entity) {
-        return res.status(404).send({ error: `Entity '${entitySerial}' not fouund.` });
-      }
+    let entity: EntityModel;
+    entity = await this.entityService.findOne({ 'permanent.serial': entitySerial });
+    if (!entity) {
+      throw new NotFoundException(`Entity '${entitySerial}' not found.`);
+    }
 
-      if (entity.cardNumber) {
-        return res.status(400).send(getResponse(400, { data: { error: `Entity '${entity.permanent.serial}' already assigned to card '${entity.cardNumber}'`, cardNumber: entity.cardNumber } }));
-      }
+    // Find new card
+    let card = await this.cardService.findOne({ cardNumber });
+    if (!card) {
+      throw new NotFoundException(`Card '${cardNumber}' not found.`);
+    }
 
-      // Find card
-      let card = await this.cardService.findOne({ cardNumber });
+    // Check if entity already has an active card 
+    if (entity.cardNumber) {
+      let currentCard = await this.cardService.findOne({ cardNumber, state: CardModel.STATE_ACTIVE });
       if (!card) {
-        return res.status(404).send({ error: `Card '${cardNumber}' not found.` });
+        throw new NotFoundException(`Card '${cardNumber}' not found.`);
       }
+
+      throw new BadRequestException(`Entity '${entity.permanent.serial}' already assigned to card '${entity.cardNumber}'`);
+    }
+
+    
+
+    try {
+
 
       // Update card info
       card.entitySerial = entity.permanent.serial;
       card.entityType = entity.permanent.type;
-      card.entityDesc = entity.permanent.name;
+      card.entityDesc = `${entity.nopermanent.rank} ${entity.permanent.name}`;
       card.lastChangeDate = new Date();
 
       // Update entity
@@ -347,7 +356,7 @@ export class EntitiesV1Controller {
       }
 
       if (!entity.cardNumber) {
-        return res.status(HttpStatus.OK).send(getResponse(HttpStatus.OK, { data: {  } }));
+        return res.status(HttpStatus.OK).send(getResponse(HttpStatus.OK, { data: {} }));
       }
 
       // Find card
