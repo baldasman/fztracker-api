@@ -6,7 +6,7 @@ export const ReadingSchema = new Schema({
     required: true,
     unique: true
   },
-  cardId: { type: String, required: true },
+  cardNumber: { type: String, required: true },
   readingDate: { type: Date, required: true, default: Date.now },
   location: {
     type: String,
@@ -16,7 +16,8 @@ export const ReadingSchema = new Schema({
     type: String,
     required: true,
   },
-  cardNumber: { type: String },
+  manual: { type: Boolean, default: true },
+  cardId: { type: String, required: false },
   movementId: { type: String }
 });
 

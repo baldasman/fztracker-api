@@ -38,14 +38,13 @@ export class NoPermanentModel {
 
 export class EntityMovementModel {
   id: string;
-  entities: string[];
   movementDate: Date;
   location: string;
   cardNumber: string;
   inOut: boolean;
   sensor: string;
-  cardId: string;
-  manual: boolean;
+  manual?: boolean;
+  cardId?: string;
 
   constructor() {
     this.id = uuidv4();

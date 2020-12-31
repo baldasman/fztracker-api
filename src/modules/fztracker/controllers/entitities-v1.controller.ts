@@ -4,13 +4,15 @@ import { Response } from 'express';
 import { AuthGuard } from '../../core/guards/auth.guard';
 import { getResponse } from '../../core/helpers/response.helper';
 import { SuccessResponseModel } from '../../core/models/success-response.model';
-import { CardModel, CardReadingModel } from '../models/card.model';
-import { EntityImportModel, EntityLogModel, EntityModel, EntityMovementModel, EntityResource, ImportEntityRequest } from '../models/entity.model';
+import { CardModel } from '../models/card.model';
+import { EntityImportModel, EntityModel, EntityMovementModel, EntityResource, ImportEntityRequest } from '../models/entity.model';
 import { LogModel } from '../models/log.model';
+import { ReadingModel } from '../models/reading.model';
 import { CardService } from '../services/card.service';
 import { EntityService } from '../services/entity.service';
 import { LogService } from '../services/log.service';
 import { ParseService } from '../services/parser.service';
+import { ReadingService } from '../services/reading.service';
 
 @Controller('fztracker/entities/v1')
 @ApiBearerAuth()
@@ -21,6 +23,7 @@ export class EntitiesV1Controller {
     private readonly logger: Logger,
     private readonly cardService: CardService,
     private readonly entityService: EntityService,
+    private readonly readingService: ReadingService,
     private readonly logService: LogService,
     private readonly parserService: ParseService) {
     this.logger.log('Init Entities@1.0.0 controller', EntitiesV1Controller.name);
@@ -102,8 +105,7 @@ export class EntitiesV1Controller {
       let entity: EntityModel;
 
       if (movement.manual) {
-        entity = await this.entityService.findOne(
-          { 'cardNumber': movement.cardNumber });
+        entity = await this.entityService.findOne({ 'cardNumber': movement.cardNumber });
       } else {
         entity = await this.entityService.findOne({ 'cardId': movement.cardId });
       }
@@ -112,29 +114,31 @@ export class EntitiesV1Controller {
         throw `No entity assigned to card "${movement.manual ? movement.cardNumber : movement.cardId}"`;
       }
 
-      // TODO: validate last movement timestamp
-      entity.inOut = entity.inOut ? false : true;
-      movement.inOut = entity.inOut;
-      // entity.movements.push(movement);
-
       // Find card
-      let card =
-        await this.cardService.findOne({ cardNumber: entity.cardNumber });
-
+      const card = await this.cardService.findOne({ cardNumber: entity.cardNumber });
       if (!card) {
         throw 'Card not found';
       }
 
-      const reading = new CardReadingModel();
+      if (card.state !== CardModel.STATE_ACTIVE) {
+        throw 'Card not active';
+      }
+
+      entity.inOut = movement.inOut ? movement.inOut : !entity.inOut;
+      movement.inOut = entity.inOut;
+
+      const reading = new ReadingModel();
       reading.location = movement.location;
       reading.sensor = movement.sensor;
       reading.movementId = movement.id;
-
-      // TODO: create reading
+      reading.cardId = movement.cardId;
+      reading.cardNumber = movement.cardNumber;
+      reading.manual = movement.manual;
 
       // Save models
-      card = await this.cardService.updateOne(card);
-      entity = await this.entityService.updateOne(entity);
+      await this.entityService.updateOne(entity);
+      await this.readingService.add(reading);
+      // await this.movementService.add(movement);
 
       const response = getResponse(200, { data: { movement } });
 
@@ -297,7 +301,7 @@ export class EntitiesV1Controller {
       throw new BadRequestException(`Entity '${entity.permanent.serial}' already assigned to card '${entity.cardNumber}'`);
     }
 
-    
+
 
     try {
 

@@ -7,8 +7,9 @@ import { CardModel } from '../models/card.model';
 @Injectable()
 export class MovementService {
   constructor(
-      @InjectModel('Card') private readonly cardModel: Model<CardModel>,
-      private readonly logger: Logger) {
+      @InjectModel('Movement') private readonly cardModel: Model<CardModel>,
+      private readonly logger: Logger
+  ) {
     this.logger.setContext(MovementService.name);
   }
 

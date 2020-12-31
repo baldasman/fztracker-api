@@ -8,9 +8,10 @@ export class ReadingModel {
   @IsNotEmpty() location: string;
   @IsNotEmpty() sensor: string;
 
-  cardId: string;
   cardNumber: string;
   movementId: string;
+  manual?: boolean;
+  cardId?: string;
 
   constructor() {
     this.uid = uuidv4();
