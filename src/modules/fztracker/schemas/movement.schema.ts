@@ -31,6 +31,7 @@ export const MovementSchema = new Schema({
   entityType: { type: String },
   cardId: { type: String },
   cardNumber: { type: String },
+  plate: { type: String },
   relatedMovements: [{ type: String, required: true }]
 });
 

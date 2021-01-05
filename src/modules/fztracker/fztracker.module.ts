@@ -17,6 +17,7 @@ import { ReadingSchema } from './schemas/reading.schema';
 import { CardService } from './services/card.service';
 import { EntityService } from './services/entity.service';
 import { LogService } from './services/log.service';
+import { MovementService } from './services/movement.service';
 import { ParseService } from './services/parser.service';
 import { ReadingService } from './services/reading.service';
 import { UserService } from './services/user.service';
@@ -32,7 +33,7 @@ import { UserService } from './services/user.service';
     MongooseModule.forFeature([{ name: 'Log', schema: LogSchema }])
   ],
   controllers: [CardsV1Controller, EntitiesV1Controller, LogsV1Controller, MovementsV1Controller, UsersV1Controller],
-  providers: [MailSenderService, UserService, CardService, EntityService, ReadingService, LogService, CsvParser, ParseService]
+  providers: [MailSenderService, UserService, CardService, EntityService, ReadingService, MovementService, LogService, CsvParser, ParseService]
 })
 export class FZtrackerModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

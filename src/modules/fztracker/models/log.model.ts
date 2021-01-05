@@ -1,6 +1,5 @@
 import * as uuidv4 from 'uuid/v4'; // random ids
 
-
 export class LogModel {
   uid: string;
   logDate: Date;

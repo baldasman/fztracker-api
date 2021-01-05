@@ -36,22 +36,6 @@ export class NoPermanentModel {
   numShots: number;
 }
 
-export class EntityMovementModel {
-  id: string;
-  movementDate: Date;
-  location: string;
-  cardNumber: string;
-  inOut: boolean;
-  sensor: string;
-  manual?: boolean;
-  cardId?: string;
-
-  constructor() {
-    this.id = uuidv4();
-    this.movementDate = new Date();
-  }
-}
-
 export class EntityLogModel {
   uid: string;
   logDate: Date;

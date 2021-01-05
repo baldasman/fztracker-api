@@ -5,12 +5,14 @@ import { AuthGuard } from '../../core/guards/auth.guard';
 import { getResponse } from '../../core/helpers/response.helper';
 import { SuccessResponseModel } from '../../core/models/success-response.model';
 import { CardModel } from '../models/card.model';
-import { EntityImportModel, EntityModel, EntityMovementModel, EntityResource, ImportEntityRequest } from '../models/entity.model';
+import { EntityImportModel, EntityModel, EntityResource, ImportEntityRequest } from '../models/entity.model';
 import { LogModel } from '../models/log.model';
+import { MovementModel } from '../models/movement.model';
 import { ReadingModel } from '../models/reading.model';
 import { CardService } from '../services/card.service';
 import { EntityService } from '../services/entity.service';
 import { LogService } from '../services/log.service';
+import { MovementService } from '../services/movement.service';
 import { ParseService } from '../services/parser.service';
 import { ReadingService } from '../services/reading.service';
 
@@ -25,6 +27,7 @@ export class EntitiesV1Controller {
     private readonly entityService: EntityService,
     private readonly readingService: ReadingService,
     private readonly logService: LogService,
+    private readonly movementService: MovementService,
     private readonly parserService: ParseService) {
     this.logger.log('Init Entities@1.0.0 controller', EntitiesV1Controller.name);
   }
@@ -38,6 +41,7 @@ export class EntitiesV1Controller {
     // @Req() req: any,
     @Query('serial') serial: string,
     @Query('cardNumber') cardNumber: string,
+    @Query('cardId') cardId: string,
     @Query('page') page: number,
     @Query('rows') rows: number,
     @Res() res: Response
@@ -53,6 +57,11 @@ export class EntitiesV1Controller {
         filter = { ...filter, cardNumber };
       }
 
+      if (cardId && cardId.trim().length > 0) {
+        filter = { ...filter, cardId };
+      }
+
+      console.log('search', filter);
       const entities = await this.entityService.find(filter, rows || 10, page || 1);
 
       const response = getResponse(200, { data: { records: entities.length, entities } });
@@ -95,7 +104,7 @@ export class EntitiesV1Controller {
   @ApiCreatedResponse({ description: 'Successfully created entity movement', type: SuccessResponseModel })
   @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
   async addMovement(
-    @Body() movement: EntityMovementModel,
+    @Body() movement: MovementModel,
     @Res() res: Response
   ):
     Promise<object> {
@@ -106,8 +115,10 @@ export class EntitiesV1Controller {
 
       if (movement.manual) {
         entity = await this.entityService.findOne({ 'cardNumber': movement.cardNumber });
+        movement.cardId = entity.cardId;
       } else {
         entity = await this.entityService.findOne({ 'cardId': movement.cardId });
+        movement.cardNumber = entity.cardNumber;
       }
 
       if (!entity) {
@@ -127,22 +138,30 @@ export class EntitiesV1Controller {
       entity.inOut = movement.inOut ? movement.inOut : !entity.inOut;
       movement.inOut = entity.inOut;
 
+      // Check plates
+      if (movement.plate && movement.plate.length > 0) {
+        const plate = entity.resources.find(r => r.type === 'VEHICLE' && r.serial.replace(/-/g, '') === movement.plate.replace(/-/g, ''));
+        if (!plate) {
+          entity.resources.push({ type: 'VEHICLE', serial: movement.plate.replace(/-/g, '') });
+        }
+      }
+
       const reading = new ReadingModel();
       reading.location = movement.location;
       reading.sensor = movement.sensor;
-      reading.movementId = movement.id;
+      reading.movementId = movement.uid;
       reading.cardId = movement.cardId;
       reading.cardNumber = movement.cardNumber;
       reading.manual = movement.manual;
 
       // Save models
-      await this.entityService.updateOne(entity);
       await this.readingService.add(reading);
-      // await this.movementService.add(movement);
+      await this.movementService.add(movement);
+      await this.entityService.updateOne(entity);
 
       const response = getResponse(200, { data: { movement } });
 
-      global['io'].emit(`movement/${movement.location}`, movement);
+      global['io'].emit(`movement`, {movement, entity});
 
       return res.status(200).send(response);
     } catch (error) {
@@ -292,20 +311,21 @@ export class EntitiesV1Controller {
     }
 
     // Check if entity already has an active card 
-    if (entity.cardNumber) {
-      let currentCard = await this.cardService.findOne({ cardNumber, state: CardModel.STATE_ACTIVE });
-      if (!card) {
-        throw new NotFoundException(`Card '${cardNumber}' not found.`);
+    if (entity.cardNumber && entity.cardNumber.trim().length > 0) {
+      let currentCard = await this.cardService.findOne({ cardNumber: entity.cardNumber, state: CardModel.STATE_ACTIVE });
+      if (!currentCard) {
+        throw new NotFoundException(`Entity '${entity.permanent.serial}' already assigned to card '${entity.cardNumber}', but card '${cardNumber}' was not found.`);
       }
 
       throw new BadRequestException(`Entity '${entity.permanent.serial}' already assigned to card '${entity.cardNumber}'`);
     }
 
-
+    // Check if card is already assigned to a different entity
+    if (card.entitySerial && card.entitySerial.trim().length > 0 && card.entitySerial !== entity.permanent.serial) {
+      throw new BadRequestException(`Card '${card.cardNumber}' already assigned to Entity '${card.entitySerial}'.`);
+    }
 
     try {
-
-
       // Update card info
       card.entitySerial = entity.permanent.serial;
       card.entityType = entity.permanent.type;
