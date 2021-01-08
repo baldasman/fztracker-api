@@ -154,6 +154,11 @@ export class EntitiesV1Controller {
       reading.cardNumber = movement.cardNumber;
       reading.manual = movement.manual;
 
+      // update entity data
+      movement.entitySerial = entity.permanent.serial;
+      movement.entityType = entity.permanent.type;
+      movement.entityName = `${entity.nopermanent.rank} ${entity.permanent.name}`
+
       // Save models
       await this.readingService.add(reading);
       await this.movementService.add(movement);
