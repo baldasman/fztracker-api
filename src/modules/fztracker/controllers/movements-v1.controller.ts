@@ -28,24 +28,31 @@ export class MovementsV1Controller {
     @Query('search') search: string,
     @Query('from') searchFrom: string,
     @Query('to') searchTo: string,
+    @Query('local') searchLocal: string,
     @Res() res: Response
   ): Promise<object> {
     try {
-      console.log('search', search, searchFrom, searchTo);
+      console.log('filtros', search, searchFrom, searchTo, searchLocal);
       let filter = {};
+            
+      
+      if (searchLocal) {
+        filter = {...filter, location: searchLocal};
+     }
+
       if (search) {
-         filter = {...filter, entitySerial: search};
+        filter = {...filter, entitySerial: search};
       }
 
       const fromDate = moment(searchFrom).startOf('day');
       const toDate = moment(searchTo).endOf('day');
      
-
+   
       
 
        filter['movementDate'] = {$gte: fromDate.toDate(), $lte: toDate.toDate()};
        console.log('filter', filter);
-      const movements = await this.movementService.find(filter);
+       const movements = await this.movementService.find(filter);
 
 
 
