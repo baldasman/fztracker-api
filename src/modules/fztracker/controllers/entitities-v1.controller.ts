@@ -58,7 +58,13 @@ export class EntitiesV1Controller {
       }
 
       if (cardId && cardId.trim().length > 0) {
-        filter = { ...filter, cardId };
+
+        const card = await this.cardService.findOne({ uid: cardId.toUpperCase() });
+        console.log('cardId', cardId.toUpperCase(), card);
+        if (card) {
+          filter = { ...filter, cardNumber: card.cardNumber };
+        }
+
       }
 
       console.log('search', filter);
@@ -113,13 +119,20 @@ export class EntitiesV1Controller {
     try {
       let entity: EntityModel;
 
-      if (movement.manual) {
-        entity = await this.entityService.findOne({ 'cardNumber': movement.cardNumber });
-        movement.cardId = entity.cardId;
-      } else {
-        entity = await this.entityService.findOne({ 'cardId': movement.cardId });
-        movement.cardNumber = entity.cardNumber;
+      if (movement.cardId) {
+
+        const c = await this.cardService.findOne({ uid: movement.cardId.toUpperCase() });
+        console.log('cardId', movement.cardId.toUpperCase(), c);
+        if (!c) {
+          throw 'Card not found';
+        }
+        movement.cardNumber = c.cardNumber;
       }
+
+
+      entity = await this.entityService.findOne({ 'cardNumber': movement.cardNumber });
+      movement.cardId = entity.cardId;
+
 
       if (!entity) {
         throw `No entity assigned to card "${movement.manual ? movement.cardNumber : movement.cardId}"`;
@@ -166,7 +179,7 @@ export class EntitiesV1Controller {
 
       const response = getResponse(200, { data: { movement } });
 
-      global['io'].emit(`movement`, {movement, entity});
+      global['io'].emit(`movement`, { movement, entity });
 
       return res.status(200).send(response);
     } catch (error) {
