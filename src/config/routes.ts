@@ -22,7 +22,7 @@ export default function getRoutesTree(): Route[] {
     },
     {
       'name': 'Auth',
-      'description': 'All things related to authentication',
+      'description': 'All methods related to authentication',
       'children': [
         {
           'name': 'AuthV1Module',
@@ -33,11 +33,11 @@ export default function getRoutesTree(): Route[] {
     },
     {
       'name': 'FZtracker',
-      'description': 'All things related to FZtracker',
+      'description': 'All methods related to FZtracker',
       'children': [
         {
-          'name': 'FZtrackerV1Module',
-          'path': 'fztracker/v1',
+          'name': 'FZtracker',
+          'path': 'fztracker',
           'version': '1.0.0'
         }
       ]

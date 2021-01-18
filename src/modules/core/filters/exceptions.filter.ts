@@ -17,15 +17,15 @@ export class ExceptionsFilter implements ExceptionFilter {
     const response = ctx.getResponse();
     const request = ctx.getRequest();
 
-    const status = exception instanceof HttpException ?
-      exception.getStatus() : (exception.errors ? HttpStatus.BAD_REQUEST : HttpStatus.INTERNAL_SERVER_ERROR);
+    const status = exception instanceof HttpException ? 
+    exception.getStatus() : (exception.errors ? HttpStatus.BAD_REQUEST : HttpStatus.INTERNAL_SERVER_ERROR);
 
-    const errors = JSON.stringify(exception.errors)
+    const errors = JSON.stringify(exception.errors);
 
-    this.logger.error(`${errors || exception} on ${request.url}`, JSON.stringify(exception.response?.data));
+    this.logger.error(`${errors || exception} on ${request.url}`, JSON.stringify(exception.response?.data)); 
 
     response.status(status).json(getResponse(status, {
-      resultMessage: 'Error',
+      resultMessage: exception instanceof HttpException ? exception.message?.message : 'Error',
       data: exception.response?.data?.data || exception || {}
     }));
   }

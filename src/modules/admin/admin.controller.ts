@@ -10,10 +10,9 @@ import { MailSenderService } from '../core/services/mailsender.service';
 import * as fs from 'fs';
 import * as PdfPrinter from 'pdfmake';
 import * as uuid from 'uuid/v4';
-import { UserService } from '../fztracker/v1/services/user.service';
+import { UserService } from '../fztracker/services/user.service';
 
 @Controller('admin')
-@ApiBearerAuth()
 @ApiTags('Admin')
 export class AdminController {
   constructor(
@@ -27,7 +26,7 @@ export class AdminController {
   @Get('status')
   @ApiOperation({ description: 'Return information about the API\'s status' })
   @ApiResponse({ status: 200, description: 'Status information returned sucessfully!' })
-  @ApiResponse({ status: 500, description: 'Mongo DB is dead' })
+  @ApiResponse({ status: 500, description: 'API DB is dead' })
   async status(@Res() res: Response) {
     const mongoState = await this.mongooseHealthIndicator.pingCheck('mongoDB');
     const status = {mongoState: mongoState.mongoDB.status};
@@ -36,6 +35,7 @@ export class AdminController {
   }
 
   @Post('status')
+  @ApiBearerAuth()
   @ApiOperation({
     description:
         `Manage the api\'s status, restarting the api, etc. No feature is implemented at this time`
@@ -46,6 +46,7 @@ export class AdminController {
   }
 
   @Post('email')
+  @ApiBearerAuth()
   @ApiOperation({description: `Send test email`})
   @ApiResponse({status: 200, description: 'Status email sent successfully.'})
   testEmail(
@@ -67,6 +68,7 @@ export class AdminController {
   }
 
   @Get('pdf')
+  @ApiBearerAuth()
   @ApiOperation({description: `Dowload test PDF`})
   @ApiResponse({status: 200, description: 'PDF sent successfully.'})
   async testPDF(@Res() res: Response) {
