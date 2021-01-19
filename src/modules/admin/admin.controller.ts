@@ -12,14 +12,16 @@ import * as PdfPrinter from 'pdfmake';
 import * as uuid from 'uuid/v4';
 import { UserService } from '../fztracker/services/user.service';
 
+const ActiveDirectory = require('activedirectory2');
+
 @Controller('admin')
 @ApiTags('Admin')
 export class AdminController {
   constructor(
-      private readonly logger: Logger,
-      private readonly mailSender: MailSenderService,
-      private readonly userService: UserService,
-      private readonly mongooseHealthIndicator: MongooseHealthIndicator) {
+    private readonly logger: Logger,
+    private readonly mailSender: MailSenderService,
+    private readonly userService: UserService,
+    private readonly mongooseHealthIndicator: MongooseHealthIndicator) {
     this.logger.log('Init admin controller', AdminController.name);
   }
 
@@ -29,7 +31,61 @@ export class AdminController {
   @ApiResponse({ status: 500, description: 'API DB is dead' })
   async status(@Res() res: Response) {
     const mongoState = await this.mongooseHealthIndicator.pingCheck('mongoDB');
-    const status = {mongoState: mongoState.mongoDB.status};
+    const status = { mongoState: mongoState.mongoDB.status };
+
+
+    const config = {
+      url: 'ldap://ad1.domatica.local',
+      searchDN: 'CN=harbour,OU=DevSecurityGroups,DC=domatica,DC=local',
+      baseDN: 'OU=Engineering,OU=UsersDomatica,DC=domatica,DC=local',
+      username: 'psantos@domatica.local',
+      password: 'XXXXXXX'
+    }
+    const ad = new ActiveDirectory(config);
+
+    const username = 'psantos@domatica.local';
+    const password = 'XXXXXXX';
+
+    ad.authenticate(username, password, function (err, auth) {
+      if (err) {
+        console.log('ERROR: ' + JSON.stringify(err));
+        return;
+      }
+
+      if (auth) {
+        console.log('Authenticated!');
+      }
+      else {
+        console.log('Authentication failed!');
+      }
+    });
+
+    const groupName = 'DevAdminGroup';
+    ad.isUserMemberOf(username, groupName, function(err, isMember) {
+      if (err) {
+        console.log('ERROR: ' +JSON.stringify(err));
+        return;
+      }
+     
+      console.log(username + ' isMemberOf ' + groupName + ': ' + isMember);
+    });
+
+    // Any of the following username types can be searched on
+    const sAMAccountName = 'psantos';
+    const userPrincipalName = 'username@domain.com';
+    // const dn = 'CN=Smith\\, John,OU=Users,DC=domain,DC=com';
+    const dn = 'OU=Engineering,OU=UsersDomatica,DC=domatica,DC=local';
+    
+    // Find user by a sAMAccountName
+    ad.findUser(sAMAccountName, function(err, user) {
+      if (err) {
+        console.log('ERROR: ' +JSON.stringify(err));
+        return;
+      }
+    
+      if (! user) console.log('User: ' + sAMAccountName + ' not found.');
+      else console.log(JSON.stringify(user));
+    });
 
     return res.status(200).send(status);
   }
@@ -38,17 +94,17 @@ export class AdminController {
   @ApiBearerAuth()
   @ApiOperation({
     description:
-        `Manage the api\'s status, restarting the api, etc. No feature is implemented at this time`
+      `Manage the api\'s status, restarting the api, etc. No feature is implemented at this time`
   })
-  @ApiResponse({status: 200, description: 'Status updated successfully.'})
+  @ApiResponse({ status: 200, description: 'Status updated successfully.' })
   editLoggerLevel(@Body('body') body: object, @Res() res: Response) {
     res.send(getResponse(200));
   }
 
   @Post('email')
   @ApiBearerAuth()
-  @ApiOperation({description: `Send test email`})
-  @ApiResponse({status: 200, description: 'Status email sent successfully.'})
+  @ApiOperation({ description: `Send test email` })
+  @ApiResponse({ status: 200, description: 'Status email sent successfully.' })
   testEmail(
     @Body('to') to: string,
     @Res() res: Response
@@ -63,14 +119,14 @@ export class AdminController {
       this.mailSender.sendReportEmail(params);
       res.send(getResponse(200));
     } catch (error) {
-      res.send(getResponse(400, {data: error}));
+      res.send(getResponse(400, { data: error }));
     }
   }
 
   @Get('pdf')
   @ApiBearerAuth()
-  @ApiOperation({description: `Dowload test PDF`})
-  @ApiResponse({status: 200, description: 'PDF sent successfully.'})
+  @ApiOperation({ description: `Dowload test PDF` })
+  @ApiResponse({ status: 200, description: 'PDF sent successfully.' })
   async testPDF(@Res() res: Response) {
     try {
       const users = await this.userService.getAll({});
@@ -92,7 +148,7 @@ export class AdminController {
       };
 
       const printer = new PdfPrinter(fonts);
-            
+
       const docDefinition = {
         content: [
           { text: 'Users', style: 'header' },
@@ -140,23 +196,23 @@ export class AdminController {
       pdfDoc.pipe(
         fs.createWriteStream(file)
       );
-      
+
       pdfDoc.on('end', () => {
-          console.log('file', file);
-          setTimeout(() => {
-            res.attachment("users.pdf");
-            res.contentType('application/pdf');
-            res.sendFile(file, () => {
-              fs.unlinkSync(file);
-            });
-            
-          }, 100);
+        console.log('file', file);
+        setTimeout(() => {
+          res.attachment("users.pdf");
+          res.contentType('application/pdf');
+          res.sendFile(file, () => {
+            fs.unlinkSync(file);
+          });
+
+        }, 100);
       });
 
       pdfDoc.end();
     } catch (error) {
       console.log(error);
-      return res.send(getResponse(404, {data: error}));
+      return res.send(getResponse(404, { data: error }));
     }
   }
 }
