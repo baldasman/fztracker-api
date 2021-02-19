@@ -35,16 +35,16 @@ export class AdminController {
 
 
     const config = {
-      url: 'ldap://ad1.domatica.local',
-      searchDN: 'CN=harbour,OU=DevSecurityGroups,DC=domatica,DC=local',
-      baseDN: 'OU=Engineering,OU=UsersDomatica,DC=domatica,DC=local',
-      username: 'psantos@domatica.local',
-      password: 'XXXXXXX'
+      url: 'ldap://AD-N-19-1.marinha.pt',
+      //searchDN: 'CN=harbour,OU=DevSecurityGroups,DC=domatica,DC=local',
+      baseDN: 'DC=marinha,DC=pt',
+      username: 'm0x74951@marinha.pt',
+      password: 'inform@20'
     }
     const ad = new ActiveDirectory(config);
 
-    const username = 'psantos@domatica.local';
-    const password = 'XXXXXXX';
+    const username = 'm0x74951@marinha.pt';
+    const password = 'inform@20';
 
     ad.authenticate(username, password, function (err, auth) {
       if (err) {
@@ -71,10 +71,10 @@ export class AdminController {
     });
 
     // Any of the following username types can be searched on
-    const sAMAccountName = 'psantos';
-    const userPrincipalName = 'username@domain.com';
+    const sAMAccountName = 'm22286';
+    // const userPrincipalName = 'm9830401@marinha.pt';
     // const dn = 'CN=Smith\\, John,OU=Users,DC=domain,DC=com';
-    const dn = 'OU=Engineering,OU=UsersDomatica,DC=domatica,DC=local';
+    const dn = 'DC=marinha,DC=pt';
     
     // Find user by a sAMAccountName
     ad.findUser(sAMAccountName, function(err, user) {
@@ -84,7 +84,7 @@ export class AdminController {
       }
     
       if (! user) console.log('User: ' + sAMAccountName + ' not found.');
-      else console.log(JSON.stringify(user));
+      else console.log('detalhes ' + JSON.stringify(user));
     });
 
     return res.status(200).send(status);
