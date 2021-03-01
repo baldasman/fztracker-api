@@ -39,12 +39,12 @@ export class AdminController {
       //searchDN: 'CN=harbour,OU=DevSecurityGroups,DC=domatica,DC=local',
       baseDN: 'DC=marinha,DC=pt',
       username: 'm0x74951@marinha.pt',
-      password: 'inform@20'
+      password: 'xxxx'
     }
     const ad = new ActiveDirectory(config);
 
     const username = 'm0x74951@marinha.pt';
-    const password = 'inform@20';
+    const password = 'xxxx';
 
     ad.authenticate(username, password, function (err, auth) {
       if (err) {
