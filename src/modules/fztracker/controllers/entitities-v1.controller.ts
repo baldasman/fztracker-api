@@ -47,6 +47,7 @@ export class EntitiesV1Controller {
     @Res() res: Response
   ): Promise<object> {
     try {
+      console.log('filtros', serial, cardNumber, page, rows);
       let filter = {};
 
       if (serial && serial.trim().length > 0) {
@@ -68,7 +69,7 @@ export class EntitiesV1Controller {
       }
 
       console.log('search', filter);
-      const entities = await this.entityService.find(filter, rows || 10, page || 1);
+      const entities = await this.entityService.find(filter, rows , page );
 
       const response = getResponse(200, { data: { records: entities.length, entities } });
       return res.status(200).send(response);
