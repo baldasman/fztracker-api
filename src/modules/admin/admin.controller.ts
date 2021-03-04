@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Logger, Param, Post, Req, Res } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { MongooseHealthIndicator } from '@nestjs/terminus';
 import { Response } from 'express';
 
@@ -166,17 +166,18 @@ export class AdminController {
   @ApiOperation({ description: 'Return information about the API\'s status' })
   @ApiResponse({ status: 200, description: 'Status information returned sucessfully!' })
   @ApiResponse({ status: 500, description: 'API DB is dead' })
+  @ApiBody({})
   async adSignin(
     @Res() res: Response,
     @Body() body: any
   ) {
-    console.log('req', body);
-    const success = await this.adService.authenticate(body.username, body.password);
-    console.log('adSignin', success);
-    return res.status(200).send({success});
+    const info = await this.adService.authenticate(body.username, body.password);
+    console.log('adSignin', info);
+    return res.status(200).send(info);
   }
   
-  @Get('ad/find')
+  @Post('ad/find')
+  @ApiBody({})
   @ApiOperation({ description: 'Return information about the API\'s status' })
   @ApiResponse({ status: 200, description: 'Status information returned sucessfully!' })
   @ApiResponse({ status: 500, description: 'API DB is dead' })
@@ -186,6 +187,6 @@ export class AdminController {
   ) {
     const info = await this.adService.findUser(username);
     console.log('adFind', info);
-    return res.status(200).send({user: info});
+    return res.status(200).send(info);
   }
 }

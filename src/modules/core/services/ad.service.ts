@@ -1,5 +1,7 @@
 import { Injectable, Inject, Logger } from '@nestjs/common';
 import { info } from 'console';
+import { resolveTypeReferenceDirective } from 'typescript';
+import { promisify } from 'util';
 
 const ActiveDirectory = require('activedirectory2');
 
@@ -31,21 +33,26 @@ export class AdService {
 
   async authenticate(username: string, password: string) {
     this.logger.setContext(AdService.name);
-    let isAithenticated = false;
-console.log(username, password)
-    await this.ad.authenticate(username, password, function (err, auth) {
-      if (err) {
-        console.log('ERROR: ' + JSON.stringify(err));
-        return;
-      }
-
-      if (auth) {
-        console.log('Authenticated!');
-        isAithenticated = true;
-      }
-      else {
-        console.log('Authentication failed!');
-      }
+    
+    const thatAd = this.ad;
+    return new Promise(function(resolve, reject) {
+      // window.onload = resolve;
+      thatAd.authenticate(username, password, function (err, auth) {
+        if (err) {
+          console.log('ERROR: ' + JSON.stringify(err));
+          reject(err);
+          return;
+        }
+  
+        if (auth) {
+          console.log('Authenticated!');
+          resolve({valid: true});
+        }
+        else {
+          console.log('Authentication failed!');
+          reject({message: 'Authentication failed!'});
+        }
+      });
     });
 
     // const groupName = 'DevAdminGroup';
@@ -63,32 +70,27 @@ console.log(username, password)
     // // const userPrincipalName = 'm9830401@marinha.pt';
     // // const dn = 'CN=Smith\\, John,OU=Users,DC=domain,DC=com';
     // const dn = 'DC=marinha,DC=pt';
-
-
-
-    return isAithenticated;
   }
 
   async findUser(username: string) {
-    let info = {
-      username
-    };
-
-    // Find user by a sAMAccountName
-    await this.ad.findUser(username, function (err, user) {
-      if (err) {
-        console.log('ERROR: ' + JSON.stringify(err));
-        return;
-      }
-
-      if (!user) { 
-        console.log('User: ' + username + ' not found.'); 
-      } else { 
-        console.log('detalhes ' + JSON.stringify(user)); 
-        info = user;
-      }
+    const thatAd = this.ad;
+    return new Promise(function(resolve, reject) {
+      // window.onload = resolve;
+      thatAd.findUser(username, function (err, user) {
+        if (err) {
+          console.log('ERROR: ' + JSON.stringify(err));
+          reject(err);
+          return;
+        }
+  
+        if (!user) { 
+          console.log('User: ' + username + ' not found.'); 
+          reject({message: 'User: ' + username + ' not found.'});
+        } else { 
+          console.log('detalhes ' + JSON.stringify(user)); 
+          resolve(user);
+        }
+      });
     });
-
-    return info;
   }
 }
