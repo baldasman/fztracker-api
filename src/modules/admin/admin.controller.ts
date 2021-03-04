@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Logger, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, Logger, Param, Post, Res } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { MongooseHealthIndicator } from '@nestjs/terminus';
 import { Response } from 'express';
@@ -11,8 +11,7 @@ import * as fs from 'fs';
 import * as PdfPrinter from 'pdfmake';
 import * as uuid from 'uuid/v4';
 import { UserService } from '../fztracker/services/user.service';
-
-const ActiveDirectory = require('activedirectory2');
+import { AdService } from '../core/services/ad.service';
 
 @Controller('admin')
 @ApiTags('Admin')
@@ -21,6 +20,7 @@ export class AdminController {
     private readonly logger: Logger,
     private readonly mailSender: MailSenderService,
     private readonly userService: UserService,
+    private readonly adService: AdService,
     private readonly mongooseHealthIndicator: MongooseHealthIndicator) {
     this.logger.log('Init admin controller', AdminController.name);
   }
@@ -33,63 +33,9 @@ export class AdminController {
     const mongoState = await this.mongooseHealthIndicator.pingCheck('mongoDB');
     const status = { mongoState: mongoState.mongoDB.status };
 
-
-    const config = {
-      url: 'ldap://AD-N-19-1.marinha.pt',
-      //searchDN: 'CN=harbour,OU=DevSecurityGroups,DC=domatica,DC=local',
-      baseDN: 'DC=marinha,DC=pt',
-      username: 'm0x74951@marinha.pt',
-      password: 'xxxx'
-    }
-    const ad = new ActiveDirectory(config);
-
-    const username = 'm0x74951@marinha.pt';
-    const password = 'xxxx';
-
-    ad.authenticate(username, password, function (err, auth) {
-      if (err) {
-        console.log('ERROR: ' + JSON.stringify(err));
-        return;
-      }
-
-      if (auth) {
-        console.log('Authenticated!');
-      }
-      else {
-        console.log('Authentication failed!');
-      }
-    });
-
-    const groupName = 'DevAdminGroup';
-    ad.isUserMemberOf(username, groupName, function(err, isMember) {
-      if (err) {
-        console.log('ERROR: ' +JSON.stringify(err));
-        return;
-      }
-     
-      console.log(username + ' isMemberOf ' + groupName + ': ' + isMember);
-    });
-
-    // Any of the following username types can be searched on
-    const sAMAccountName = 'm22286';
-    // const userPrincipalName = 'm9830401@marinha.pt';
-    // const dn = 'CN=Smith\\, John,OU=Users,DC=domain,DC=com';
-    const dn = 'DC=marinha,DC=pt';
-    
-    // Find user by a sAMAccountName
-    ad.findUser(sAMAccountName, function(err, user) {
-      if (err) {
-        console.log('ERROR: ' +JSON.stringify(err));
-        return;
-      }
-    
-      if (! user) console.log('User: ' + sAMAccountName + ' not found.');
-      else console.log('detalhes ' + JSON.stringify(user));
-    });
-
     return res.status(200).send(status);
   }
-
+  
   @Post('status')
   @ApiBearerAuth()
   @ApiOperation({
@@ -214,5 +160,32 @@ export class AdminController {
       console.log(error);
       return res.send(getResponse(404, { data: error }));
     }
+  }
+
+  @Get('ad/signin')
+  @ApiOperation({ description: 'Return information about the API\'s status' })
+  @ApiResponse({ status: 200, description: 'Status information returned sucessfully!' })
+  @ApiResponse({ status: 500, description: 'API DB is dead' })
+  async adSignin(
+    @Res() res: Response,
+    @Param('username') username: string,
+    @Param('password') password: string
+  ) {
+    const success = await this.adService.authenticate(username, password);
+    console.log('adSignin', success);
+    return res.status(200).send(status);
+  }
+  
+  @Get('ad/find')
+  @ApiOperation({ description: 'Return information about the API\'s status' })
+  @ApiResponse({ status: 200, description: 'Status information returned sucessfully!' })
+  @ApiResponse({ status: 500, description: 'API DB is dead' })
+  async adFind(
+    @Res() res: Response,
+    @Param('username') username: string
+  ) {
+    const info = await this.adService.findUser(username);
+    console.log('adFind', info);
+    return res.status(200).send({user: info});
   }
 }
