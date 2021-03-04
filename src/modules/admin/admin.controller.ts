@@ -183,9 +183,9 @@ export class AdminController {
   @ApiResponse({ status: 500, description: 'API DB is dead' })
   async adFind(
     @Res() res: Response,
-    @Param('username') username: string
+    @Body() body: any
   ) {
-    const info = await this.adService.findUser(username);
+    const info = await this.adService.findUser(body.findNII);
     console.log('adFind', info);
     return res.status(200).send(info);
   }

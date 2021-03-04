@@ -87,7 +87,11 @@ export class AdService {
           console.log('User: ' + username + ' not found.'); 
           reject({message: 'User: ' + username + ' not found.'});
         } else { 
-          console.log('detalhes ' + JSON.stringify(user)); 
+          console.log('detalhes' + JSON.stringify(user)); 
+          thatAd.getGroupMembershipForUser(username, function(err, groups) {
+        
+           console.log(JSON.stringify(groups));
+          });
           resolve(user);
         }
       });
