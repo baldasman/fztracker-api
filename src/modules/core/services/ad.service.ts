@@ -32,7 +32,7 @@ export class AdService {
   async authenticate(username: string, password: string) {
     this.logger.setContext(AdService.name);
     let isAithenticated = false;
-
+console.log(username, password)
     await this.ad.authenticate(username, password, function (err, auth) {
       if (err) {
         console.log('ERROR: ' + JSON.stringify(err));
