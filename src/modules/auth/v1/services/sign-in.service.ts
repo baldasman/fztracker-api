@@ -50,6 +50,8 @@ export class SignInService {
 
         // convert to local user
         auth = adUser.toLocalUser(adUser);
+
+        console.log(adUser,auth)
       }
 
       if (!auth.isActive) {
@@ -132,9 +134,13 @@ export class SignInService {
     });
 
     try {
+      console.log(session);
       await this.sessionService.createSession(session);
+
       return getResponse(200, { data: { token, email: auth.authId, name: auth.name, isAdmin: auth.isAdmin } })
     } catch (e) {
+     
+     console.error(e);
       this.logger.error('Error saving the session');
       return getResponse(500);
     }

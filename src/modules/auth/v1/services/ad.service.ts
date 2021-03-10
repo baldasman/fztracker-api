@@ -78,11 +78,11 @@ export class AdService {
         } else {
           console.log('detalhes' + JSON.stringify(user));
 
-          thatAd.getGroupMembershipForUser(username, function (err, groups) {
-            console.log(JSON.stringify(groups));
-          });
+        //  thatAd.getGroupMembershipForUser(username, function (err, groups) {
+       //     console.log(JSON.stringify(groups));
+         // });
 
-          const adUser = new AdUser(user.user);
+          const adUser = new AdUser(user);
           resolve(adUser);
         }
       });
