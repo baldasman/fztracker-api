@@ -222,6 +222,8 @@ export class EntitiesV1Controller {
       }
 
 
+
+
       
 
       entity.inOut = movement.inOut ? movement.inOut : !entity.inOut;
@@ -243,10 +245,14 @@ export class EntitiesV1Controller {
       reading.cardNumber = movement.cardNumber;
       reading.manual = movement.manual;
 
+
+
       // update entity data
       movement.entitySerial = entity.serial;
       movement.entityType = entity.type;
       movement.entityName = entity.name;
+      movement.movementDate =reading.readingDate;
+      entity.lastMovementDate = reading.readingDate;
 
       // Save models
       await this.readingService.add(reading);
