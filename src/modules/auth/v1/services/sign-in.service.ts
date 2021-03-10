@@ -71,7 +71,7 @@ export class SignInService {
       let isAdUserValid = await this.adService.authenticate(body.authId, body.password);
 
       if (!isAdUserValid) {
-        this.logger.error('Passwords don\'t match');
+        this.logger.error('AD authentication failed');
         return getResponse(401, { resultMessage: 'messages.errors.invalid_credentials' });
       }
     } else {
@@ -137,7 +137,6 @@ export class SignInService {
     });
 
     try {
-      console.log(session);
       await this.sessionService.createSession(session);
 
       return getResponse(200, { data: { token, email: auth.authId, name: auth.name, isAdmin: auth.isAdmin } })

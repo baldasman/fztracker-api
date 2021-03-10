@@ -14,6 +14,8 @@ export class AdService {
   constructor(
     private readonly logger: Logger
   ) {
+    this.logger.setContext(AdService.name);
+
     // TODO: create env variables
     this.adminUsername = 'm0x74951@marinha.pt';
     this.adminPassword = 'inform@20';
@@ -26,32 +28,25 @@ export class AdService {
       password: this.adminPassword
     }
 
-
     this.ad = new ActiveDirectory(this.config);
   }
 
-  async authenticate(username: string, password: string) {
-    this.logger.setContext(AdService.name);
-
+  async authenticate(username: string, password: string): Promise<boolean> {
     const thatAd = this.ad;
-    return new Promise(function (resolve, reject) {
-      // window.onload = resolve;
-      thatAd.authenticate(username, password, function (err, auth) {
 
-        //console.log('informaçao' + username, password, err,auth );
+    return new Promise(function (resolve, reject) {
+      thatAd.authenticate(username, password, function (err, auth) {
         if (err) {
-          console.log('ERROR: ' + JSON.stringify(err));
+          console.error('ERROR: ' + JSON.stringify(err));
           reject(err);
           return;
         }
 
-
         if (auth) {
-          console.log('Authenticated!');
-          resolve({ valid: true });
+          resolve(true);
         }
         else {
-          console.log('Authentication failed!');
+          console.error('AD Authentication failed!');
           reject({ message: 'Authentication failed!' });
         }
       });
@@ -66,13 +61,13 @@ export class AdService {
       // window.onload = resolve;
       thatAd.findUser(username, function (err, user) {
         if (err) {
-          console.log('ERROR: ' + JSON.stringify(err));
+          console.error('ERROR: ' + JSON.stringify(err));
           reject(err);
           return;
         }
 
         if (!user) {
-          console.log('User: ' + username + ' not found.');
+          console.log('AD User: ' + username + ' not found.');
 
           reject({ message: 'User: ' + username + ' not found.' });
         } else {
