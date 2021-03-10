@@ -1,6 +1,7 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CsvParser } from 'nest-csv-parser';
+import { AuthModule } from '../auth/auth.module';
 import { ExtractTokenMiddleware } from '../core/middleware/extract-token.middleware';
 import { AuthSchema } from '../core/schemas/auth.schema';
 import { MailSenderService } from '../core/services/mailsender.service';
@@ -30,7 +31,8 @@ import { UserService } from './services/user.service';
     MongooseModule.forFeature([{ name: 'Entity', schema: EntitySchema }]),
     MongooseModule.forFeature([{ name: 'Movement', schema: MovementSchema }]),
     MongooseModule.forFeature([{ name: 'Reading', schema: ReadingSchema }]),
-    MongooseModule.forFeature([{ name: 'Log', schema: LogSchema }])
+    MongooseModule.forFeature([{ name: 'Log', schema: LogSchema }]),
+    AuthModule
   ],
   controllers: [CardsV1Controller, EntitiesV1Controller, LogsV1Controller, MovementsV1Controller, UsersV1Controller],
   providers: [MailSenderService, UserService, CardService, EntityService, ReadingService, MovementService, LogService, CsvParser, ParseService]

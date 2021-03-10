@@ -1,6 +1,7 @@
 import { BadRequestException, Body, Controller, Get, HttpStatus, Logger, NotFoundException, Param, Post, Query, Req, Res, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiCreatedResponse, ApiOperation, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { Response } from 'express';
+import { AdService } from '../../auth/v1/services/ad.service';
 import { AuthGuard } from '../../core/guards/auth.guard';
 import { getResponse } from '../../core/helpers/response.helper';
 import { SuccessResponseModel } from '../../core/models/success-response.model';
@@ -25,6 +26,7 @@ export class EntitiesV1Controller {
     private readonly logger: Logger,
     private readonly cardService: CardService,
     private readonly entityService: EntityService,
+    private readonly adService: AdService,
     private readonly readingService: ReadingService,
     private readonly logService: LogService,
     private readonly movementService: MovementService,
@@ -103,6 +105,33 @@ export class EntitiesV1Controller {
       }
 
       return res.status(400).send({ error: error });
+    }
+  }
+
+  @Get('find')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Find entity by serial' })
+  @ApiCreatedResponse({ description: 'Successfully returned entity', type: SuccessResponseModel })
+  @ApiUnauthorizedResponse({ description: 'Invalid entity' })
+  async find(
+    @Query('serial') serial: string,
+    @Res() res: Response
+  ): Promise<object> {
+    try {
+      console.log('search', serial);
+      const adUser = await this.adService.findUser(serial);
+      let response;
+
+      if (!adUser) {
+        response = getResponse(HttpStatus.NOT_FOUND, { data: null });
+        return res.status(HttpStatus.NOT_FOUND).send(response);
+      }
+
+      response = getResponse(200, { data: adUser });
+      return res.status(200).send(response);
+    } catch (error) {
+      console.error(error);
+      return res.status(400).send({ error: error.errmsg });
     }
   }
 
