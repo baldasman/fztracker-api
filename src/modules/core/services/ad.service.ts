@@ -21,60 +21,49 @@ export class AdService {
     this.adminPassword = 'inform@20';
 
     this.config = {
-      url: 'ldap://AD-N-19-1.marinha.pt',
+      url: 'ldap://AD-N-19-2.marinha.pt',
       //searchDN: 'CN=harbour,OU=DevSecurityGroups,DC=domatica,DC=local',
-      baseDN: 'DC=marinha,DC=pt',
+      baseDN: 'OU=Marinha,DC=marinha,DC=pt',
       username: this.adminUsername,
       password: this.adminPassword
     }
+
 
     this.ad = new ActiveDirectory(this.config);
   }
 
   async authenticate(username: string, password: string) {
     this.logger.setContext(AdService.name);
-    
+
     const thatAd = this.ad;
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
       // window.onload = resolve;
       thatAd.authenticate(username, password, function (err, auth) {
+
+        //console.log('informaçao' + username, password, err,auth );
         if (err) {
           console.log('ERROR: ' + JSON.stringify(err));
           reject(err);
           return;
         }
-  
+
+
         if (auth) {
           console.log('Authenticated!');
-          resolve({valid: true});
+          resolve({ valid: true });
         }
         else {
           console.log('Authentication failed!');
-          reject({message: 'Authentication failed!'});
+          reject({ message: 'Authentication failed!' });
         }
       });
+
     });
-
-    // const groupName = 'DevAdminGroup';
-    // ad.isUserMemberOf(username, groupName, function (err, isMember) {
-    //   if (err) {
-    //     console.log('ERROR: ' + JSON.stringify(err));
-    //     return;
-    //   }
-
-    //   console.log(username + ' isMemberOf ' + groupName + ': ' + isMember);
-    // });
-
-    // // Any of the following username types can be searched on
-    // const sAMAccountName = 'm22286';
-    // // const userPrincipalName = 'm9830401@marinha.pt';
-    // // const dn = 'CN=Smith\\, John,OU=Users,DC=domain,DC=com';
-    // const dn = 'DC=marinha,DC=pt';
   }
 
   async findUser(username: string) {
     const thatAd = this.ad;
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
       // window.onload = resolve;
       thatAd.findUser(username, function (err, user) {
         if (err) {
@@ -82,19 +71,49 @@ export class AdService {
           reject(err);
           return;
         }
-  
-        if (!user) { 
-          console.log('User: ' + username + ' not found.'); 
-          reject({message: 'User: ' + username + ' not found.'});
-        } else { 
-          console.log('detalhes' + JSON.stringify(user)); 
-          thatAd.getGroupMembershipForUser(username, function(err, groups) {
-        
-           console.log(JSON.stringify(groups));
-          });
-          resolve(user);
+
+        if (!user) {
+          console.log('User: ' + username + ' not found.');
+          reject({ message: 'User: ' + username + ' not found.' });
+        } else {
+          console.log('detalhes' + JSON.stringify(user));
+      
         }
+        resolve(user);
       });
+
+
+
+      var query = 'OU=CCF';
+ 
+      thatAd.findUsers(query, true, function(err, users) {
+        console.log('detalhes' + JSON.stringify(users));
+        resolve(users);
+      });
+
+  
+
+
+
+
+
     });
   }
+
+
+
+    async isMemberOf(username: string, groupName:string) {
+      const thatAd = this.ad;
+      return new Promise(function (resolve, reject) {
+
+       thatAd.isUserMemberOf(username, groupName, function (err, isMember) {
+
+       // console.log(username + ' isMemberOf ' + groupName + ': ' + isMember);
+
+          resolve(isMember);
+        });
+      })
+    };
+
 }
+

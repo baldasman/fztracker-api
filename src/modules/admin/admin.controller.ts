@@ -35,7 +35,7 @@ export class AdminController {
 
     return res.status(200).send(status);
   }
-  
+
   @Post('status')
   @ApiBearerAuth()
   @ApiOperation({
@@ -163,9 +163,9 @@ export class AdminController {
   }
 
   @Post('ad/signin')
-  @ApiOperation({ description: 'Return information about the API\'s status' })
-  @ApiResponse({ status: 200, description: 'Status information returned sucessfully!' })
-  @ApiResponse({ status: 500, description: 'API DB is dead' })
+  @ApiOperation({ description: 'Return AD auth' })
+  @ApiResponse({ status: 200, description: 'Auth sucessfully!' })
+  @ApiResponse({ status: 500, description: 'Auth Fail' })
   @ApiBody({})
   async adSignin(
     @Res() res: Response,
@@ -175,12 +175,12 @@ export class AdminController {
     console.log('adSignin', info);
     return res.status(200).send(info);
   }
-  
+
   @Post('ad/find')
   @ApiBody({})
-  @ApiOperation({ description: 'Return information about the API\'s status' })
-  @ApiResponse({ status: 200, description: 'Status information returned sucessfully!' })
-  @ApiResponse({ status: 500, description: 'API DB is dead' })
+  @ApiOperation({ description: 'find NII in AD' })
+  @ApiResponse({ status: 200, description: 'find NII sucessfully!' })
+  @ApiResponse({ status: 500, description: 'NII not found ' })
   async adFind(
     @Res() res: Response,
     @Body() body: any
@@ -189,4 +189,21 @@ export class AdminController {
     console.log('adFind', info);
     return res.status(200).send(info);
   }
+
+
+  @Post('ad/ismember')
+  @ApiBody({})
+  @ApiOperation({ description: 'the NII is member of group?' })
+  @ApiResponse({ status: 200, description: 'find NII in group sucessfully!' })
+  @ApiResponse({ status: 500, description: 'NII not found in group ' })
+  async adismember(
+    @Res() res: Response,
+    @Body() body: any
+  ) {
+    const info = await this.adService.isMemberOf(body.username, body.group);
+    console.log('adismember', info);
+    return res.status(200).send(info);
+  }
 }
+
+
