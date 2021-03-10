@@ -10,6 +10,7 @@ import { Logger } from '@nestjs/common';
 
 // Filters.
 import { ExceptionsFilter } from './filters/exceptions.filter';
+import { AdService } from '../auth/v1/services/ad.service';
 
 
 @Global() // This will make this module available globaly! This should only be done on this CoreModule!

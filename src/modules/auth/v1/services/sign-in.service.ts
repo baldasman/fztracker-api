@@ -14,7 +14,7 @@ import { SessionsService } from './sessions.service';
 import { getResponse } from '../../../core/helpers/response.helper';
 
 import { SessionModel } from '../models/session.model';
-import { AdService } from '../../../core/services/ad.service';
+import { AdService } from './ad.service';
 
 @Injectable()
 export class SignInService {
@@ -83,7 +83,7 @@ export class SignInService {
         return getResponse(500);
       }
     }
-    
+
     // check session type
     if (body.sessionType == 'api' && !auth.isApi) {
       this.logger.error('Invalid session type for user.');

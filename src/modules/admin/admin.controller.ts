@@ -11,7 +11,7 @@ import * as fs from 'fs';
 import * as PdfPrinter from 'pdfmake';
 import * as uuid from 'uuid/v4';
 import { UserService } from '../fztracker/services/user.service';
-import { AdService } from '../core/services/ad.service';
+import { AdService } from '../auth/v1/services/ad.service';
 
 @Controller('admin')
 @ApiTags('Admin')

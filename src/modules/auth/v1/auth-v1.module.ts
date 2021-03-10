@@ -20,6 +20,7 @@ import { LogoutService } from './services/logout.service';
 
 import { SessionSchema } from './schemas/session.schema';
 import { AuthSchema } from '../../core/schemas/auth.schema';
+import { AdService } from './services/ad.service';
 
 @Module({
   imports: [
@@ -40,9 +41,10 @@ import { AuthSchema } from '../../core/schemas/auth.schema';
     SignInService,
     SignUpService,
     SessionsService,
-    VerifyTokenService
+    VerifyTokenService,
+    AdService
   ],
-  exports: []
+  exports: [AdService]
 })
 export class AuthV1Module implements NestModule {
   configure(consumer: MiddlewareConsumer) {

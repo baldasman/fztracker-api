@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { AdUser } from '../models/ad-user.model';
+import { AdUser } from '../../../core/models/ad-user.model';
 
 const ActiveDirectory = require('activedirectory2');
 
