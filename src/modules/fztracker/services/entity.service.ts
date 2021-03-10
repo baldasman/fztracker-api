@@ -26,6 +26,6 @@ export class EntityService {
   }
 
   async updateOne(entity: EntityModel): Promise<EntityModel> {
-    return this.entityModel.updateOne({ "permanent.serial": entity.serial }, entity).exec();
+    return this.entityModel.updateOne({ "serial": entity.serial }, entity).exec();
   }
 }

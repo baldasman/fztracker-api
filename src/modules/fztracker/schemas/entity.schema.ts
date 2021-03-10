@@ -31,4 +31,4 @@ export const EntitySchema = new Schema({
   resources: [{}]
 });
 
-EntitySchema.index({ 'permanent.serial': 1, cardId: 1, cardNumber: true });
+EntitySchema.index({ 'serial': 1, cardId: 1, cardNumber: true });

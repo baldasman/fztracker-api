@@ -53,7 +53,7 @@ export class EntitiesV1Controller {
       let filter = {};
 
       if (serial && serial.trim().length > 0) {
-        filter = { ...filter, 'permanent.serial': serial };
+        filter = { ...filter, 'serial': serial };
       }
 
       if (cardNumber && cardNumber.trim().length > 0) {
@@ -125,6 +125,31 @@ export class EntitiesV1Controller {
       if (!adUser) {
         response = getResponse(HttpStatus.NOT_FOUND, { data: null });
         return res.status(HttpStatus.NOT_FOUND).send(response);
+      }
+
+      // add to local DB
+      let entity = await this.entityService.findOne({ 'serial': serial });
+      let update = true;
+
+      if (!entity) {
+        update = false;
+
+        // create new entity
+        entity = new EntityModel();
+        entity.serial = adUser.employeeID;
+      }
+
+      entity.state = EntityModel.STATE_ACTIVE;
+      entity.name = adUser.displayName;
+      entity.unit = adUser.dn;  // TODO: filter OU
+      entity.type = adUser.description;
+      entity.email = adUser.mail;
+      entity.resources = [];
+      
+      if (update) {
+        await this.entityService.updateOne(entity);
+      } else {
+        await this.entityService.add(entity);
       }
 
       response = getResponse(200, { data: adUser });
@@ -262,7 +287,7 @@ export class EntitiesV1Controller {
           }
 
           // Find entity by serial
-          let entity = await this.entityService.findOne({ 'permanent.serial': entityToImport.serial });
+          let entity = await this.entityService.findOne({ 'serial': entityToImport.serial });
           let update = true;
 
           if (!entity) {
@@ -344,7 +369,7 @@ export class EntitiesV1Controller {
     console.log('aassignCard:', entitySerial, cardNumber);
 
     let entity: EntityModel;
-    entity = await this.entityService.findOne({ 'permanent.serial': entitySerial });
+    entity = await this.entityService.findOne({ 'serial': entitySerial });
     if (!entity) {
       throw new NotFoundException(`Entity '${entitySerial}' not found.`);
     }
@@ -419,7 +444,7 @@ export class EntitiesV1Controller {
 
     try {
       let entity: EntityModel;
-      entity = await this.entityService.findOne({ 'permanent.serial': entitySerial });
+      entity = await this.entityService.findOne({ 'serial': entitySerial });
       if (!entity) {
         return res.status(404).send({ error: `Entity '${entitySerial}' not fouund.` });
       }
