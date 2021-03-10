@@ -1,5 +1,6 @@
 export class TokenModel {
   authId: string;
+  externalId: string;
   name: string;
   sessionId: string;
   sessionType: string;
@@ -10,6 +11,7 @@ export class TokenModel {
 
   constructor(body: TokenModel) {
     this.authId = body.authId;
+    this.externalId = body.externalId;
     this.name = body.name;
     this.sessionId = body.sessionId;
     this.sessionType = body.sessionType;

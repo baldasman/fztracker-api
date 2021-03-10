@@ -1,5 +1,6 @@
 import {Injectable, Logger} from '@nestjs/common';
 import {getResponse} from '../../../core/helpers/response.helper';
+import { AdService } from './ad.service';
 
 import {AuthsService} from './auths.service';
 import {DecodeTokenService} from './decode-token.service';
@@ -11,6 +12,7 @@ export class VerifyTokenService {
       private readonly authsService: AuthsService,
       private readonly decodeTokenService: DecodeTokenService,
       private readonly logger: Logger,
+      private readonly adService: AdService,
       private readonly sessionService: SessionsService) {}
 
   async verifyToken(token, res) {
@@ -25,16 +27,40 @@ export class VerifyTokenService {
 
     // find the auth
     let auth;
+    let adUser;
     try {
-      auth = await this.authsService.findAuth({authId: decoded.authId});
+      auth = await this.authsService.findAuth({ authId:  decoded.authId });
       if (!auth) {
-        this.logger.error('Auth not found');
-        return getResponse(401);
+        this.logger.log('Auth not found on local db. Try to find on AD...');
+
+        // Try to find user on AD
+        adUser = await this.adService.findUser( decoded.externalId);
+        if (!adUser) {
+          this.logger.error('Auth not found: '+ decoded.externalId);
+          return getResponse(401, { resultMessage: 'messages.errors.invalid_credentials' });
+        }
+
+        // convert to local user
+        auth = adUser.toLocalUser(adUser);
+
+        // check if user is admin
+        auth.isAdmin = await this.adService.isMemberOf(decoded.externalId, 'CCF-FZGUARD-SUPERADMIN');
+      }
+
+      if (!auth.isActive) {
+        this.logger.error('Account isn\'t confirmed');
+        return getResponse(423, { resultMessage: 'messages.errors.account_not_confirmed' });
       }
     } catch (e) {
-      this.logger.error('Error accessing authschema');
+      this.logger.error('Error accessing AuthSchema');
       return getResponse(500);
     }
+
+
+
+
+
+  
 
     // find the session
     let session;

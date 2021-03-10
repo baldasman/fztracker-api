@@ -9,53 +9,75 @@ import { environment } from '../../../config/environment';
 export class MailSenderService {
   private readonly loggerContext = MailSenderService.name;
 
-  private transport = createTransport({
+  /* private transport = createTransport({
     service: 'gmail',
     auth: {
       user: environment.smtpEmail,
       pass: environment.smtpPassword,
     }
-  });
+  }); */
 
-  // private transport = createTransport({
-  //   host: 'smtp.office365.com', // Office 365 server
-  //   port: 587,     // secure SMTP
-  //   secure: false, // false for TLS - as a boolean not string - but the
-  //   default is false so just remove this completely auth: {
-  //       user: environment.smtpEmail,
-  //       pass: environment.smtpPassword
-  //   },
-  //   tls: {
-  //       ciphers: 'SSLv3'
-  //   }
-  // });
 
-  // private transport = createTransport({
-  //   host: 'smtp.gmail.com',
-  //   port: 587,
-  //   secure: false,
-  //   requireTLS: true,
-  //   auth: {
-  //       user: environment.smtpEmail,
-  //       pass: environment.smtpPassword
-  //   }
-  // });
+ /*  $EmailFrom = “csie.config@marinha.pt”
+
+$EmailTo = “moreira.sousa@marinha.pt”
+
+$Subject = “teste de mail”
+
+$Body = “um fui ao jardim da celeste”
+
+$SMTPServer = “smtp.marinha.pt”
+
+$SMTPClient = New-Object Net.Mail.SmtpClient($SmtpServer, 587)
+
+$SMTPClient.EnableSsl = $true
+
+$SMTPClient.Credentials = New-Object System.Net.NetworkCredential(“m0x74951”, “inform@20”);
+
+$SMTPClient.Send($EmailFrom, $EmailTo, $Subject, $Body) */
+
+
+   private transport = createTransport({
+    host: 'smtp.marinha.pt', // Office 365 server
+     port: 587,     // secure SMTP
+    secure: false, 
+    requireTLS: true,
+    // false for TLS - as a boolean not string - but the
+    auth: {
+        user: environment.smtpEmail,
+        pass: environment.smtpPassword
+   },
+   tls: {
+    rejectUnauthorized: false
+  }
+       });
+     
+/*   private transport = createTransport({
+    host: environment.smtpHost,
+    port: 587,
+    secure: false,
+   // requireTLS: false,
+    auth: {
+      user: environment.smtpEmail,
+      pass: environment.smtpPassword
+    }
+  }); */
 
   constructor(private readonly logger: Logger) {
-    
+    console.log(this.transport);
   }
 
   sendReportEmail(locals) {
     const template = 'testEmail';
 
     const templateUrl =
-        join(__dirname, `../../../assets/templates/${template}.ejs`);
+      join(__dirname, `../../../assets/templates/${template}.ejs`);
 
     renderFile(templateUrl, locals, (err, data) => {
       if (err) {
         this.logger.error(
-            `Error while trying to render file ${template}.ejs`,
-            this.loggerContext, err);
+          `Error while trying to render file ${template}.ejs`,
+          this.loggerContext, err);
         return;
       } else {
         console.log('sendTestEmail', __dirname);
@@ -73,15 +95,17 @@ export class MailSenderService {
             },
           ]
         };
+        console.log("a enviar",locals.emailToSend), data;
         return this.transport.sendMail(mainOptions, (error) => {
           if (error) {
             console.log(error);
             this.logger.error(
               `Error while trying to render file ${template}.ejs`,
-                this.loggerContext);
+              this.loggerContext);
           }
 
           fs.unlinkSync(locals.reportPath);
+          console.log("enviado",locals.emailToSend);
         });
       }
     });
@@ -89,44 +113,50 @@ export class MailSenderService {
 
   sendInviteEmail(locals) {
     const templateUrl =
-        join(__dirname, '../../../assets/templates/inviteRegister.ejs');
+      join(__dirname, '../../../assets/templates/testEmail.ejs');
     renderFile(
-        templateUrl, {
-          confirmationCode: locals.confirmationCode,
-          activationUrl: locals.activationUrl
-        },
-        (err, data) => {
-          if (err) {
-            this.logger.error(
-                'Error while trying to render file inviteRegister.ejs',
+      templateUrl, {
+        headerImageUrl: locals.headerImageUrl,
+      confirmationCode: locals.confirmationCode,
+      activationUrl: locals.activationUrl
+    },
+      (err, data) => {
+        if (err) {
+
+          console.error(err);
+          this.logger.error(
+            'Error while trying to render file inviteRegister.ejs',
+            this.loggerContext);
+          return;
+        } else {
+          const mainOptions = {
+            from: 'csie.config@marinha.pt',
+            to: locals.emailToSend,
+            subject: 'Invite',
+            html: data
+          };
+          console.log("a enviar",locals.emailToSend, data);
+          return this.transport.sendMail(mainOptions, (error) => {
+            if (error) {
+              console.error(error);
+              this.logger.error(
+                'Error while trying to send invite register email',
                 this.loggerContext);
-            return;
-          } else {
-            const mainOptions = {
-              from: '',
-              to: locals.emailToSend,
-              subject: 'Invite',
-              html: data
-            };
-            return this.transport.sendMail(mainOptions, (error) => {
-              if (error) {
-                this.logger.error(
-                    'Error while trying to send invite register email',
-                    this.loggerContext);
-              }
-            });
-          }
-        });
+               
+            } else { console.log("a enviado",locals.emailToSend)}
+          });
+        }
+      });
   }
 
   sendInviteInformationEmail(locals) {
     const templateUrl =
-        join(__dirname, '../../../assets/templates/inviteInformationEmail.ejs');
-    renderFile(templateUrl, {userEmail: locals.newUserEmail}, (err, data) => {
+      join(__dirname, '../../../assets/templates/inviteInformationEmail.ejs');
+    renderFile(templateUrl, { userEmail: locals.newUserEmail }, (err, data) => {
       if (err) {
         this.logger.error(
-            'Error while trying to render file inviteInformationEmail.ejs',
-            this.loggerContext);
+          'Error while trying to render file inviteInformationEmail.ejs',
+          this.loggerContext);
         return;
       } else {
         const mainOptions = {
@@ -138,8 +168,8 @@ export class MailSenderService {
         return this.transport.sendMail(mainOptions, (error) => {
           if (error) {
             this.logger.error(
-                'Error while trying to send invite information email',
-                this.loggerContext);
+              'Error while trying to send invite information email',
+              this.loggerContext);
           }
         });
       }
@@ -148,21 +178,21 @@ export class MailSenderService {
 
   sendWarningEmail(locals) {
     const templateUrl =
-        join(__dirname, '../../../assets/templates/warningEmail.ejs');
-    renderFile(templateUrl, {serviceName: locals.serviceName}, (err, data) => {
+      join(__dirname, '../../../assets/templates/warningEmail.ejs');
+    renderFile(templateUrl, { serviceName: locals.serviceName }, (err, data) => {
       if (err) {
         this.logger.error(
-            'Error while trying to render file warningEmail.ejs',
-            this.loggerContext);
+          'Error while trying to render file warningEmail.ejs',
+          this.loggerContext);
         return;
       } else {
         const mainOptions =
-            {from: '', to: locals.emailToSend, subject: 'Warning', html: data};
+          { from: '', to: locals.emailToSend, subject: 'Warning', html: data };
         return this.transport.sendMail(mainOptions, (error) => {
           if (error) {
             this.logger.error(
-                'Error while trying to send confirmation account email',
-                this.loggerContext);
+              'Error while trying to send confirmation account email',
+              this.loggerContext);
           }
         });
       }
@@ -171,50 +201,50 @@ export class MailSenderService {
 
   sendSignUpNotificationEmail(locals) {
     const templateUrl =
-        join(__dirname, '../../../assets/templates/signUpNotification.ejs');
+      join(__dirname, '../../../assets/templates/signUpNotification.ejs');
     console.log(templateUrl);
     renderFile(
-        templateUrl, {
-          activationUrl: locals.activationUrl,
-          userEmail: locals.userEmail,
-          userName: locals.userName,
-          headerImageUrl:
-              'https://info.vost.pt/wp-content/uploads/2020/04/Open4Business_Header_NewLogo.png'
-        },
-        (err, data) => {
-          if (err) {
-            this.logger.error(
-                'Error while trying to render file signUpNotification.ejs',
-                this.loggerContext);
-            return;
-          } else {
-            const mainOptions = {
-              from: '"Open4Business by VOSTPT"<no-reply@vost.pt>',
-              to: locals.emailToSend,
-              subject: 'Nova empresa registada',
-              html: data
-            };
+      templateUrl, {
+      activationUrl: locals.activationUrl,
+      userEmail: locals.userEmail,
+      userName: locals.userName,
+      headerImageUrl:
+        'https://info.vost.pt/wp-content/uploads/2020/04/Open4Business_Header_NewLogo.png'
+    },
+      (err, data) => {
+        if (err) {
+          this.logger.error(
+            'Error while trying to render file signUpNotification.ejs',
+            this.loggerContext);
+          return;
+        } else {
+          const mainOptions = {
+            from: '"Open4Business by VOSTPT"<no-reply@vost.pt>',
+            to: locals.emailToSend,
+            subject: 'Nova empresa registada',
+            html: data
+          };
 
-            return this.transport.sendMail(mainOptions, (error) => {
-              if (error) {
-                console.log(error);
-                this.logger.error(
-                    'Error while trying to send confirmation account email',
-                    this.loggerContext);
-              }
-            });
-          }
-        });
+          return this.transport.sendMail(mainOptions, (error) => {
+            if (error) {
+              console.log(error);
+              this.logger.error(
+                'Error while trying to send confirmation account email',
+                this.loggerContext);
+            }
+          });
+        }
+      });
   }
 
   sendRecoverEmail(locals) {
     const templateUrl =
-        join(__dirname, '../../../assets/templates/recoverPassword.ejs');
-    renderFile(templateUrl, {resetUrl: locals.resetUrl}, (err, data) => {
+      join(__dirname, '../../../assets/templates/recoverPassword.ejs');
+    renderFile(templateUrl, { resetUrl: locals.resetUrl }, (err, data) => {
       if (err) {
         this.logger.error(
-            'Error while trying to render file recoverPassword.ejs',
-            this.loggerContext);
+          'Error while trying to render file recoverPassword.ejs',
+          this.loggerContext);
         return;
       } else {
         const mainOptions = {
@@ -226,8 +256,8 @@ export class MailSenderService {
         return this.transport.sendMail(mainOptions, (error) => {
           if (error) {
             this.logger.error(
-                'Error while trying to send confirmation account email',
-                this.loggerContext);
+              'Error while trying to send confirmation account email',
+              this.loggerContext);
           }
         });
       }
@@ -236,12 +266,12 @@ export class MailSenderService {
 
   sendPortalInviteEmail(locals) {
     const templateUrl =
-        join(__dirname, '../../../assets/templates/portalInviteEmail.ejs');
-    renderFile(templateUrl, {registerUrl: locals.registerUrl}, (err, data) => {
+      join(__dirname, '../../../assets/templates/portalInviteEmail.ejs');
+    renderFile(templateUrl, { registerUrl: locals.registerUrl }, (err, data) => {
       if (err) {
         this.logger.error(
-            'Error while trying to render file portalInviteEmail.ejs',
-            this.loggerContext);
+          'Error while trying to render file portalInviteEmail.ejs',
+          this.loggerContext);
         return;
       } else {
         const mainOptions = {
@@ -253,8 +283,8 @@ export class MailSenderService {
         return this.transport.sendMail(mainOptions, (error) => {
           if (error) {
             this.logger.error(
-                'Error while trying to send portal invite email',
-                this.loggerContext);
+              'Error while trying to send portal invite email',
+              this.loggerContext);
           }
         });
       }
@@ -263,75 +293,75 @@ export class MailSenderService {
 
   sendAccountConfirmedEmail(locals) {
     const templateUrl =
-        join(__dirname, '../../../assets/templates/accountConfirmedEmail.ejs');
+      join(__dirname, '../../../assets/templates/accountConfirmedEmail.ejs');
     renderFile(
-        templateUrl, {
-          ...locals,
-          headerImageUrl:
-              'https://info.vost.pt/wp-content/uploads/2020/04/Open4Business_Header_NewLogo.png'
-        },
-        (err, data) => {
-          if (err) {
-            this.logger.error(
-                'Error while trying to render file accountConfirmedEmail.ejs',
-                this.loggerContext, err);
-            return;
-          } else {
-            const mainOptions = {
-              from: '"Open4Business by VOSTPT"<no-reply@vost.pt>',
-              to: locals.emailToSend,
-              subject: 'Conta confirmada',
-              html: data
-            };
-            return this.transport.sendMail(mainOptions, (error) => {
-              if (error) {
-                this.logger.error(
-                    'Error while trying to send account confirmed email',
-                    this.loggerContext);
-              }
-            });
-          }
-        });
+      templateUrl, {
+      ...locals,
+      headerImageUrl:
+        'https://info.vost.pt/wp-content/uploads/2020/04/Open4Business_Header_NewLogo.png'
+    },
+      (err, data) => {
+        if (err) {
+          this.logger.error(
+            'Error while trying to render file accountConfirmedEmail.ejs',
+            this.loggerContext, err);
+          return;
+        } else {
+          const mainOptions = {
+            from: '"Open4Business by VOSTPT"<no-reply@vost.pt>',
+            to: locals.emailToSend,
+            subject: 'Conta confirmada',
+            html: data
+          };
+          return this.transport.sendMail(mainOptions, (error) => {
+            if (error) {
+              this.logger.error(
+                'Error while trying to send account confirmed email',
+                this.loggerContext);
+            }
+          });
+        }
+      });
   }
 
   sendImportNotificationEmail(locals) {
     const templateUrl =
-        join(__dirname, '../../../assets/templates/importNotification.ejs');
+      join(__dirname, '../../../assets/templates/importNotification.ejs');
 
     renderFile(
-        templateUrl, {
-          ...locals,
-          headerImageUrl:
-              'https://info.vost.pt/wp-content/uploads/2020/04/Open4Business_Header_NewLogo.png'
-        },
-        (err, data) => {
-          if (err) {
-            this.logger.error(
-                'Error while trying to render file confirmAccount.ejs',
-                this.loggerContext, err);
-            return;
-          } else {
-            const mainOptions = {
-              from: '"Open4Business by VOSTPT"<no-reply@vost.pt>',
-              to: locals.emailToSend,
-              subject: `Lojas ${locals.status}: ${locals.company}`,
-              html: data
-            };
-            return this.transport.sendMail(mainOptions, (error) => {
-              if (error) {
-                console.log(error);
-                this.logger.error(
-                    'Error while trying to send upload locations email',
-                    this.loggerContext);
-              }
-            });
-          }
-        });
+      templateUrl, {
+      ...locals,
+      headerImageUrl:
+        'https://info.vost.pt/wp-content/uploads/2020/04/Open4Business_Header_NewLogo.png'
+    },
+      (err, data) => {
+        if (err) {
+          this.logger.error(
+            'Error while trying to render file confirmAccount.ejs',
+            this.loggerContext, err);
+          return;
+        } else {
+          const mainOptions = {
+            from: '"Open4Business by VOSTPT"<no-reply@vost.pt>',
+            to: locals.emailToSend,
+            subject: `Lojas ${locals.status}: ${locals.company}`,
+            html: data
+          };
+          return this.transport.sendMail(mainOptions, (error) => {
+            if (error) {
+              console.log(error);
+              this.logger.error(
+                'Error while trying to send upload locations email',
+                this.loggerContext);
+            }
+          });
+        }
+      });
   }
 
   sendImportConfirmationEmail(locals) {
     const templateUrl =
-        join(__dirname, '../../../assets/templates/importConfirmation.ejs');
+      join(__dirname, '../../../assets/templates/importConfirmation.ejs');
 
     if (locals.confirm) {
       locals.action = 'já estão ativas';
@@ -342,34 +372,73 @@ export class MailSenderService {
     }
 
     renderFile(
-        templateUrl, {
-          ...locals,
-          headerImageUrl:
-              'https://info.vost.pt/wp-content/uploads/2020/04/Open4Business_Header_NewLogo.png'
-        },
-        (err, data) => {
-          if (err) {
-            this.logger.error(
-                'Error while trying to render file confirmAccount.ejs',
-                this.loggerContext, err);
-            return;
-          } else {
-            const mainOptions = {
-              from: '"Open4Business by VOSTPT"<no-reply@vost.pt>',
-              to: locals.emailToSend,
-              subject: `Lojas Importadas: ${locals.result}`,
-              html: data
-            };
+      templateUrl, {
+      ...locals,
+      headerImageUrl:
+        'https://info.vost.pt/wp-content/uploads/2020/04/Open4Business_Header_NewLogo.png'
+    },
+      (err, data) => {
+        if (err) {
+          this.logger.error(
+            'Error while trying to render file confirmAccount.ejs',
+            this.loggerContext, err);
+          return;
+        } else {
+          const mainOptions = {
+            from: '"Open4Business by VOSTPT"<no-reply@vost.pt>',
+            to: locals.emailToSend,
+            subject: `Lojas Importadas: ${locals.result}`,
+            html: data
+          };
 
-            return this.transport.sendMail(mainOptions, (error) => {
-              if (error) {
-                console.error('sendMail: ImportConfirmationEmail', error);
-                this.logger.error(
-                    'Error while trying to send locations review account email',
-                    this.loggerContext);
-              }
-            });
-          }
-        });
+          return this.transport.sendMail(mainOptions, (error) => {
+            if (error) {
+              console.error('sendMail: ImportConfirmationEmail', error);
+              this.logger.error(
+                'Error while trying to send locations review account email',
+                this.loggerContext);
+            }
+          });
+        }
+      });
   }
+
+  sendSingnCard(locals) {
+    const templateUrl =
+      join(__dirname, '../../../assets/templates/singnCard.ejs');
+    renderFile(
+      templateUrl, 
+      locals,
+    
+      (err, data) => {
+        if (err) {
+
+          console.error(err);
+          this.logger.error(
+            'Error while trying to render file inviteRegister.ejs',
+            this.loggerContext);
+          return;
+        } else {
+          const mainOptions = {
+            from: 'csie.config@marinha.pt',
+            to: locals.emailToSend,
+            subject: 'Cartao Atribuido',
+            html: data
+          };
+      
+          return this.transport.sendMail(mainOptions, (error) => {
+            if (error) {
+              console.error(error);
+              this.logger.error(
+                'Error while trying to send invite register email',
+                this.loggerContext);
+               
+            } else { console.log("email do cartao enviado",locals.emailToSend)}
+          });
+        }
+      });
+  }
+
+
+
 }

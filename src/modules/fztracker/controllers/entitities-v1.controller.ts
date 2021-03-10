@@ -5,6 +5,7 @@ import { AdService } from '../../auth/v1/services/ad.service';
 import { AuthGuard } from '../../core/guards/auth.guard';
 import { getResponse } from '../../core/helpers/response.helper';
 import { SuccessResponseModel } from '../../core/models/success-response.model';
+import { MailSenderService } from '../../core/services/mailsender.service';
 import { CardModel } from '../models/card.model';
 import { EntityImportModel, EntityModel, EntityResource, ImportEntityRequest } from '../models/entity.model';
 import { LogModel } from '../models/log.model';
@@ -16,6 +17,7 @@ import { LogService } from '../services/log.service';
 import { MovementService } from '../services/movement.service';
 import { ParseService } from '../services/parser.service';
 import { ReadingService } from '../services/reading.service';
+import moment = require('moment');
 
 @Controller('fztracker/entities/v1')
 @ApiBearerAuth()
@@ -27,6 +29,7 @@ export class EntitiesV1Controller {
     private readonly cardService: CardService,
     private readonly entityService: EntityService,
     private readonly adService: AdService,
+    private readonly mailSender: MailSenderService,
     private readonly readingService: ReadingService,
     private readonly logService: LogService,
     private readonly movementService: MovementService,
@@ -202,6 +205,12 @@ export class EntitiesV1Controller {
         throw `No entity assigned to card "${movement.manual ? movement.cardNumber : movement.cardId}"`;
       }
 
+      //sync entity data
+
+     const updteEntity = await this.updateUser(entity.serial);
+     if (updteEntity) {
+       entity = updteEntity;
+     }
       // Find card
       const card = await this.cardService.findOne({ cardNumber: entity.cardNumber });
       if (!card) {
@@ -211,6 +220,9 @@ export class EntitiesV1Controller {
       if (card.state !== CardModel.STATE_ACTIVE) {
         throw 'Card not active';
       }
+
+
+      
 
       entity.inOut = movement.inOut ? movement.inOut : !entity.inOut;
       movement.inOut = entity.inOut;
@@ -377,7 +389,7 @@ export class EntitiesV1Controller {
     Promise<object> {
     console.log('aassignCard:', entitySerial, cardNumber);
 
-    if (entitySerial && entitySerial.startsWith('m')) {
+    if (entitySerial && entitySerial.toUpperCase().startsWith('M')) {
       entitySerial = entitySerial.substring(1);
     }
 
@@ -420,8 +432,8 @@ export class EntitiesV1Controller {
       entity.cardNumber = card.cardNumber;
 
       // Save models
-      card = await this.cardService.updateOne(card);
-      entity = await this.entityService.updateOne(entity);
+      await this.cardService.updateOne(card);
+      await this.entityService.updateOne(entity);
 
       // Add card log
       const log = new LogModel();
@@ -429,6 +441,19 @@ export class EntitiesV1Controller {
       log.obs = `${entitySerial}`;
       log.userId = req.context.session.authId;
       this.logService.add(log);
+
+      const toDate = moment().format('DD-MM-YYYY HH:mm');
+
+      const params = {
+        cardNumber:entity.cardNumber,
+        date:toDate,
+        emailToSend: entity.email,    
+      };
+      console.log(params, entity);
+      this.mailSender.sendSingnCard(params);
+      
+
+
 
       const response = getResponse(200, { data: { card, entity } });
       return res.status(200).send(response);
@@ -457,6 +482,10 @@ export class EntitiesV1Controller {
 
     try {
       let entity: EntityModel;
+      if(entitySerial.toUpperCase().startsWith('M')){
+
+        entitySerial = entitySerial.substring(1);
+      }
       entity = await this.entityService.findOne({ 'serial': entitySerial });
       if (!entity) {
         return res.status(404).send({ error: `Entity '${entitySerial}' not fouund.` });
@@ -504,5 +533,46 @@ export class EntitiesV1Controller {
 
       return res.status(400).send({ error: error });
     }
+  }
+
+  private async updateUser(nii:string):Promise<EntityModel>{
+    if (!nii.toLowerCase().startsWith('m')) {
+      nii = 'm' + nii;
+    }
+    const adUser = await this.adService.findUser(nii);
+   
+
+    if (!adUser) {
+     
+      return null;
+    }
+
+    // add to local DB
+    let entity = await this.entityService.findOne({ 'serial': adUser.employeeID });
+    let update = true;
+
+    if (!entity) {
+      update = false;
+
+      // create new entity
+      entity = new EntityModel();
+      entity.serial = adUser.employeeID;
+      entity.resources = [];
+    }
+
+    entity.state = EntityModel.STATE_ACTIVE;
+    entity.name = adUser.displayName;
+    entity.unit = adUser.dn;  // TODO: filter OU
+    entity.type = adUser.description;
+    entity.email = adUser.mail;
+    
+
+    if (update) {
+      await this.entityService.updateOne(entity);
+    } else {
+      await this.entityService.add(entity);
+    }
+    return entity;
+
   }
 }

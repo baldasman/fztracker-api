@@ -106,6 +106,7 @@ export class SignInService {
     // create the token
     const tokenModel = {
       authId: auth.authId,
+      externalId: adUser?.sAMAccountName,
       sessionId,
       sessionType: body.sessionType,
       numberOfLogins: auth.numberOfLogins + 1,

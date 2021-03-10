@@ -57,12 +57,12 @@ export class AdminController {
   ) {
     try {
       const params = {
-        // headerImageUrl: '../../assets/images/default-domain-image.png',
-        headerImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1200px-PDF_file_icon.svg.png',
-        emailToSend: to
+        cardNumber:"m001",
+        date:new Date(),
+        emailToSend: to,     
       };
 
-      this.mailSender.sendReportEmail(params);
+      this.mailSender.sendSingnCard(params);
       res.send(getResponse(200));
     } catch (error) {
       res.send(getResponse(400, { data: error }));
