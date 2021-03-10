@@ -67,6 +67,7 @@ export class SignInService {
     }
 
     if (adUser) {
+      console.log('AD', adUser);
       // Try to authenticate on AD
       let isAdUserValid = await this.adService.authenticate(body.authId, body.password);
 
