@@ -119,6 +119,15 @@ export class EntitiesV1Controller {
   ): Promise<object> {
     try {
       console.log('search', serial);
+
+      if (!serial) {
+        return res.status(HttpStatus.NOT_FOUND).send({ error: 'Not found.' });
+      }
+
+      if (!serial.startsWith('m')) {
+        serial = 'm' + serial;
+      }
+      
       const adUser = await this.adService.findUser(serial);
       let response;
 
@@ -145,7 +154,7 @@ export class EntitiesV1Controller {
       entity.type = adUser.description;
       entity.email = adUser.mail;
       entity.resources = [];
-      
+
       if (update) {
         await this.entityService.updateOne(entity);
       } else {
