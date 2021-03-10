@@ -146,13 +146,14 @@ export class EntitiesV1Controller {
       entity.email = adUser.mail;
       entity.resources = [];
       
+      let localUser;
       if (update) {
-        await this.entityService.updateOne(entity);
+        localUser = await this.entityService.updateOne(entity);
       } else {
-        await this.entityService.add(entity);
+        localUser = await this.entityService.add(entity);
       }
 
-      response = getResponse(200, { data: adUser });
+      response = getResponse(200, { data: localUser });
       return res.status(200).send(response);
     } catch (error) {
       console.error(error);
