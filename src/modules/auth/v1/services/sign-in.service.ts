@@ -14,6 +14,7 @@ import { SessionsService } from './sessions.service';
 import { getResponse } from '../../../core/helpers/response.helper';
 
 import { SessionModel } from '../models/session.model';
+import { AdService } from '../../../core/services/ad.service';
 
 @Injectable()
 export class SignInService {
@@ -21,7 +22,8 @@ export class SignInService {
     @Inject(REQUEST) private readonly req: Request,
     private readonly authsService: AuthsService,
     private readonly logger: Logger,
-    private readonly sessionService: SessionsService
+    private readonly sessionService: SessionsService,
+    private readonly adService: AdService
   ) {
     // promisifying this method to avoid the callback hell
     promisify(compare);
@@ -31,12 +33,23 @@ export class SignInService {
     this.logger.setContext(SignInService.name);
 
     // find the auth
-    let auth
+    let auth;
+    let adUser;
+
     try {
       auth = await this.authsService.findAuth({ authId: body.authId });
       if (!auth) {
-        this.logger.error('Auth not found');
-        return getResponse(401, { resultMessage: 'messages.errors.invalid_credentials' });
+        this.logger.error('Auth not found on local db. Try to find on AD...');
+
+        // Try to find user on AD
+        adUser = await this.adService.findUser(body.authId);
+        if (!adUser) {
+          this.logger.error('Auth not found');
+          return getResponse(401, { resultMessage: 'messages.errors.invalid_credentials' });
+        }
+
+        // convert to local user
+        auth = adUser.toLocalUser(adUser);
       }
 
       if (!auth.isActive) {
@@ -48,23 +61,33 @@ export class SignInService {
       return getResponse(500);
     }
 
-    // compare the passwords
-    try {
-      const result = await compare(body.password, auth.password);
+    if (adUser) {
+      // Try to authenticate on AD
+      let isAdUserValid = await this.adService.authenticate(body.authId, body.password);
 
-      if (!result) {
+      if (!isAdUserValid) {
         this.logger.error('Passwords don\'t match');
         return getResponse(401, { resultMessage: 'messages.errors.invalid_credentials' });
       }
-    } catch (e) {
-      this.logger.error('Error comparing the passwords');
-      return getResponse(500);
-    }
+    } else {
+      // compare the passwords
+      try {
+        const result = await compare(body.password, auth.password);
 
+        if (!result) {
+          this.logger.error('Passwords don\'t match');
+          return getResponse(401, { resultMessage: 'messages.errors.invalid_credentials' });
+        }
+      } catch (e) {
+        this.logger.error('Error comparing the passwords');
+        return getResponse(500);
+      }
+    }
+    
     // check session type
     if (body.sessionType == 'api' && !auth.isApi) {
       this.logger.error('Invalid session type for user.');
-        return getResponse(401, { resultMessage: 'Invalid session type for user.' });
+      return getResponse(401, { resultMessage: 'Invalid session type for user.' });
     }
 
     // generate the sessionId

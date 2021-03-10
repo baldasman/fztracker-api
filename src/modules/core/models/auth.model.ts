@@ -13,7 +13,7 @@ export class AuthModel {
   isApi: boolean;
   activationToken: string;
 
-  constructor(data: AuthModel) {
+  constructor(data: Partial<AuthModel>) {
     this.authId = data.authId;
     this.password = data.password;
     this.name = data.name;

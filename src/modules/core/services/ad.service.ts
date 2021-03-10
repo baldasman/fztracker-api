@@ -1,7 +1,5 @@
-import { Injectable, Inject, Logger } from '@nestjs/common';
-import { info } from 'console';
-import { resolveTypeReferenceDirective } from 'typescript';
-import { promisify } from 'util';
+import { Injectable, Logger } from '@nestjs/common';
+import { AdUser } from '../models/ad-user.model';
 
 const ActiveDirectory = require('activedirectory2');
 
@@ -61,8 +59,9 @@ export class AdService {
     });
   }
 
-  async findUser(username: string) {
+  async findUser(username: string): Promise<AdUser> {
     const thatAd = this.ad;
+
     return new Promise(function (resolve, reject) {
       // window.onload = resolve;
       thatAd.findUser(username, function (err, user) {
@@ -74,34 +73,41 @@ export class AdService {
 
         if (!user) {
           console.log('User: ' + username + ' not found.');
+
           reject({ message: 'User: ' + username + ' not found.' });
         } else {
           console.log('detalhes' + JSON.stringify(user));
-      
+
+          thatAd.getGroupMembershipForUser(username, function (err, groups) {
+            console.log(JSON.stringify(groups));
+          });
+
+          const adUser = new AdUser(user.user);
+          resolve(adUser);
         }
-        resolve(user);
       });
 
+      // var query = 'OU=CCF';
 
-
+      // thatAd.findUsers(query, true, function(err, users) {
+      //   console.log('detalhes' + JSON.stringify(users));
+      //   resolve(users);
+      // });
     });
   }
 
+  async isMemberOf(username: string, groupName: string) {
+    const thatAd = this.ad;
+    return new Promise(function (resolve, reject) {
 
-  
+      thatAd.isUserMemberOf(username, groupName, function (err, isMember) {
 
-    async isMemberOf(username: string, groupName:string) {
-      const thatAd = this.ad;
-      return new Promise(function (resolve, reject) {
+        // console.log(username + ' isMemberOf ' + groupName + ': ' + isMember);
 
-       thatAd.isUserMemberOf(username, groupName, function (err, isMember) {
-
-       // console.log(username + ' isMemberOf ' + groupName + ': ' + isMember);
-
-          resolve(isMember);
-        });
-      })
-    };
+        resolve(isMember);
+      });
+    })
+  };
 
 }
 
