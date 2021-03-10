@@ -127,7 +127,7 @@ export class EntitiesV1Controller {
       if (!serial.startsWith('m')) {
         serial = 'm' + serial;
       }
-      
+
       const adUser = await this.adService.findUser(serial);
       let response;
 
@@ -376,6 +376,10 @@ export class EntitiesV1Controller {
   ):
     Promise<object> {
     console.log('aassignCard:', entitySerial, cardNumber);
+
+    if (entitySerial && entitySerial.startsWith('m')) {
+      entitySerial = entitySerial.substring(1);
+    }
 
     let entity: EntityModel;
     entity = await this.entityService.findOne({ 'serial': entitySerial });
