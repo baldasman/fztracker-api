@@ -15,6 +15,8 @@ import { getResponse } from '../../../core/helpers/response.helper';
 
 import { SessionModel } from '../models/session.model';
 import { AdService } from './ad.service';
+import { AuthModel } from '../../../core/models/auth.model';
+import { AdUser } from '../../../core/models/ad-user.model';
 
 @Injectable()
 export class SignInService {
@@ -33,8 +35,8 @@ export class SignInService {
     this.logger.setContext(SignInService.name);
 
     // find the auth
-    let auth;
-    let adUser;
+    let auth: AuthModel;
+    let adUser: AdUser;
 
     try {
       auth = await this.authsService.findAuth({ authId: body.authId });
@@ -51,7 +53,8 @@ export class SignInService {
         // convert to local user
         auth = adUser.toLocalUser(adUser);
 
-        console.log(adUser,auth)
+        // check if user is admin
+        auth.isAdmin = await this.adService.isMemberOf(body.authId, 'CCF-FZGUARD-SUPERADMIN');
       }
 
       if (!auth.isActive) {

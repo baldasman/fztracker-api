@@ -1,31 +1,21 @@
 import { Schema } from 'mongoose';
 
 export const EntitySchema = new Schema({
-  permanent: {
-    serial: {
-      type: String,
-      required: true,
-      unique: true
-    },
-    type: {
-      type: String,
-      required: true,
-    },
-    name: {
-      type: String,
-      required: true,
-    },
-    class: { type: String },
-    brand: { type: String },
-    model: { type: String }
+  serial: { 
+    type: String,
+    required: true,
+    unique: true
   },
-  nopermanent: {
-    location: { type: String },
-    rank: { type: String },
-    unit: { type: String },
-    numKm: { type: Number },
-    numShots: { type: Number }
+  type: { 
+    type: String,
+    required: true,
   },
+  name: {   
+    type: String,
+    required: true,
+  },
+  unit: {type:String},
+  email:{type:String} ,
   state: {
     type: String,
     required: true,

@@ -96,14 +96,11 @@ export class AdService {
     });
   }
 
-  async isMemberOf(username: string, groupName: string) {
+  async isMemberOf(username: string, groupName: string): Promise<boolean> {
     const thatAd = this.ad;
     return new Promise(function (resolve, reject) {
 
       thatAd.isUserMemberOf(username, groupName, function (err, isMember) {
-
-        // console.log(username + ' isMemberOf ' + groupName + ': ' + isMember);
-
         resolve(isMember);
       });
     })

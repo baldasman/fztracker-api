@@ -69,7 +69,7 @@ export class EntitiesV1Controller {
       }
 
       console.log('search', filter);
-      const entities = await this.entityService.find(filter, rows , page );
+      const entities = await this.entityService.find(filter, rows, page);
 
       const response = getResponse(200, { data: { records: entities.length, entities } });
       return res.status(200).send(response);
@@ -169,9 +169,9 @@ export class EntitiesV1Controller {
       reading.manual = movement.manual;
 
       // update entity data
-      movement.entitySerial = entity.permanent.serial;
-      movement.entityType = entity.permanent.type;
-      movement.entityName = `${entity.nopermanent.rank} ${entity.permanent.name}`
+      movement.entitySerial = entity.serial;
+      movement.entityType = entity.type;
+      movement.entityName = entity.name;
 
       // Save models
       await this.readingService.add(reading);
@@ -241,16 +241,13 @@ export class EntitiesV1Controller {
 
             // create new entity
             entity = new EntityModel();
-            entity.permanent.serial = entityToImport.serial;
+            entity.serial = entityToImport.serial;
             entity.state = EntityModel.STATE_ACTIVE;
           }
 
-          entity.nopermanent.rank = entityToImport.rank;
-          entity.permanent.class = entityToImport.class;
-          entity.permanent.name = entityToImport.name;
-          entity.nopermanent.location = entityToImport.location;
-          entity.nopermanent.unit = entityToImport.unit;
-          entity.permanent.type = entityToImport.type;
+          entity.name = entityToImport.name;
+          entity.unit = entityToImport.unit;
+          entity.type = entityToImport.type;
 
           if (!entity.resources) {
             entity.resources = [];
@@ -333,22 +330,22 @@ export class EntitiesV1Controller {
     if (entity.cardNumber && entity.cardNumber.trim().length > 0) {
       let currentCard = await this.cardService.findOne({ cardNumber: entity.cardNumber, state: CardModel.STATE_ACTIVE });
       if (!currentCard) {
-        throw new NotFoundException(`Entity '${entity.permanent.serial}' already assigned to card '${entity.cardNumber}', but card '${cardNumber}' was not found.`);
+        throw new NotFoundException(`Entity '${entity.serial}' already assigned to card '${entity.cardNumber}', but card '${cardNumber}' was not found.`);
       }
 
-      throw new BadRequestException(`Entity '${entity.permanent.serial}' already assigned to card '${entity.cardNumber}'`);
+      throw new BadRequestException(`Entity '${entity.serial}' already assigned to card '${entity.cardNumber}'`);
     }
 
     // Check if card is already assigned to a different entity
-    if (card.entitySerial && card.entitySerial.trim().length > 0 && card.entitySerial !== entity.permanent.serial) {
+    if (card.entitySerial && card.entitySerial.trim().length > 0 && card.entitySerial !== entity.serial) {
       throw new BadRequestException(`Card '${card.cardNumber}' already assigned to Entity '${card.entitySerial}'.`);
     }
 
     try {
       // Update card info
-      card.entitySerial = entity.permanent.serial;
-      card.entityType = entity.permanent.type;
-      card.entityDesc = `${entity.nopermanent.rank} ${entity.permanent.name}`;
+      card.entitySerial = entity.serial;
+      card.entityType = entity.type;
+      card.entityDesc = entity.name;
       card.lastChangeDate = new Date();
 
       // Update entity

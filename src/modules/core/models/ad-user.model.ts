@@ -35,7 +35,7 @@ export class AdUser {
     this.description = data?.description;
   }
 
-  toLocalUser(u: Partial<AdUser>): AuthModel {
+  public toLocalUser(u: Partial<AdUser>): AuthModel {
     const user = new AuthModel({
       authId: u.mail,
       name: u.displayName,

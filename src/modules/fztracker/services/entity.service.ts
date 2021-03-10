@@ -3,12 +3,11 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { EntityModel } from '../models/entity.model';
 
-
 @Injectable()
 export class EntityService {
   constructor(
-      @InjectModel('Entity') private readonly entityModel: Model<EntityModel>,
-      private readonly logger: Logger) {
+    @InjectModel('Entity') private readonly entityModel: Model<EntityModel>,
+    private readonly logger: Logger) {
     this.logger.setContext(EntityService.name);
   }
 
@@ -27,6 +26,6 @@ export class EntityService {
   }
 
   async updateOne(entity: EntityModel): Promise<EntityModel> {
-    return this.entityModel.updateOne({"permanent.serial": entity.permanent.serial}, entity).exec();
+    return this.entityModel.updateOne({ "permanent.serial": entity.serial }, entity).exec();
   }
 }

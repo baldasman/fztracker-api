@@ -1,7 +1,7 @@
-import {IsNotEmpty} from 'class-validator';
-import * as uuidv4 from 'uuid/v4';  // random ids
+import { IsNotEmpty } from 'class-validator';
+import * as uuidv4 from 'uuid/v4'; // random ids
 
-export class PermanentModel {
+export class EntityResource {
   static TYPE_CARMIL = 'Viatura Militar';
   static TYPE_CARCIV = 'Viatura Civil';
   static TYPE_MILITARY = 'Militar';
@@ -9,16 +9,6 @@ export class PermanentModel {
   static TYPE_SCOUT = 'Aluno';
   static TYPE_VISITOR = 'Visita';
 
-  @IsNotEmpty() serial: string;
-  @IsNotEmpty() type: string;
-  @IsNotEmpty() name: string;
-
-  class: string;
-  brand: string;
-  model: string;
-}
-
-export class EntityResource {
   serial: string;
   type: string;
 
@@ -26,14 +16,6 @@ export class EntityResource {
     this.serial = serial;
     this.type = type;
   }
-}
-
-export class NoPermanentModel {
-  location: string;
-  rank: string;
-  unit: string;
-  numKm: number;
-  numShots: number;
 }
 
 export class EntityLogModel {
@@ -56,9 +38,11 @@ export class EntityModel {
   static STATE_ACTIVE = 'ACTIVE';
   static STATE_INACTIVE = 'INACTIVE';
 
-  @IsNotEmpty() permanent: PermanentModel;
-
-  nopermanent: NoPermanentModel;
+  serial: string;
+  type: string;
+  name: string;
+  unit: string;
+  email: string;
   state: string;
   inOut: boolean;
   lastMovementDate: Date;
@@ -67,9 +51,6 @@ export class EntityModel {
   resources: EntityResource[];
 
   constructor() {
-    this.permanent = new PermanentModel();
-    this.nopermanent = new NoPermanentModel();
-
     this.inOut = true;
     this.lastMovementDate = new Date();
   }
@@ -87,7 +68,7 @@ export class EntityImportModel {
   resource2: string;
   resource3: string;
   resource4: string;
-  
+
 }
 
 export class ImportEntityRequest {
