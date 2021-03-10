@@ -84,23 +84,11 @@ export class AdService {
 
 
 
-      var query = 'OU=CCF';
- 
-      thatAd.findUsers(query, true, function(err, users) {
-        console.log('detalhes' + JSON.stringify(users));
-        resolve(users);
-      });
-
-  
-
-
-
-
-
     });
   }
 
 
+  
 
     async isMemberOf(username: string, groupName:string) {
       const thatAd = this.ad;
