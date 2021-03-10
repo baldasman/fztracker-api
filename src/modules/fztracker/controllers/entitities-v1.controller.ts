@@ -128,7 +128,7 @@ export class EntitiesV1Controller {
       }
 
       // add to local DB
-      let entity = await this.entityService.findOne({ 'serial': serial });
+      let entity = await this.entityService.findOne({ 'serial': adUser.employeeID });
       let update = true;
 
       if (!entity) {
