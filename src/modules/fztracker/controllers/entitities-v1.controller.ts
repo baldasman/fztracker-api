@@ -253,6 +253,7 @@ export class EntitiesV1Controller {
       movement.entityName = entity.name;
       movement.movementDate =reading.readingDate;
       entity.lastMovementDate = reading.readingDate;
+      card.lastMovementDate = reading.readingDate;  // ->ver se isto esta OK
 
       // Save models
       await this.readingService.add(reading);
@@ -432,7 +433,7 @@ export class EntitiesV1Controller {
       card.entityType = entity.type;
       card.entityDesc = entity.name;
       card.lastChangeDate = new Date();
-
+      
       // Update entity
       entity.cardId = card.uid;
       entity.cardNumber = card.cardNumber;

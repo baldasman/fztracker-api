@@ -12,6 +12,7 @@ export class CardModel {
   entitySerial: string;
   entityType: string;
   entityDesc: string;
+  lastMovementDate:Date;
 
   constructor() {
 
