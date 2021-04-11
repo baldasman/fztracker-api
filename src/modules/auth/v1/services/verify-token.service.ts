@@ -28,7 +28,9 @@ export class VerifyTokenService {
     // find the auth
     let auth;
     let adUser;
+   
     try {
+      console.log(decoded);
       auth = await this.authsService.findAuth({ authId:  decoded.authId });
       if (!auth) {
         this.logger.log('Auth not found on local db. Try to find on AD...');
