@@ -4,6 +4,7 @@ import { Schema } from 'mongoose';
 
 export const CardSchema = new Schema({
   uid: { type: String, required: true, unique: true },
+  uidShort: { type: String, required: false, unique: true },
   cardNumber: { type: String, required: false },
   state: { type: String, required: true },
   lastChangeDate: { type: Date, default: Date.now },
