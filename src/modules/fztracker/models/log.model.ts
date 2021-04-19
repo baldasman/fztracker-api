@@ -8,6 +8,7 @@ export class LogModel {
   entitySerial: string;
   entityType: string;
   cardId: string;
+  cardIdShort: string;
   cardNumber: string;
   userId: string;
 

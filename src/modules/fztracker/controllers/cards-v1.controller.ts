@@ -38,7 +38,7 @@ export class CardsV1Controller {
     try {
       const filter = {};
       const cards = await this.cardService.find(filter);
-
+      console.log('cards', filter,cards );
       // global['io'].emit('card', { uid: 'cardId' });
 
       const response = getResponse(200, { data: { cards } });

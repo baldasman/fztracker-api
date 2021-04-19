@@ -47,6 +47,7 @@ export class EntityModel {
   inOut: boolean;
   lastMovementDate: Date;
   cardId: string;
+  cardIdShort: string;
   cardNumber: string;
   resources: EntityResource[];
 

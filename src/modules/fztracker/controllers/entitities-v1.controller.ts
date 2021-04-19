@@ -183,18 +183,38 @@ export class EntitiesV1Controller {
     Promise<object> {
     console.log('movement', movement);
 
+
+    movement.cardIdShort = movement.cardId;
+ 
     try {
       let entity: EntityModel;
 
-      if (movement.cardId) {
+      if (movement.cardId.length>7) {
 
         const c = await this.cardService.findOne({ uid: movement.cardId.toUpperCase() });
+
         console.log('cardId', movement.cardId.toUpperCase(), c);
         if (!c) {
-          throw 'Card not found';
+          throw 'Card not found2';
         }
-        movement.cardNumber = c.cardNumber;
+       movement.cardNumber = c.cardNumber;
       }
+      
+      if (movement.cardId.length<7) {
+
+      
+        const e = await this.cardService.findOne({ uidShort: movement.cardIdShort.toUpperCase() });
+
+        console.log('cardIdShort', movement.cardIdShort.toUpperCase(), e);
+       
+        if (!e) {
+          throw 'CardShort not found2';
+        }
+       movement.cardNumber = e.cardNumber;
+      }
+
+
+   
 
 
       entity = await this.entityService.findOne({ 'cardNumber': movement.cardNumber });

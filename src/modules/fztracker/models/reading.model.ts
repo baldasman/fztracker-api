@@ -12,6 +12,7 @@ export class ReadingModel {
   movementId: string;
   manual?: boolean;
   cardId?: string;
+  cardIdShort?: string;
 
   constructor() {
     this.uid = uuidv4();

@@ -1,5 +1,7 @@
 import { Schema } from 'mongoose';
 
+
+
 export const CardSchema = new Schema({
   uid: { type: String, required: true, unique: true },
   cardNumber: { type: String, required: false },
@@ -10,5 +12,6 @@ export const CardSchema = new Schema({
   entityType: { type: String },
   entityDesc: { type: String }
 });
+
 
 CardSchema.index({ cardNumber: 1 });

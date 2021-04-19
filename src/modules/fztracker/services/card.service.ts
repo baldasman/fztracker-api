@@ -17,6 +17,11 @@ export class CardService {
   }
 
   async findOne(filter: object): Promise<CardModel> {
+
+ 
+
+
+
     return this.cardModel.findOne(filter).exec();
   }
 

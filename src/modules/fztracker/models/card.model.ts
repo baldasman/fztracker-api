@@ -6,13 +6,15 @@ export class CardModel {
 
   @IsNotEmpty() uid: string;
   @IsNotEmpty() state: string;
-
+  @IsNotEmpty() uidShort: string;
+  
   cardNumber: string;
   lastChangeDate: Date;
   entitySerial: string;
   entityType: string;
   entityDesc: string;
   lastMovementDate:Date;
+  
 
   constructor() {
 
