@@ -23,6 +23,7 @@ export class CardModel {
 
 export class CardImportModel {
   uid: string;
+  uidShort: string;
   cardNumber: string;
   state: string;
   cardType: string;

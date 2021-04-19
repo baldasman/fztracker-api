@@ -94,7 +94,7 @@ export class CardsV1Controller {
     try {
       // Parse csv file
       const headers = [
-        'uid', 'cardNumber', 'state', 'cardType'
+        'uid', 'uidShort', 'cardNumber', 'state', 'cardType'
       ];
 
       let successCounter = 0;
@@ -136,6 +136,7 @@ export class CardsV1Controller {
           }
 
           card.entityType = cardToImport.cardType;
+          card.uidShort = cardToImport.uidShort;
 
           try {
             if (update) {
