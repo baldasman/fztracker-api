@@ -208,6 +208,7 @@ export class EntitiesV1Controller {
         console.log('cardIdShort', movement.cardIdShort.toUpperCase(), e);
        
         if (!e) {
+       
           throw 'CardShort not found2';
         }
        movement.cardNumber = e.cardNumber;
