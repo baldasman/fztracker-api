@@ -183,44 +183,36 @@ export class EntitiesV1Controller {
     Promise<object> {
     console.log('movement', movement);
 
-
     movement.cardIdShort = movement.cardId;
- 
+
     try {
       let entity: EntityModel;
 
-      if (movement.cardId.length>7) {
-
+      if (movement.cardId.length > 7) {
         const c = await this.cardService.findOne({ uid: movement.cardId.toUpperCase() });
 
         console.log('cardId', movement.cardId.toUpperCase(), c);
         if (!c) {
           throw 'Card not found2';
         }
-       movement.cardNumber = c.cardNumber;
-      }
-      
-      if (movement.cardId.length<7) {
 
-      
+        movement.cardNumber = c.cardNumber;
+      }
+
+      if (movement.cardId.length < 7) {
         const e = await this.cardService.findOne({ uidShort: movement.cardIdShort.toUpperCase() });
 
         console.log('cardIdShort', movement.cardIdShort.toUpperCase(), e);
-       
+
         if (!e) {
-       
+
           throw 'CardShort not found2';
         }
-       movement.cardNumber = e.cardNumber;
+        movement.cardNumber = e.cardNumber;
       }
-
-
-   
-
 
       entity = await this.entityService.findOne({ 'cardNumber': movement.cardNumber });
       movement.cardId = entity.cardId;
-
 
       if (!entity) {
         throw `No entity assigned to card "${movement.manual ? movement.cardNumber : movement.cardId}"`;
@@ -228,10 +220,10 @@ export class EntitiesV1Controller {
 
       //sync entity data
 
-     const updteEntity = await this.updateUser(entity.serial);
-     if (updteEntity) {
-       entity = updteEntity;
-     }
+      const updteEntity = await this.updateUser(entity.serial);
+      if (updteEntity) {
+        entity = updteEntity;
+      }
       // Find card
       const card = await this.cardService.findOne({ cardNumber: entity.cardNumber });
       if (!card) {
@@ -245,7 +237,7 @@ export class EntitiesV1Controller {
 
 
 
-      
+
 
       entity.inOut = movement.inOut ? movement.inOut : !entity.inOut;
       movement.inOut = entity.inOut;
@@ -272,7 +264,7 @@ export class EntitiesV1Controller {
       movement.entitySerial = entity.serial;
       movement.entityType = entity.type;
       movement.entityName = entity.name;
-      movement.movementDate =reading.readingDate;
+      movement.movementDate = reading.readingDate;
       entity.lastMovementDate = reading.readingDate;
       card.lastMovementDate = reading.readingDate;  // ->ver se isto esta OK
 
@@ -454,7 +446,7 @@ export class EntitiesV1Controller {
       card.entityType = entity.type;
       card.entityDesc = entity.name;
       card.lastChangeDate = new Date();
-      
+
       // Update entity
       entity.cardId = card.uid;
       entity.cardNumber = card.cardNumber;
@@ -473,13 +465,13 @@ export class EntitiesV1Controller {
       const toDate = moment().format('DD-MM-YYYY HH:mm');
 
       const params = {
-        cardNumber:entity.cardNumber,
-        date:toDate,
-        emailToSend: entity.email,    
+        cardNumber: entity.cardNumber,
+        date: toDate,
+        emailToSend: entity.email,
       };
       console.log(params, entity);
       this.mailSender.sendSingnCard(params);
-      
+
 
 
 
@@ -510,7 +502,7 @@ export class EntitiesV1Controller {
 
     try {
       let entity: EntityModel;
-      if(entitySerial.toUpperCase().startsWith('M')){
+      if (entitySerial.toUpperCase().startsWith('M')) {
 
         entitySerial = entitySerial.substring(1);
       }
@@ -563,15 +555,13 @@ export class EntitiesV1Controller {
     }
   }
 
-  private async updateUser(nii:string):Promise<EntityModel>{
+  private async updateUser(nii: string): Promise<EntityModel> {
     if (!nii.toLowerCase().startsWith('m')) {
       nii = 'm' + nii;
     }
-    const adUser = await this.adService.findUser(nii);
-   
 
+    const adUser = await this.adService.findUser(nii);
     if (!adUser) {
-     
       return null;
     }
 
@@ -593,7 +583,6 @@ export class EntitiesV1Controller {
     entity.unit = adUser.dn;  // TODO: filter OU
     entity.type = adUser.description;
     entity.email = adUser.mail;
-    
 
     if (update) {
       await this.entityService.updateOne(entity);
