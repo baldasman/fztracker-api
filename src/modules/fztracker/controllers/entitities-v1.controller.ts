@@ -255,6 +255,7 @@ export class EntitiesV1Controller {
       reading.sensor = movement.sensor;
       reading.movementId = movement.uid;
       reading.cardId = movement.cardId;
+      
       reading.cardNumber = movement.cardNumber;
       reading.manual = movement.manual;
 
