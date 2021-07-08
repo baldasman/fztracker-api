@@ -1,8 +1,8 @@
 {
-  "name": "shr-api-accounts",
+  "name": "FzGuard_API",
   "version": "1.0.0",
-  "description": "",
-  "author": "",
+  "description": "api que controla o FZguard portal, leitores fisicos e aplicaçao movel",
+  "author": "Moreira de Sousa",
   "license": "MIT",
   "scripts": {
     "prebuild": "rimraf dist",
