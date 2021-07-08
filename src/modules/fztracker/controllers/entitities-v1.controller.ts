@@ -219,11 +219,19 @@ export class EntitiesV1Controller {
       }
 
       //sync entity data
+      try {
+        console.log("chagui");
+        const updteEntity = await this.updateUser(entity.serial);
+        if (updteEntity) {
+          entity = updteEntity;
+        }
+      console.log("depois", updteEntity);
+      } catch (error) {
 
-      const updteEntity = await this.updateUser(entity.serial);
-      if (updteEntity) {
-        entity = updteEntity;
       }
+      console.log("depois de  tudo mais nada");
+
+    
       // Find card
       const card = await this.cardService.findOne({ cardNumber: entity.cardNumber });
       if (!card) {
@@ -255,7 +263,7 @@ export class EntitiesV1Controller {
       reading.sensor = movement.sensor;
       reading.movementId = movement.uid;
       reading.cardId = movement.cardId;
-      
+
       reading.cardNumber = movement.cardNumber;
       reading.manual = movement.manual;
 
