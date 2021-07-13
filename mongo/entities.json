@@ -3,14 +3,9 @@
     "$oid": "6048cd7017b1b429dc8e0b97"
   },
   "inOut": true,
-  "resources": [
-    {
-      "type": "VEHICLE",
-      "serial": "NOCAR"
-    }
-  ],
+  "resources": [],
   "lastMovementDate": {
-    "$date": "2021-07-07T23:12:14Z"
+    "$date": "2021-07-09T14:00:46.795Z"
   },
   "serial": "9830401",
   "state": "ACTIVE",
@@ -28,7 +23,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-11T00:19:07.948Z"
+    "$date": "2021-07-13T06:56:54.795Z"
   },
   "serial": "9815504",
   "state": "ACTIVE",
@@ -46,7 +41,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-11T10:02:16.303Z"
+    "$date": "2021-07-13T07:47:53.302Z"
   },
   "serial": "9318496",
   "state": "ACTIVE",
@@ -55,8 +50,8 @@
   "type": "QP - ACTIVO",
   "email": "drago.goncalves@marinha.pt",
   "__v": 0,
-  "cardId": "0424061AE66C85",
-  "cardNumber": "M0018"
+  "cardId": "043E9E1AE66C80",
+  "cardNumber": "M0135"
 },{
   "_id": {
     "$oid": "604b755790c3d737482a8676"
@@ -82,7 +77,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-12T14:07:17.746Z"
+    "$date": "2021-07-12T22:43:06.788Z"
   },
   "serial": "9601015",
   "state": "ACTIVE",
@@ -90,7 +85,9 @@
   "unit": "CN=M9601015,OU=USERS,OU=CCF-BAT2,OU=CCF,OU=Marinha,DC=marinha,DC=pt",
   "type": "REGIME DE CONTRATO",
   "email": "torres.silva@marinha.pt",
-  "__v": 0
+  "__v": 0,
+  "cardId": "04B59F1AE66C80",
+  "cardNumber": "M0171"
 },{
   "_id": {
     "$oid": "604b760790c3d737482a8678"
@@ -98,7 +95,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-12T14:09:11.797Z"
+    "$date": "2021-07-13T08:10:44.939Z"
   },
   "serial": "21393",
   "state": "ACTIVE",
@@ -106,7 +103,9 @@
   "unit": "CN=M21393,OU=USERS,OU=CCF-BAT2,OU=CCF,OU=Marinha,DC=marinha,DC=pt",
   "type": "QP - ACTIVO",
   "email": "costa.frescata@marinha.pt",
-  "__v": 0
+  "__v": 0,
+  "cardId": "04098E1AE66C81",
+  "cardNumber": "M0015"
 },{
   "_id": {
     "$oid": "604b761190c3d737482a8679"
@@ -171,7 +170,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-12T14:10:09.432Z"
+    "$date": "2021-07-13T07:39:51.981Z"
   },
   "serial": "9807499",
   "state": "ACTIVE",
@@ -257,12 +256,12 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-12T14:11:51.966Z"
+    "$date": "2021-07-13T06:14:08.203Z"
   },
   "serial": "701789",
   "state": "ACTIVE",
   "name": "CMOR FZ João Cardoso",
-  "unit": "CN=M701789,OU=USERS,OU=CCF-BAT2,OU=CCF,OU=Marinha,DC=marinha,DC=pt",
+  "unit": "CN=M701789,OU=USERS,OU=CCF,OU=Marinha,DC=marinha,DC=pt",
   "type": "QP - ACTIVO",
   "email": "lourenco.joao.cardoso@marinha.pt",
   "__v": 0,
@@ -275,7 +274,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-12T14:12:28.507Z"
+    "$date": "2021-07-12T01:04:26.885Z"
   },
   "serial": "744287",
   "state": "ACTIVE",
@@ -335,7 +334,9 @@
   "unit": "CN=M9816405,OU=USERS,OU=CCF-BAT2,OU=CCF,OU=Marinha,DC=marinha,DC=pt",
   "type": "QP - ACTIVO",
   "email": "marques.gregorio@marinha.pt",
-  "__v": 0
+  "__v": 0,
+  "cardId": "042E8E1AE66C81",
+  "cardNumber": "M0161"
 },{
   "_id": {
     "$oid": "604b76fb90c3d737482a8686"
@@ -356,10 +357,10 @@
   "_id": {
     "$oid": "604b770590c3d737482a8687"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-12T14:13:25.385Z"
+    "$date": "2021-07-12T13:23:04.468Z"
   },
   "serial": "9804804",
   "state": "ACTIVE",
@@ -374,10 +375,10 @@
   "_id": {
     "$oid": "604b770f90c3d737482a8688"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-12T14:13:35.314Z"
+    "$date": "2021-07-10T08:36:27.464Z"
   },
   "serial": "9812902",
   "state": "ACTIVE",
@@ -392,10 +393,10 @@
   "_id": {
     "$oid": "604b796990c3d737482a868a"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-12T14:23:37.444Z"
+    "$date": "2021-07-12T16:47:21.598Z"
   },
   "serial": "775284",
   "state": "ACTIVE",
@@ -403,7 +404,9 @@
   "unit": "CN=M775284,OU=USERS,OU=CCF,OU=Marinha,DC=marinha,DC=pt",
   "type": "QP - ACTIVO",
   "email": "antonio.cordeiro@marinha.pt",
-  "__v": 0
+  "__v": 0,
+  "cardId": "043DA91AE66C81",
+  "cardNumber": "M0003"
 },{
   "_id": {
     "$oid": "604b797590c3d737482a868b"
@@ -463,7 +466,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-29T10:45:56.324Z"
+    "$date": "2021-07-13T07:51:04.522Z"
   },
   "serial": "9804004",
   "state": "ACTIVE",
@@ -478,10 +481,10 @@
   "_id": {
     "$oid": "604b9ee090c3d737482a8690"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-20T08:52:50.122Z"
+    "$date": "2021-07-12T09:50:36.542Z"
   },
   "serial": "9331994",
   "state": "ACTIVE",
@@ -677,7 +680,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-15T11:45:24.920Z"
+    "$date": "2021-07-13T07:02:41.488Z"
   },
   "serial": "9820202",
   "state": "ACTIVE",
@@ -692,10 +695,10 @@
   "_id": {
     "$oid": "604f48e090c3d737482a86a0"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-15T11:45:36.314Z"
+    "$date": "2021-07-09T18:44:09.342Z"
   },
   "serial": "9803501",
   "state": "ACTIVE",
@@ -767,7 +770,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-15T11:46:59.542Z"
+    "$date": "2021-07-13T07:54:12.696Z"
   },
   "serial": "23515",
   "state": "ACTIVE",
@@ -785,7 +788,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-15T11:47:11.921Z"
+    "$date": "2021-07-13T08:18:42.150Z"
   },
   "serial": "306998",
   "state": "ACTIVE",
@@ -857,7 +860,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-15T11:47:34.451Z"
+    "$date": "2021-07-12T07:47:23.626Z"
   },
   "serial": "9811205",
   "state": "ACTIVE",
@@ -875,7 +878,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-15T11:47:42.172Z"
+    "$date": "2021-07-13T07:03:53.034Z"
   },
   "serial": "9811016",
   "state": "ACTIVE",
@@ -1049,7 +1052,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-15T11:49:10.368Z"
+    "$date": "2021-07-13T07:39:37.229Z"
   },
   "serial": "9814709",
   "state": "ACTIVE",
@@ -1200,10 +1203,10 @@
   "_id": {
     "$oid": "604f49e590c3d737482a86bd"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-15T11:49:57.600Z"
+    "$date": "2021-07-12T13:52:50.453Z"
   },
   "serial": "9814806",
   "state": "ACTIVE",
@@ -1211,7 +1214,9 @@
   "unit": "CN=M9814806,OU=USERS,OU=CCF-BAT2,OU=CCF,OU=Marinha,DC=marinha,DC=pt",
   "type": "QP - ACTIVO",
   "email": "salgado.jesus@marinha.pt",
-  "__v": 0
+  "__v": 0,
+  "cardId": "04C8FD1AE66C80",
+  "cardNumber": "M0162"
 },{
   "_id": {
     "$oid": "604f49eb90c3d737482a86be"
@@ -1273,7 +1278,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-15T11:50:18.546Z"
+    "$date": "2021-07-12T19:39:55.240Z"
   },
   "serial": "9601617",
   "state": "ACTIVE",
@@ -1306,10 +1311,10 @@
   "_id": {
     "$oid": "604f4a0590c3d737482a86c3"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-15T11:50:29.384Z"
+    "$date": "2021-07-12T14:20:48.623Z"
   },
   "serial": "9822100",
   "state": "ACTIVE",
@@ -1327,7 +1332,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-15T11:50:39.229Z"
+    "$date": "2021-07-13T07:52:09.883Z"
   },
   "serial": "9819306",
   "state": "ACTIVE",
@@ -1363,7 +1368,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-15T11:50:48.703Z"
+    "$date": "2021-07-13T07:23:26.728Z"
   },
   "serial": "9805016",
   "state": "ACTIVE",
@@ -1485,7 +1490,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-15T11:51:30.308Z"
+    "$date": "2021-07-13T07:25:37.077Z"
   },
   "serial": "9812503",
   "state": "ACTIVE",
@@ -1503,7 +1508,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-15T11:51:39.715Z"
+    "$date": "2021-07-13T07:27:40.006Z"
   },
   "serial": "9310907",
   "state": "ACTIVE",
@@ -1553,7 +1558,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-15T11:51:59.386Z"
+    "$date": "2021-07-12T18:11:38.331Z"
   },
   "serial": "9822802",
   "state": "ACTIVE",
@@ -1625,7 +1630,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-15T11:52:35.632Z"
+    "$date": "2021-07-13T07:37:16.401Z"
   },
   "serial": "9810016",
   "state": "ACTIVE",
@@ -1643,7 +1648,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-15T11:52:40.923Z"
+    "$date": "2021-07-13T07:43:34.446Z"
   },
   "serial": "9814218",
   "state": "ACTIVE",
@@ -1661,7 +1666,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-15T11:52:45.890Z"
+    "$date": "2021-07-13T07:22:43.609Z"
   },
   "serial": "9819110",
   "state": "ACTIVE",
@@ -1679,7 +1684,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-15T11:52:50.263Z"
+    "$date": "2021-07-13T07:43:28.623Z"
   },
   "serial": "9805316",
   "state": "ACTIVE",
@@ -1713,7 +1718,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-15T11:52:59.081Z"
+    "$date": "2021-07-13T07:54:54.076Z"
   },
   "serial": "9823601",
   "state": "ACTIVE",
@@ -1765,7 +1770,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-15T11:53:14.813Z"
+    "$date": "2021-07-13T07:46:26.432Z"
   },
   "serial": "9810317",
   "state": "ACTIVE",
@@ -1783,7 +1788,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-15T11:53:31.589Z"
+    "$date": "2021-07-13T08:06:22.018Z"
   },
   "serial": "9814604",
   "state": "ACTIVE",
@@ -1798,10 +1803,10 @@
   "_id": {
     "$oid": "604f718490c3d737482a86e1"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-15T14:39:00.818Z"
+    "$date": "2021-07-12T15:01:05.616Z"
   },
   "serial": "9808005",
   "state": "ACTIVE",
@@ -1816,10 +1821,10 @@
   "_id": {
     "$oid": "60508c31c587611d6867a299"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-16T10:45:05.215Z"
+    "$date": "2021-07-12T15:33:08.900Z"
   },
   "serial": "9839608",
   "state": "ACTIVE",
@@ -1889,7 +1894,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-16T10:48:02.007Z"
+    "$date": "2021-07-12T07:15:33.355Z"
   },
   "serial": "9835002",
   "state": "ACTIVE",
@@ -1943,7 +1948,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-16T10:48:52.173Z"
+    "$date": "2021-07-13T00:50:45.054Z"
   },
   "serial": "9808807",
   "state": "ACTIVE",
@@ -1961,7 +1966,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-16T10:49:20.272Z"
+    "$date": "2021-07-13T07:39:29.881Z"
   },
   "serial": "9835008",
   "state": "ACTIVE",
@@ -1979,7 +1984,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-16T10:49:28.891Z"
+    "$date": "2021-07-13T07:25:11.066Z"
   },
   "serial": "9837008",
   "state": "ACTIVE",
@@ -2051,7 +2056,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-16T10:51:32.447Z"
+    "$date": "2021-07-13T07:42:22.980Z"
   },
   "serial": "9809317",
   "state": "ACTIVE",
@@ -2059,7 +2064,9 @@
   "unit": "CN=M9809317,OU=USERS,OU=CCF-BAT2,OU=CCF,OU=Marinha,DC=marinha,DC=pt",
   "type": "REGIME DE CONTRATO",
   "email": "Condesso.Flausino@MARINHA.PT",
-  "__v": 0
+  "__v": 0,
+  "cardId": "04C99A1AE66C80",
+  "cardNumber": "M0355"
 },{
   "_id": {
     "$oid": "60508dcac587611d6867a2a7"
@@ -2119,7 +2126,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-16T10:56:18.824Z"
+    "$date": "2021-07-13T07:25:20.335Z"
   },
   "serial": "9807605",
   "state": "ACTIVE",
@@ -2171,7 +2178,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-16T11:00:07.005Z"
+    "$date": "2021-07-13T07:25:26.077Z"
   },
   "serial": "9812818",
   "state": "ACTIVE",
@@ -2189,7 +2196,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-16T11:01:15.417Z"
+    "$date": "2021-07-12T19:38:57.958Z"
   },
   "serial": "9812218",
   "state": "ACTIVE",
@@ -2207,7 +2214,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-16T18:32:50.806Z"
+    "$date": "2021-07-13T07:02:05.722Z"
   },
   "serial": "9321703",
   "state": "ACTIVE",
@@ -2563,7 +2570,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T09:08:18.871Z"
+    "$date": "2021-07-13T07:38:32.839Z"
   },
   "serial": "912095",
   "state": "ACTIVE",
@@ -2581,7 +2588,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T09:22:31.167Z"
+    "$date": "2021-07-13T08:06:28.230Z"
   },
   "serial": "22005",
   "state": "ACTIVE",
@@ -2617,7 +2624,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T09:47:29.524Z"
+    "$date": "2021-07-13T06:56:28.372Z"
   },
   "serial": "9809298",
   "state": "ACTIVE",
@@ -2635,7 +2642,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T09:50:30.193Z"
+    "$date": "2021-07-13T07:27:53.261Z"
   },
   "serial": "770390",
   "state": "ACTIVE",
@@ -2650,10 +2657,10 @@
   "_id": {
     "$oid": "6051d147c587611d6867a2d4"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T09:52:07.407Z"
+    "$date": "2021-07-13T08:17:58.303Z"
   },
   "serial": "9804810",
   "state": "ACTIVE",
@@ -2689,7 +2696,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T09:56:37.987Z"
+    "$date": "2021-07-13T07:40:44.505Z"
   },
   "serial": "9829702",
   "state": "ACTIVE",
@@ -2707,7 +2714,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:13:16.806Z"
+    "$date": "2021-07-12T22:36:15.095Z"
   },
   "serial": "9601516",
   "state": "ACTIVE",
@@ -2759,7 +2766,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:20:16.518Z"
+    "$date": "2021-07-13T07:21:15.130Z"
   },
   "serial": "9829201",
   "state": "ACTIVE",
@@ -3021,7 +3028,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:30:46.566Z"
+    "$date": "2021-07-13T07:40:06.147Z"
   },
   "serial": "9809618",
   "state": "ACTIVE",
@@ -3036,10 +3043,10 @@
   "_id": {
     "$oid": "6051da63c587611d6867a2ee"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:30:59.338Z"
+    "$date": "2021-07-12T16:34:53.825Z"
   },
   "serial": "9808918",
   "state": "ACTIVE",
@@ -3125,7 +3132,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:33:22.715Z"
+    "$date": "2021-07-13T08:14:03.379Z"
   },
   "serial": "752088",
   "state": "ACTIVE",
@@ -3140,10 +3147,10 @@
   "_id": {
     "$oid": "6051db06c587611d6867a2f4"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:33:42.298Z"
+    "$date": "2021-07-12T15:48:31.769Z"
   },
   "serial": "527699",
   "state": "ACTIVE",
@@ -3194,10 +3201,10 @@
   "_id": {
     "$oid": "6051db2ac587611d6867a2f8"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:34:18.411Z"
+    "$date": "2021-07-12T13:22:42.026Z"
   },
   "serial": "788089",
   "state": "ACTIVE",
@@ -3223,7 +3230,9 @@
   "unit": "CN=M744887,OU=USERS,OU=CCF-BAT1,OU=CCF,OU=Marinha,DC=marinha,DC=pt",
   "type": "QP - ACTIVO",
   "email": "antonio.martins.rodrigues@marinha.pt",
-  "__v": 0
+  "__v": 0,
+  "cardId": "04939E1AE66C80",
+  "cardNumber": "M0335"
 },{
   "_id": {
     "$oid": "6051db34c587611d6867a2fa"
@@ -3303,7 +3312,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:34:58.367Z"
+    "$date": "2021-07-12T07:51:16.959Z"
   },
   "serial": "9803901",
   "state": "ACTIVE",
@@ -3371,12 +3380,12 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:35:31.437Z"
+    "$date": "2021-07-11T19:46:45.147Z"
   },
   "serial": "9600519",
   "state": "ACTIVE",
   "name": "STEN FZ Llano Cordeiro",
-  "unit": "CN=M9600519,OU=USERS,OU=CCF-EF,OU=CCF,OU=Marinha,DC=marinha,DC=pt",
+  "unit": "CN=M9600519,OU=USERS,OU=CCF-BAT1,OU=CCF,OU=Marinha,DC=marinha,DC=pt",
   "type": "REGIME DE CONTRATO",
   "email": "Llano.Cordeiro@MARINHA.PT",
   "__v": 0,
@@ -3422,10 +3431,10 @@
   "_id": {
     "$oid": "6051db93c587611d6867a305"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:36:03.510Z"
+    "$date": "2021-07-12T12:51:38.350Z"
   },
   "serial": "800689",
   "state": "ACTIVE",
@@ -3477,7 +3486,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:36:27.234Z"
+    "$date": "2021-07-13T07:54:25.957Z"
   },
   "serial": "9323401",
   "state": "ACTIVE",
@@ -3495,7 +3504,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:36:35.611Z"
+    "$date": "2021-07-13T07:58:18.425Z"
   },
   "serial": "743687",
   "state": "ACTIVE",
@@ -3544,10 +3553,10 @@
   "_id": {
     "$oid": "6051dbbec587611d6867a30c"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:36:46.141Z"
+    "$date": "2021-07-12T15:30:12.228Z"
   },
   "serial": "745488",
   "state": "ACTIVE",
@@ -3556,8 +3565,8 @@
   "type": "QP - ACTIVO",
   "email": "paulo.ferreira.silva@marinha.pt",
   "__v": 0,
-  "cardId": "0429071AE66C85",
-  "cardNumber": "M0673"
+  "cardId": "044EA91AE66C81",
+  "cardNumber": "M0218"
 },{
   "_id": {
     "$oid": "6051dbc4c587611d6867a30d"
@@ -3565,7 +3574,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:36:52.419Z"
+    "$date": "2021-07-13T07:14:58.857Z"
   },
   "serial": "301698",
   "state": "ACTIVE",
@@ -3583,7 +3592,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:37:06.048Z"
+    "$date": "2021-07-13T06:46:40.093Z"
   },
   "serial": "6801691",
   "state": "ACTIVE",
@@ -3635,7 +3644,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:37:38.907Z"
+    "$date": "2021-07-13T07:50:43.054Z"
   },
   "serial": "606895",
   "state": "ACTIVE",
@@ -3653,7 +3662,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:37:40.322Z"
+    "$date": "2021-07-13T07:02:15.158Z"
   },
   "serial": "731389",
   "state": "ACTIVE",
@@ -3668,10 +3677,10 @@
   "_id": {
     "$oid": "6051dc06c587611d6867a314"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:37:58.615Z"
+    "$date": "2021-07-12T23:09:50.604Z"
   },
   "serial": "9826801",
   "state": "ACTIVE",
@@ -3689,7 +3698,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:38:01.776Z"
+    "$date": "2021-07-11T23:15:32.998Z"
   },
   "serial": "9815210",
   "state": "ACTIVE",
@@ -3707,7 +3716,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:38:04.403Z"
+    "$date": "2021-07-12T06:40:38.672Z"
   },
   "serial": "9801300",
   "state": "ACTIVE",
@@ -3751,7 +3760,9 @@
   "unit": "CN=M9804398,OU=USERS,OU=CCF-BAT1,OU=CCF,OU=Marinha,DC=marinha,DC=pt",
   "type": "QP - ACTIVO",
   "email": "santos.marcelino@marinha.pt",
-  "__v": 0
+  "__v": 0,
+  "cardId": "041F071AE66C85",
+  "cardNumber": "M0231"
 },{
   "_id": {
     "$oid": "6051dc20c587611d6867a319"
@@ -3777,7 +3788,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:38:24.791Z"
+    "$date": "2021-07-13T07:16:02.497Z"
   },
   "serial": "9818406",
   "state": "ACTIVE",
@@ -3813,7 +3824,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:38:31.468Z"
+    "$date": "2021-07-13T07:26:57.330Z"
   },
   "serial": "9806600",
   "state": "ACTIVE",
@@ -3849,7 +3860,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:38:37.254Z"
+    "$date": "2021-07-13T06:56:46.844Z"
   },
   "serial": "9815303",
   "state": "ACTIVE",
@@ -3885,7 +3896,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:38:43.232Z"
+    "$date": "2021-07-13T07:33:08.305Z"
   },
   "serial": "9330706",
   "state": "ACTIVE",
@@ -3936,10 +3947,10 @@
   "_id": {
     "$oid": "6051dc46c587611d6867a323"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:39:02.377Z"
+    "$date": "2021-07-12T15:41:11.393Z"
   },
   "serial": "9802205",
   "state": "ACTIVE",
@@ -3947,7 +3958,9 @@
   "unit": "CN=M9802205,OU=USERS,OU=CCF-BAT1,OU=CCF,OU=Marinha,DC=marinha,DC=pt",
   "type": "QP - ACTIVO",
   "email": "goncalves.morgado@marinha.pt",
-  "__v": 0
+  "__v": 0,
+  "cardId": "044EE21AE66C80",
+  "cardNumber": "M0166"
 },{
   "_id": {
     "$oid": "6051dc49c587611d6867a324"
@@ -3955,7 +3968,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:39:05.315Z"
+    "$date": "2021-07-13T00:04:13.875Z"
   },
   "serial": "9804908",
   "state": "ACTIVE",
@@ -4007,7 +4020,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:39:21.776Z"
+    "$date": "2021-07-13T07:13:08.615Z"
   },
   "serial": "9802601",
   "state": "ACTIVE",
@@ -4043,7 +4056,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:39:30.412Z"
+    "$date": "2021-07-13T07:27:32.755Z"
   },
   "serial": "9804513",
   "state": "ACTIVE",
@@ -4051,7 +4064,9 @@
   "unit": "CN=M9804513,OU=USERS,OU=CCF-BAT1,OU=CCF,OU=Marinha,DC=marinha,DC=pt",
   "type": "QP - ACTIVO",
   "email": "pedro.marques.coelho@marinha.pt",
-  "__v": 0
+  "__v": 0,
+  "cardId": "04659E1AE66C80",
+  "cardNumber": "M0144"
 },{
   "_id": {
     "$oid": "6051dc71c587611d6867a32a"
@@ -4092,10 +4107,10 @@
   "_id": {
     "$oid": "6051dc79c587611d6867a32c"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:39:53.819Z"
+    "$date": "2021-07-12T18:21:53.423Z"
   },
   "serial": "9801015",
   "state": "ACTIVE",
@@ -4214,10 +4229,10 @@
   "_id": {
     "$oid": "6051dcd0c587611d6867a333"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:41:20.603Z"
+    "$date": "2021-07-11T08:43:43.093Z"
   },
   "serial": "604895",
   "state": "ACTIVE",
@@ -4253,7 +4268,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:41:35.189Z"
+    "$date": "2021-07-13T07:16:51.233Z"
   },
   "serial": "9800498",
   "state": "ACTIVE",
@@ -4271,7 +4286,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:41:40.822Z"
+    "$date": "2021-07-12T22:48:19.584Z"
   },
   "serial": "9801799",
   "state": "ACTIVE",
@@ -4307,7 +4322,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:42:01.312Z"
+    "$date": "2021-07-13T05:40:11.928Z"
   },
   "serial": "9827501",
   "state": "ACTIVE",
@@ -4322,10 +4337,10 @@
   "_id": {
     "$oid": "6051dd02c587611d6867a339"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:42:10.893Z"
+    "$date": "2021-07-12T14:50:00.019Z"
   },
   "serial": "9820700",
   "state": "ACTIVE",
@@ -4410,10 +4425,10 @@
   "_id": {
     "$oid": "6051dd29c587611d6867a33e"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:42:49.310Z"
+    "$date": "2021-07-12T10:22:32.325Z"
   },
   "serial": "9815002",
   "state": "ACTIVE",
@@ -4449,7 +4464,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:43:00.999Z"
+    "$date": "2021-07-12T05:58:19.650Z"
   },
   "serial": "9808604",
   "state": "ACTIVE",
@@ -4485,7 +4500,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:43:12.949Z"
+    "$date": "2021-07-13T07:27:19.539Z"
   },
   "serial": "9811902",
   "state": "ACTIVE",
@@ -4553,7 +4568,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:43:51.545Z"
+    "$date": "2021-07-12T06:53:03.392Z"
   },
   "serial": "9821502",
   "state": "ACTIVE",
@@ -4568,10 +4583,10 @@
   "_id": {
     "$oid": "6051dd6dc587611d6867a347"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-30T13:20:57.565Z"
+    "$date": "2021-07-12T13:40:30.439Z"
   },
   "serial": "9810701",
   "state": "ACTIVE",
@@ -4607,7 +4622,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-23T14:11:06.013Z"
+    "$date": "2021-07-12T07:06:21.172Z"
   },
   "serial": "9815403",
   "state": "ACTIVE",
@@ -4661,7 +4676,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:44:26.277Z"
+    "$date": "2021-07-13T06:42:10.131Z"
   },
   "serial": "9824800",
   "state": "ACTIVE",
@@ -4697,7 +4712,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:44:37.808Z"
+    "$date": "2021-07-13T06:45:45.446Z"
   },
   "serial": "9821901",
   "state": "ACTIVE",
@@ -4705,7 +4720,9 @@
   "unit": "CN=M9821901,OU=USERS,OU=CCF-BAT1,OU=CCF,OU=Marinha,DC=marinha,DC=pt",
   "type": "QP - ACTIVO",
   "email": "Pereira.Martins@marinha.pt",
-  "__v": 0
+  "__v": 0,
+  "cardId": "047BA91AE66C80",
+  "cardNumber": "M0138"
 },{
   "_id": {
     "$oid": "6051dd9bc587611d6867a34f"
@@ -4713,7 +4730,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:44:43.504Z"
+    "$date": "2021-07-13T07:46:17.686Z"
   },
   "serial": "9811599",
   "state": "ACTIVE",
@@ -4731,7 +4748,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:44:51.840Z"
+    "$date": "2021-07-13T07:29:28.144Z"
   },
   "serial": "9805903",
   "state": "ACTIVE",
@@ -4749,7 +4766,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:44:57.454Z"
+    "$date": "2021-07-13T08:00:08.625Z"
   },
   "serial": "9803802",
   "state": "ACTIVE",
@@ -4785,7 +4802,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:45:18.864Z"
+    "$date": "2021-07-13T07:02:33.907Z"
   },
   "serial": "224798",
   "state": "ACTIVE",
@@ -4821,7 +4838,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:45:32.727Z"
+    "$date": "2021-07-13T07:52:51.841Z"
   },
   "serial": "9835401",
   "state": "ACTIVE",
@@ -4870,10 +4887,10 @@
   "_id": {
     "$oid": "6051dde8c587611d6867a358"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-29T14:15:14.660Z"
+    "$date": "2021-07-10T08:38:56.887Z"
   },
   "serial": "9817205",
   "state": "ACTIVE",
@@ -4888,10 +4905,10 @@
   "_id": {
     "$oid": "6051ddf9c587611d6867a359"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:46:17.677Z"
+    "$date": "2021-07-12T08:56:57.327Z"
   },
   "serial": "9818304",
   "state": "ACTIVE",
@@ -4943,7 +4960,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:46:42.926Z"
+    "$date": "2021-07-13T07:45:19.246Z"
   },
   "serial": "9802705",
   "state": "ACTIVE",
@@ -4976,10 +4993,10 @@
   "_id": {
     "$oid": "6051de1ec587611d6867a35e"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:46:54.527Z"
+    "$date": "2021-07-12T17:48:53.418Z"
   },
   "serial": "9800505",
   "state": "ACTIVE",
@@ -5031,7 +5048,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-23T13:17:05.252Z"
+    "$date": "2021-07-12T07:15:12.631Z"
   },
   "serial": "9826506",
   "state": "ACTIVE",
@@ -5049,7 +5066,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:49:05.804Z"
+    "$date": "2021-07-10T23:31:56.641Z"
   },
   "serial": "9804709",
   "state": "ACTIVE",
@@ -5082,10 +5099,10 @@
   "_id": {
     "$oid": "6051deb0c587611d6867a364"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:49:20.954Z"
+    "$date": "2021-07-12T13:20:24.196Z"
   },
   "serial": "9800209",
   "state": "ACTIVE",
@@ -5100,10 +5117,10 @@
   "_id": {
     "$oid": "6051deb8c587611d6867a365"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:49:28.158Z"
+    "$date": "2021-07-12T08:57:20.462Z"
   },
   "serial": "9801109",
   "state": "ACTIVE",
@@ -5118,10 +5135,10 @@
   "_id": {
     "$oid": "6051dfacc587611d6867a366"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:53:32.049Z"
+    "$date": "2021-07-13T08:18:03.513Z"
   },
   "serial": "9819309",
   "state": "ACTIVE",
@@ -5136,10 +5153,10 @@
   "_id": {
     "$oid": "6051dfb2c587611d6867a367"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:53:38.554Z"
+    "$date": "2021-07-12T16:28:17.107Z"
   },
   "serial": "9812910",
   "state": "ACTIVE",
@@ -5298,10 +5315,10 @@
   "_id": {
     "$oid": "6051e00ac587611d6867a370"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-23T13:21:26.326Z"
+    "$date": "2021-07-12T14:31:55.372Z"
   },
   "serial": "9809413",
   "state": "ACTIVE",
@@ -5423,7 +5440,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:55:50.083Z"
+    "$date": "2021-07-13T07:18:59.368Z"
   },
   "serial": "9805818",
   "state": "ACTIVE",
@@ -5441,7 +5458,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-23T14:04:32.362Z"
+    "$date": "2021-07-12T16:54:47.160Z"
   },
   "serial": "9802818",
   "state": "ACTIVE",
@@ -5495,7 +5512,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:56:19.226Z"
+    "$date": "2021-07-12T06:50:25.296Z"
   },
   "serial": "9803518",
   "state": "ACTIVE",
@@ -5582,10 +5599,10 @@
   "_id": {
     "$oid": "6051e088c587611d6867a380"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:57:12.055Z"
+    "$date": "2021-07-13T07:42:31.934Z"
   },
   "serial": "9808618",
   "state": "ACTIVE",
@@ -5693,7 +5710,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-05-11T13:37:00.718Z"
+    "$date": "2021-07-12T19:09:31.855Z"
   },
   "serial": "9811518",
   "state": "ACTIVE",
@@ -5708,10 +5725,10 @@
   "_id": {
     "$oid": "6051e0bcc587611d6867a387"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:58:04.002Z"
+    "$date": "2021-07-12T17:28:04.006Z"
   },
   "serial": "9811718",
   "state": "ACTIVE",
@@ -5762,10 +5779,10 @@
   "_id": {
     "$oid": "6051e0ccc587611d6867a38a"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-05-11T13:36:22.614Z"
+    "$date": "2021-07-12T08:57:03.613Z"
   },
   "serial": "9814518",
   "state": "ACTIVE",
@@ -5853,7 +5870,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:58:56.762Z"
+    "$date": "2021-07-12T22:05:41.093Z"
   },
   "serial": "9807116",
   "state": "ACTIVE",
@@ -5904,10 +5921,10 @@
   "_id": {
     "$oid": "6051e10cc587611d6867a392"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:59:24.823Z"
+    "$date": "2021-07-12T19:58:25.974Z"
   },
   "serial": "9808119",
   "state": "ACTIVE",
@@ -5925,7 +5942,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:59:39.292Z"
+    "$date": "2021-07-13T05:29:12.556Z"
   },
   "serial": "9807019",
   "state": "ACTIVE",
@@ -5943,7 +5960,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:59:46.694Z"
+    "$date": "2021-07-13T05:35:41.609Z"
   },
   "serial": "9800619",
   "state": "ACTIVE",
@@ -5961,7 +5978,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:59:53.373Z"
+    "$date": "2021-07-12T21:31:53.408Z"
   },
   "serial": "9805619",
   "state": "ACTIVE",
@@ -5969,7 +5986,9 @@
   "unit": "CN=M9805619,OU=USERS,OU=CCF-BAT1,OU=CCF,OU=Marinha,DC=marinha,DC=pt",
   "type": "REGIME DE CONTRATO",
   "email": "moreira.vieira@marinha.pt",
-  "__v": 0
+  "__v": 0,
+  "cardId": "044DF61AE66C80",
+  "cardNumber": "M0133"
 },{
   "_id": {
     "$oid": "6051e12ec587611d6867a396"
@@ -5977,7 +5996,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T10:59:58.853Z"
+    "$date": "2021-07-11T21:49:13.343Z"
   },
   "serial": "9802119",
   "state": "ACTIVE",
@@ -5995,7 +6014,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T11:00:05.456Z"
+    "$date": "2021-07-11T21:49:11.159Z"
   },
   "serial": "9807619",
   "state": "ACTIVE",
@@ -6013,7 +6032,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T11:00:12.465Z"
+    "$date": "2021-07-12T19:09:37.023Z"
   },
   "serial": "9806819",
   "state": "ACTIVE",
@@ -6022,8 +6041,8 @@
   "type": "REGIME DE CONTRATO",
   "email": "pena.junior@marinha.pt",
   "__v": 0,
-  "cardId": "04F7071AE66C84",
-  "cardNumber": "M0760"
+  "cardId": "045AE21AE66C80",
+  "cardNumber": "M0160"
 },{
   "_id": {
     "$oid": "6051e142c587611d6867a399"
@@ -6046,10 +6065,10 @@
   "_id": {
     "$oid": "6051e148c587611d6867a39a"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-23T13:21:32.700Z"
+    "$date": "2021-07-11T09:54:27.954Z"
   },
   "serial": "9805319",
   "state": "ACTIVE",
@@ -6139,7 +6158,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T11:01:20.519Z"
+    "$date": "2021-07-13T05:29:06.131Z"
   },
   "serial": "9809117",
   "state": "ACTIVE",
@@ -6154,10 +6173,10 @@
   "_id": {
     "$oid": "6051e181c587611d6867a3a0"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T11:01:21.884Z"
+    "$date": "2021-07-13T03:50:47.044Z"
   },
   "serial": "9805717",
   "state": "ACTIVE",
@@ -6172,10 +6191,10 @@
   "_id": {
     "$oid": "6051e19ac587611d6867a3a1"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T11:01:46.401Z"
+    "$date": "2021-07-12T10:25:15.417Z"
   },
   "serial": "9804016",
   "state": "ACTIVE",
@@ -6190,10 +6209,10 @@
   "_id": {
     "$oid": "6051e1c8c587611d6867a3a2"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-29T15:19:10.316Z"
+    "$date": "2021-07-12T17:03:02.797Z"
   },
   "serial": "20208",
   "state": "ACTIVE",
@@ -6247,7 +6266,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T11:06:39.385Z"
+    "$date": "2021-07-12T22:36:00.617Z"
   },
   "serial": "9600816",
   "state": "ACTIVE",
@@ -6255,15 +6274,17 @@
   "unit": "CN=M9600816,OU=USERS,OU=CCF-BAT1,OU=CCF,OU=Marinha,DC=marinha,DC=pt",
   "type": "REGIME DE CONTRATO",
   "email": "Sobral.Paulino@MARINHA.PT",
-  "__v": 0
+  "__v": 0,
+  "cardId": "0495A91AE66C80",
+  "cardNumber": "M0143"
 },{
   "_id": {
     "$oid": "6051e2c4c587611d6867a3a7"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T11:06:44.607Z"
+    "$date": "2021-07-12T16:26:27.043Z"
   },
   "serial": "9601616",
   "state": "ACTIVE",
@@ -6281,7 +6302,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T11:06:52.840Z"
+    "$date": "2021-07-12T09:10:32.905Z"
   },
   "serial": "9810398",
   "state": "ACTIVE",
@@ -6290,8 +6311,8 @@
   "type": "QP - ACTIVO",
   "email": "alcobia.jose@marinha.pt",
   "__v": 0,
-  "cardId": "0421071AE66C85",
-  "cardNumber": "M0644"
+  "cardId": "04B2A91AE66C80",
+  "cardNumber": "M0142"
 },{
   "_id": {
     "$oid": "6051e2d4c587611d6867a3a9"
@@ -6349,7 +6370,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T11:07:22.887Z"
+    "$date": "2021-07-13T07:41:49.780Z"
   },
   "serial": "9820901",
   "state": "ACTIVE",
@@ -6383,7 +6404,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T11:07:39.874Z"
+    "$date": "2021-07-12T19:49:21.155Z"
   },
   "serial": "9818303",
   "state": "ACTIVE",
@@ -6391,7 +6412,9 @@
   "unit": "CN=M9818303,OU=USERS,OU=CCF-BAT1,OU=CCF,OU=Marinha,DC=marinha,DC=pt",
   "type": "QP - ACTIVO",
   "email": "Pereira.Brito@marinha.pt",
-  "__v": 0
+  "__v": 0,
+  "cardId": "040E9F1AE66C81",
+  "cardNumber": "M0139"
 },{
   "_id": {
     "$oid": "6051e30dc587611d6867a3af"
@@ -6514,10 +6537,10 @@
   "_id": {
     "$oid": "6051e35fc587611d6867a3b6"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T11:09:19.042Z"
+    "$date": "2021-07-12T15:36:05.712Z"
   },
   "serial": "9819704",
   "state": "ACTIVE",
@@ -6535,7 +6558,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T11:09:35.398Z"
+    "$date": "2021-07-13T07:56:31.617Z"
   },
   "serial": "9801105",
   "state": "ACTIVE",
@@ -6543,7 +6566,9 @@
   "unit": "CN=M9801105,OU=USERS,OU=CCF-BAT1,OU=CCF,OU=Marinha,DC=marinha,DC=pt",
   "type": "QP - ACTIVO",
   "email": "Lindade.Pereira@marinha.pt",
-  "__v": 0
+  "__v": 0,
+  "cardId": "0494A91AE66C80",
+  "cardNumber": "M0137"
 },{
   "_id": {
     "$oid": "6051e375c587611d6867a3b8"
@@ -6551,7 +6576,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T11:09:41.453Z"
+    "$date": "2021-07-13T07:37:58.779Z"
   },
   "serial": "9817207",
   "state": "ACTIVE",
@@ -6560,8 +6585,8 @@
   "type": "QP - ACTIVO",
   "email": "vieira.reverendo@marinha.pt",
   "__v": 0,
-  "cardId": "040D061AE66C85",
-  "cardNumber": "M0765"
+  "cardId": "0443F41AE66C81",
+  "cardNumber": "M0169"
 },{
   "_id": {
     "$oid": "6051e381c587611d6867a3b9"
@@ -6582,10 +6607,10 @@
   "_id": {
     "$oid": "6051e38fc587611d6867a3ba"
   },
-  "inOut": false,
+  "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-06-29T13:24:56.441Z"
+    "$date": "2021-07-12T18:18:12.758Z"
   },
   "serial": "9809713",
   "state": "ACTIVE",
@@ -6621,7 +6646,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-23T13:16:54.347Z"
+    "$date": "2021-07-13T07:27:36.374Z"
   },
   "serial": "9802415",
   "state": "ACTIVE",
@@ -6654,10 +6679,10 @@
   "_id": {
     "$oid": "6051e3d9c587611d6867a3be"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T11:11:21.100Z"
+    "$date": "2021-07-13T03:50:41.053Z"
   },
   "serial": "9810617",
   "state": "ACTIVE",
@@ -6665,7 +6690,9 @@
   "unit": "CN=M9810617,OU=USERS,OU=CCF-BAT1,OU=CCF,OU=Marinha,DC=marinha,DC=pt",
   "type": "REGIME DE CONTRATO",
   "email": "Diogo.Pena@MARINHA.PT",
-  "__v": 0
+  "__v": 0,
+  "cardId": "0439F61AE66C81",
+  "cardNumber": "M0167"
 },{
   "_id": {
     "$oid": "6051e3d9c587611d6867a3bf"
@@ -6673,7 +6700,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T11:11:21.831Z"
+    "$date": "2021-07-12T07:04:47.349Z"
   },
   "serial": "9807516",
   "state": "ACTIVE",
@@ -6709,7 +6736,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T11:11:32.394Z"
+    "$date": "2021-07-12T21:54:36.433Z"
   },
   "serial": "9809517",
   "state": "ACTIVE",
@@ -6717,15 +6744,17 @@
   "unit": "CN=M9809517,OU=USERS,OU=CCF-BAT1,OU=CCF,OU=Marinha,DC=marinha,DC=pt",
   "type": "REGIME DE CONTRATO",
   "email": "Valdagua.Coutinho@MARINHA.PT",
-  "__v": 0
+  "__v": 0,
+  "cardId": "0423F41AE66C81",
+  "cardNumber": "M0170"
 },{
   "_id": {
     "$oid": "6051e3e9c587611d6867a3c2"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T11:11:37.788Z"
+    "$date": "2021-07-12T13:42:19.950Z"
   },
   "serial": "9811817",
   "state": "ACTIVE",
@@ -6733,7 +6762,9 @@
   "unit": "CN=M9811817,OU=USERS,OU=CCF-BAT1,OU=CCF,OU=Marinha,DC=marinha,DC=pt",
   "type": "REGIME DE CONTRATO",
   "email": "Jesus.Inacio@MARINHA.PT",
-  "__v": 0
+  "__v": 0,
+  "cardId": "046DE61AE66C80",
+  "cardNumber": "M0164"
 },{
   "_id": {
     "$oid": "6051e3f2c587611d6867a3c3"
@@ -6822,10 +6853,10 @@
   "_id": {
     "$oid": "6051e454c587611d6867a3c8"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T11:13:24.079Z"
+    "$date": "2021-07-12T09:09:26.281Z"
   },
   "serial": "9800618",
   "state": "ACTIVE",
@@ -6843,7 +6874,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T11:13:29.267Z"
+    "$date": "2021-07-13T07:44:16.947Z"
   },
   "serial": "9811818",
   "state": "ACTIVE",
@@ -6851,7 +6882,9 @@
   "unit": "CN=M9811818,OU=USERS,OU=CCF-BAT1,OU=CCF,OU=Marinha,DC=marinha,DC=pt",
   "type": "REGIME DE CONTRATO",
   "email": "Miguel.Correia.Manguito@MARINHA.PT",
-  "__v": 0
+  "__v": 0,
+  "cardId": "0437A91AE66C81",
+  "cardNumber": "M0168"
 },{
   "_id": {
     "$oid": "6051e45ec587611d6867a3ca"
@@ -6859,7 +6892,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T11:13:34.372Z"
+    "$date": "2021-07-12T11:27:59.055Z"
   },
   "serial": "9813918",
   "state": "ACTIVE",
@@ -6877,7 +6910,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T11:13:39.929Z"
+    "$date": "2021-07-12T19:39:01.804Z"
   },
   "serial": "9811918",
   "state": "ACTIVE",
@@ -7916,10 +7949,10 @@
   "_id": {
     "$oid": "6051ec5dc587611d6867a40e"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T11:47:41.660Z"
+    "$date": "2021-07-13T08:08:29.299Z"
   },
   "serial": "9816904",
   "state": "ACTIVE",
@@ -8003,7 +8036,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-17T11:54:52.300Z"
+    "$date": "2021-07-13T07:20:32.079Z"
   },
   "serial": "23400",
   "state": "ACTIVE",
@@ -8093,7 +8126,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-18T09:32:50.491Z"
+    "$date": "2021-07-13T06:25:57.779Z"
   },
   "serial": "9802104",
   "state": "ACTIVE",
@@ -8373,7 +8406,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-18T09:43:18.914Z"
+    "$date": "2021-07-13T07:26:19.733Z"
   },
   "serial": "9820004",
   "state": "ACTIVE",
@@ -8545,7 +8578,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-18T09:45:45.130Z"
+    "$date": "2021-07-12T17:07:48.620Z"
   },
   "serial": "9813417",
   "state": "ACTIVE",
@@ -8553,7 +8586,9 @@
   "unit": "CN=M9813417,OU=USERS,OU=CCF-BAT2,OU=CCF,OU=Marinha,DC=marinha,DC=pt",
   "type": "REGIME DE CONTRATO",
   "email": "Goncalves.Aranha@MARINHA.PT",
-  "__v": 0
+  "__v": 0,
+  "cardId": "046BCB1AE66C81",
+  "cardNumber": "M0354"
 },{
   "_id": {
     "$oid": "60532165fd570f31d0a37c4b"
@@ -8717,7 +8752,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-18T09:55:26.475Z"
+    "$date": "2021-07-13T07:34:27.451Z"
   },
   "serial": "9804219",
   "state": "ACTIVE",
@@ -8805,7 +8840,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-22T11:40:16.886Z"
+    "$date": "2021-07-09T08:13:57.061Z"
   },
   "serial": "9808099",
   "state": "ACTIVE",
@@ -8911,7 +8946,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-22T14:20:43.834Z"
+    "$date": "2021-07-12T22:22:51.877Z"
   },
   "serial": "9806919",
   "state": "ACTIVE",
@@ -8965,7 +9000,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-22T14:21:34.628Z"
+    "$date": "2021-07-12T21:38:27.571Z"
   },
   "serial": "9805919",
   "state": "ACTIVE",
@@ -9016,10 +9051,10 @@
   "_id": {
     "$oid": "6058a823bf4bc84094722530"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-22T14:22:27.977Z"
+    "$date": "2021-07-12T23:08:33.355Z"
   },
   "serial": "9807518",
   "state": "ACTIVE",
@@ -9037,7 +9072,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-22T14:22:37.910Z"
+    "$date": "2021-07-12T21:38:24.154Z"
   },
   "serial": "9801119",
   "state": "ACTIVE",
@@ -9073,7 +9108,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-22T14:23:08.971Z"
+    "$date": "2021-07-12T21:38:32.235Z"
   },
   "serial": "9801819",
   "state": "ACTIVE",
@@ -9091,7 +9126,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-22T14:23:18.822Z"
+    "$date": "2021-07-13T00:52:45.431Z"
   },
   "serial": "9801919",
   "state": "ACTIVE",
@@ -9124,10 +9159,10 @@
   "_id": {
     "$oid": "6058a894bf4bc84094722536"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-22T14:24:20.889Z"
+    "$date": "2021-07-11T08:26:56.126Z"
   },
   "serial": "9808517",
   "state": "ACTIVE",
@@ -9181,7 +9216,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-22T15:48:11.717Z"
+    "$date": "2021-07-13T07:42:29.949Z"
   },
   "serial": "9806516",
   "state": "ACTIVE",
@@ -9199,7 +9234,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-22T15:48:23.294Z"
+    "$date": "2021-07-13T07:38:54.376Z"
   },
   "serial": "746388",
   "state": "ACTIVE",
@@ -9235,7 +9270,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-23T10:02:47.712Z"
+    "$date": "2021-07-13T06:56:10.920Z"
   },
   "serial": "21592",
   "state": "ACTIVE",
@@ -9445,7 +9480,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-23T10:13:45.126Z"
+    "$date": "2021-07-13T08:10:15.748Z"
   },
   "serial": "9802299",
   "state": "ACTIVE",
@@ -9479,7 +9514,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-23T10:14:04.992Z"
+    "$date": "2021-07-13T07:43:17.401Z"
   },
   "serial": "9801002",
   "state": "ACTIVE",
@@ -9548,10 +9583,10 @@
   "_id": {
     "$oid": "6059bf92bf4bc84094722551"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-23T10:14:42.950Z"
+    "$date": "2021-07-12T05:37:34.842Z"
   },
   "serial": "9807797",
   "state": "ACTIVE",
@@ -9637,7 +9672,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-23T10:15:13.947Z"
+    "$date": "2021-07-13T08:03:48.630Z"
   },
   "serial": "9809703",
   "state": "ACTIVE",
@@ -9673,7 +9708,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-23T10:15:36.366Z"
+    "$date": "2021-07-12T17:38:57.236Z"
   },
   "serial": "9601318",
   "state": "ACTIVE",
@@ -9919,7 +9954,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-23T10:21:54.034Z"
+    "$date": "2021-07-13T08:19:26.417Z"
   },
   "serial": "304603",
   "state": "ACTIVE",
@@ -9937,7 +9972,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-23T10:22:02.409Z"
+    "$date": "2021-07-13T07:07:54.227Z"
   },
   "serial": "9802905",
   "state": "ACTIVE",
@@ -9989,7 +10024,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-24T09:32:01.625Z"
+    "$date": "2021-07-13T06:20:30.573Z"
   },
   "serial": "9806102",
   "state": "ACTIVE",
@@ -10004,10 +10039,10 @@
   "_id": {
     "$oid": "605b071cbf4bc84094722570"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-23T13:02:57.519Z"
+    "$date": "2021-07-11T07:10:47.221Z"
   },
   "serial": "9809100",
   "state": "ACTIVE",
@@ -10076,10 +10111,10 @@
   "_id": {
     "$oid": "605c4edebf4bc8409472257a"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-25T08:50:38.088Z"
+    "$date": "2021-07-13T06:10:06.723Z"
   },
   "serial": "319298",
   "state": "ACTIVE",
@@ -10151,7 +10186,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-25T10:43:53.706Z"
+    "$date": "2021-07-13T07:50:56.046Z"
   },
   "serial": "21002",
   "state": "ACTIVE",
@@ -10187,7 +10222,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-25T10:44:19.892Z"
+    "$date": "2021-07-12T07:51:31.383Z"
   },
   "serial": "9815701",
   "state": "ACTIVE",
@@ -10205,7 +10240,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-25T10:52:14.122Z"
+    "$date": "2021-07-12T17:23:19.431Z"
   },
   "serial": "9360104",
   "state": "ACTIVE",
@@ -10277,7 +10312,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-03-27T09:11:48.706Z"
+    "$date": "2021-07-13T07:19:23.782Z"
   },
   "serial": "9337704",
   "state": "ACTIVE",
@@ -10286,8 +10321,8 @@
   "type": "QP - ACTIVO",
   "email": "conceicao.porta@marinha.pt",
   "__v": 0,
-  "cardId": "0427061AE66C85",
-  "cardNumber": "M0626"
+  "cardId": "0452E81AE66C81",
+  "cardNumber": "M0234"
 },{
   "_id": {
     "$oid": "605ef6e2bf4bc84094722590"
@@ -10313,7 +10348,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-06T09:42:04.852Z"
+    "$date": "2021-07-13T07:51:33.456Z"
   },
   "serial": "9815700",
   "state": "ACTIVE",
@@ -11141,7 +11176,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-06T14:33:04.159Z"
+    "$date": "2021-07-13T08:04:05.571Z"
   },
   "serial": "310699",
   "state": "ACTIVE",
@@ -11177,7 +11212,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-06T14:57:34.376Z"
+    "$date": "2021-07-13T07:46:15.047Z"
   },
   "serial": "9812604",
   "state": "ACTIVE",
@@ -11273,7 +11308,7 @@
     }
   ],
   "lastMovementDate": {
-    "$date": "2021-07-07T13:28:51.121Z"
+    "$date": "2021-07-12T09:45:02.314Z"
   },
   "serial": "21090",
   "state": "ACTIVE",
@@ -11291,7 +11326,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-07T13:35:07.384Z"
+    "$date": "2021-07-13T07:57:37.102Z"
   },
   "serial": "23797",
   "state": "ACTIVE",
@@ -11309,7 +11344,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-07T13:45:17.459Z"
+    "$date": "2021-07-13T07:47:38.724Z"
   },
   "serial": "24409",
   "state": "ACTIVE",
@@ -11327,7 +11362,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-07T14:58:33.111Z"
+    "$date": "2021-07-13T08:12:35.382Z"
   },
   "serial": "160588",
   "state": "ACTIVE",
@@ -11363,7 +11398,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-07T15:00:12.655Z"
+    "$date": "2021-07-13T07:11:21.834Z"
   },
   "serial": "26786",
   "state": "ACTIVE",
@@ -11397,7 +11432,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-07T15:01:25.890Z"
+    "$date": "2021-07-13T07:59:48.040Z"
   },
   "serial": "9325399",
   "state": "ACTIVE",
@@ -11415,7 +11450,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-07T15:01:43.461Z"
+    "$date": "2021-07-13T06:48:12.348Z"
   },
   "serial": "9302504",
   "state": "ACTIVE",
@@ -11516,10 +11551,10 @@
   "_id": {
     "$oid": "606dca2fe49e522ddccc86ce"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-07T15:05:19.028Z"
+    "$date": "2021-07-12T12:33:35.740Z"
   },
   "serial": "9832308",
   "state": "ACTIVE",
@@ -11537,7 +11572,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-08T13:48:21.296Z"
+    "$date": "2021-07-13T07:40:19.326Z"
   },
   "serial": "9811901",
   "state": "ACTIVE",
@@ -11591,7 +11626,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-09T11:01:14.581Z"
+    "$date": "2021-07-13T08:06:01.749Z"
   },
   "serial": "20109",
   "state": "ACTIVE",
@@ -11609,7 +11644,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-09T12:36:51.340Z"
+    "$date": "2021-07-12T07:13:41.114Z"
   },
   "serial": "9805702",
   "state": "ACTIVE",
@@ -11642,10 +11677,10 @@
   "_id": {
     "$oid": "60704c9be49e522ddccc870b"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-09T12:46:19.968Z"
+    "$date": "2021-07-12T14:06:55.489Z"
   },
   "serial": "9810104",
   "state": "ACTIVE",
@@ -11733,7 +11768,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-13T13:15:04.443Z"
+    "$date": "2021-07-12T22:37:24.083Z"
   },
   "serial": "9808500",
   "state": "ACTIVE",
@@ -11787,7 +11822,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-13T13:21:58.191Z"
+    "$date": "2021-07-13T07:36:41.066Z"
   },
   "serial": "9805104",
   "state": "ACTIVE",
@@ -11802,10 +11837,10 @@
   "_id": {
     "$oid": "60759bef6c413715d8a38151"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-13T13:26:07.341Z"
+    "$date": "2021-07-12T14:10:47.997Z"
   },
   "serial": "9326603",
   "state": "ACTIVE",
@@ -11823,7 +11858,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-13T13:26:41.434Z"
+    "$date": "2021-07-13T07:45:29.490Z"
   },
   "serial": "102898",
   "state": "ACTIVE",
@@ -11859,7 +11894,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-13T13:40:36.711Z"
+    "$date": "2021-07-13T00:04:02.090Z"
   },
   "serial": "9807403",
   "state": "ACTIVE",
@@ -11967,7 +12002,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-14T12:36:59.752Z"
+    "$date": "2021-07-13T07:21:00.969Z"
   },
   "serial": "11005394",
   "state": "ACTIVE",
@@ -11976,8 +12011,8 @@
   "type": "MAPA DE PESSOAL CIVIL DA MARINHA",
   "email": "anselmo.pinto@marinha.pt",
   "__v": 0,
-  "cardId": "045F9E1AE66C80",
-  "cardNumber": "C02"
+  "cardId": "0427F61AE66C81",
+  "cardNumber": "M0220"
 },{
   "_id": {
     "$oid": "6076e4176c413715d8a38179"
@@ -11985,7 +12020,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-14T12:46:15.795Z"
+    "$date": "2021-07-13T06:47:45.599Z"
   },
   "serial": "12009700",
   "state": "ACTIVE",
@@ -11994,8 +12029,8 @@
   "type": "MAPA DE PESSOAL CIVIL DA MARINHA",
   "email": "maria.conceicao.gregorio@marinha.pt",
   "__v": 0,
-  "cardId": "0411071AE66C85",
-  "cardNumber": "C05"
+  "cardId": "0430E91AE66C81",
+  "cardNumber": "M0350"
 },{
   "_id": {
     "$oid": "6076e5fb6c413715d8a3817c"
@@ -12090,10 +12125,10 @@
   "_id": {
     "$oid": "6076f2906c413715d8a3819f"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-29T13:17:27.085Z"
+    "$date": "2021-07-12T07:55:58.950Z"
   },
   "serial": "9805399",
   "state": "ACTIVE",
@@ -12183,7 +12218,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-15T14:01:30.137Z"
+    "$date": "2021-07-13T07:43:08.984Z"
   },
   "serial": "9102719",
   "state": "ACTIVE",
@@ -12201,7 +12236,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-15T14:06:58.923Z"
+    "$date": "2021-07-13T06:41:17.201Z"
   },
   "serial": "785288",
   "state": "ACTIVE",
@@ -12237,7 +12272,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-15T18:46:57.366Z"
+    "$date": "2021-07-12T08:50:31.868Z"
   },
   "serial": "410086",
   "state": "ACTIVE",
@@ -12284,10 +12319,10 @@
   "_id": {
     "$oid": "607946696c413715d8a381dc"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-16T08:10:17.926Z"
+    "$date": "2021-07-12T16:01:56.913Z"
   },
   "serial": "9329597",
   "state": "ACTIVE",
@@ -12305,7 +12340,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-16T08:10:44.533Z"
+    "$date": "2021-07-13T07:23:44.914Z"
   },
   "serial": "9303508",
   "state": "ACTIVE",
@@ -12323,7 +12358,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-16T08:11:08.359Z"
+    "$date": "2021-07-13T07:19:57.696Z"
   },
   "serial": "6800492",
   "state": "ACTIVE",
@@ -12357,7 +12392,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-16T08:11:33.915Z"
+    "$date": "2021-07-13T07:29:19.054Z"
   },
   "serial": "9807497",
   "state": "ACTIVE",
@@ -12388,10 +12423,10 @@
   "_id": {
     "$oid": "607946f36c413715d8a381e2"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-16T08:12:35.480Z"
+    "$date": "2021-07-13T06:31:26.135Z"
   },
   "serial": "9801999",
   "state": "ACTIVE",
@@ -12406,10 +12441,10 @@
   "_id": {
     "$oid": "607947026c413715d8a381e4"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-16T08:12:50.947Z"
+    "$date": "2021-07-12T15:39:23.557Z"
   },
   "serial": "9806999",
   "state": "ACTIVE",
@@ -12440,10 +12475,10 @@
   "_id": {
     "$oid": "6079472a6c413715d8a381e6"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-16T08:13:30.596Z"
+    "$date": "2021-07-11T09:03:40.557Z"
   },
   "serial": "9808000",
   "state": "ACTIVE",
@@ -12510,10 +12545,10 @@
   "_id": {
     "$oid": "6079475e6c413715d8a381ea"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-16T08:14:22.947Z"
+    "$date": "2021-07-12T15:13:45.811Z"
   },
   "serial": "230101",
   "state": "ACTIVE",
@@ -12528,10 +12563,10 @@
   "_id": {
     "$oid": "6079476d6c413715d8a381eb"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-16T08:14:37.068Z"
+    "$date": "2021-07-12T13:38:11.826Z"
   },
   "serial": "9806803",
   "state": "ACTIVE",
@@ -12546,10 +12581,10 @@
   "_id": {
     "$oid": "60794c076c413715d8a381ed"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-16T08:34:15.848Z"
+    "$date": "2021-07-12T14:36:37.237Z"
   },
   "serial": "9803102",
   "state": "ACTIVE",
@@ -12583,7 +12618,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-29T13:16:44.874Z"
+    "$date": "2021-07-12T07:20:09.949Z"
   },
   "serial": "9805798",
   "state": "ACTIVE",
@@ -12601,7 +12636,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-16T08:38:04.152Z"
+    "$date": "2021-07-13T07:56:50.310Z"
   },
   "serial": "9339602",
   "state": "ACTIVE",
@@ -12634,10 +12669,10 @@
   "_id": {
     "$oid": "60794d226c413715d8a381f3"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-16T08:38:58.806Z"
+    "$date": "2021-07-12T16:03:41.827Z"
   },
   "serial": "9325596",
   "state": "ACTIVE",
@@ -12655,7 +12690,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-16T08:39:41.960Z"
+    "$date": "2021-07-13T07:58:49.499Z"
   },
   "serial": "11008009",
   "state": "ACTIVE",
@@ -12664,16 +12699,16 @@
   "type": "MAPA DE PESSOAL CIVIL DA MARINHA",
   "email": "amado.fonseca@marinha.pt",
   "__v": 0,
-  "cardId": "0420FD1AE66C81",
-  "cardNumber": "C10"
+  "cardId": "0402FD1AE66C81",
+  "cardNumber": "M0347"
 },{
   "_id": {
     "$oid": "60794d676c413715d8a381f6"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-16T08:40:07.227Z"
+    "$date": "2021-07-12T15:23:17.865Z"
   },
   "serial": "11014209",
   "state": "ACTIVE",
@@ -12682,8 +12717,8 @@
   "type": "MAPA DE PESSOAL CIVIL DA MARINHA",
   "email": "cesar.santos.ferreira@marinha.pt",
   "__v": 0,
-  "cardId": "048D9E1AE66C80",
-  "cardNumber": "C09"
+  "cardId": "0468F61AE66C80",
+  "cardNumber": "M0345"
 },{
   "_id": {
     "$oid": "60794d736c413715d8a381f7"
@@ -12709,7 +12744,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-29T14:05:43.237Z"
+    "$date": "2021-07-12T20:04:42.699Z"
   },
   "serial": "9600917",
   "state": "ACTIVE",
@@ -12740,10 +12775,10 @@
   "_id": {
     "$oid": "607957286c413715d8a381fb"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-16T09:21:44.487Z"
+    "$date": "2021-07-09T15:32:14.443Z"
   },
   "serial": "9339402",
   "state": "ACTIVE",
@@ -12761,7 +12796,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-16T09:22:52.554Z"
+    "$date": "2021-07-10T09:04:48.379Z"
   },
   "serial": "315292",
   "state": "ACTIVE",
@@ -12779,7 +12814,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-16T09:23:50.772Z"
+    "$date": "2021-07-13T07:50:35.615Z"
   },
   "serial": "900390",
   "state": "ACTIVE",
@@ -12797,7 +12832,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-16T09:25:06.352Z"
+    "$date": "2021-07-13T07:40:25.538Z"
   },
   "serial": "1576291",
   "state": "ACTIVE",
@@ -12830,10 +12865,10 @@
   "_id": {
     "$oid": "6079580e6c413715d8a38201"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-16T09:25:34.445Z"
+    "$date": "2021-07-12T15:23:31.725Z"
   },
   "serial": "9808400",
   "state": "ACTIVE",
@@ -12887,7 +12922,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-16T09:26:24.543Z"
+    "$date": "2021-07-13T07:44:29.142Z"
   },
   "serial": "9801707",
   "state": "ACTIVE",
@@ -12939,7 +12974,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-16T09:27:31.186Z"
+    "$date": "2021-07-13T07:59:16.378Z"
   },
   "serial": "14005887",
   "state": "ACTIVE",
@@ -12948,8 +12983,8 @@
   "type": "MAPA DE PESSOAL CIVIL DA MARINHA",
   "email": "antunes.tome@marinha.pt",
   "__v": 0,
-  "cardId": "0429A91AE66C81",
-  "cardNumber": "C07"
+  "cardId": "048FA91AE66C80",
+  "cardNumber": "M0140"
 },{
   "_id": {
     "$oid": "6079588e6c413715d8a38209"
@@ -13021,7 +13056,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-16T10:35:21.307Z"
+    "$date": "2021-07-13T05:58:51.710Z"
   },
   "serial": "409486",
   "state": "ACTIVE",
@@ -13055,7 +13090,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-16T10:38:59.190Z"
+    "$date": "2021-07-13T06:14:17.171Z"
   },
   "serial": "9318000",
   "state": "ACTIVE",
@@ -13123,7 +13158,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-16T10:40:37.047Z"
+    "$date": "2021-07-13T07:26:39.806Z"
   },
   "serial": "9333309",
   "state": "ACTIVE",
@@ -13131,7 +13166,9 @@
   "unit": "CN=M9333309,OU=USERS,OU=CCF,OU=Marinha,DC=marinha,DC=pt",
   "type": "QP - ACTIVO",
   "email": "rocha.fernandes@marinha.pt",
-  "__v": 0
+  "__v": 0,
+  "cardId": "04078E1AE66C81",
+  "cardNumber": "M0172"
 },{
   "_id": {
     "$oid": "607969fc6c413715d8a38216"
@@ -13157,7 +13194,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-16T10:42:49.647Z"
+    "$date": "2021-07-12T06:47:07.789Z"
   },
   "serial": "9326100",
   "state": "ACTIVE",
@@ -13352,10 +13389,10 @@
   "_id": {
     "$oid": "60799d216c413715d8a3823f"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-16T14:20:17.043Z"
+    "$date": "2021-07-12T14:24:06.947Z"
   },
   "serial": "723287",
   "state": "ACTIVE",
@@ -13364,8 +13401,8 @@
   "type": "QP - ACTIVO",
   "email": "fernando.lopes.santos@marinha.pt",
   "__v": 0,
-  "cardId": "041A071AE66C85",
-  "cardNumber": "M0679"
+  "cardId": "04F49A1AE66C80",
+  "cardNumber": "M0141"
 },{
   "_id": {
     "$oid": "60799d476c413715d8a38241"
@@ -13373,7 +13410,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-16T14:20:55.748Z"
+    "$date": "2021-07-13T07:27:10.109Z"
   },
   "serial": "1503994",
   "state": "ACTIVE",
@@ -13388,10 +13425,10 @@
   "_id": {
     "$oid": "60799d5f6c413715d8a38243"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-16T14:21:19.706Z"
+    "$date": "2021-07-12T15:02:57.094Z"
   },
   "serial": "403503",
   "state": "ACTIVE",
@@ -13427,7 +13464,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-16T15:14:03.014Z"
+    "$date": "2021-07-13T07:45:45.422Z"
   },
   "serial": "9817804",
   "state": "ACTIVE",
@@ -13435,7 +13472,9 @@
   "unit": "CN=M9817804,OU=USERS,OU=CCF,OU=Marinha,DC=marinha,DC=pt",
   "type": "QP - ACTIVO",
   "email": "rui.santos.roque@marinha.pt",
-  "__v": 0
+  "__v": 0,
+  "cardId": "044DE51AE66C80",
+  "cardNumber": "M0317"
 },{
   "_id": {
     "$oid": "6079ab8f6c413715d8a3824d"
@@ -13461,7 +13500,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-19T06:38:27.117Z"
+    "$date": "2021-07-13T06:36:18.506Z"
   },
   "serial": "9320102",
   "state": "ACTIVE",
@@ -13479,7 +13518,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-19T08:41:52.975Z"
+    "$date": "2021-07-13T07:54:44.495Z"
   },
   "serial": "9300308",
   "state": "ACTIVE",
@@ -13547,7 +13586,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-19T09:05:26.727Z"
+    "$date": "2021-07-13T07:43:44.884Z"
   },
   "serial": "25693",
   "state": "ACTIVE",
@@ -13555,7 +13594,9 @@
   "unit": "CN=M25693,OU=USERS,OU=CCF,OU=Marinha,DC=marinha,DC=pt",
   "type": "QP - ACTIVO",
   "email": "oliveira.azenha@marinha.pt",
-  "__v": 0
+  "__v": 0,
+  "cardId": "04D5F21AE66C80",
+  "cardNumber": "M0020"
 },{
   "_id": {
     "$oid": "607d5b406c413715d8a3825a"
@@ -13563,7 +13604,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-19T10:28:16.749Z"
+    "$date": "2021-07-13T07:55:41.876Z"
   },
   "serial": "210398",
   "state": "ACTIVE",
@@ -13578,10 +13619,10 @@
   "_id": {
     "$oid": "607d5c006c413715d8a3825b"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-19T10:31:28.160Z"
+    "$date": "2021-07-12T11:04:45.191Z"
   },
   "serial": "168088",
   "state": "ACTIVE",
@@ -13599,7 +13640,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-19T12:41:11.713Z"
+    "$date": "2021-07-13T07:18:28.953Z"
   },
   "serial": "9810499",
   "state": "ACTIVE",
@@ -13633,7 +13674,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-19T13:25:22.124Z"
+    "$date": "2021-07-13T05:57:01.021Z"
   },
   "serial": "9817009",
   "state": "ACTIVE",
@@ -13684,10 +13725,10 @@
   "_id": {
     "$oid": "607d89cf6c413715d8a38288"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-19T13:46:55.778Z"
+    "$date": "2021-07-11T06:54:15.317Z"
   },
   "serial": "9805495",
   "state": "ACTIVE",
@@ -13705,7 +13746,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-19T13:56:28.395Z"
+    "$date": "2021-07-13T07:42:53.103Z"
   },
   "serial": "9811007",
   "state": "ACTIVE",
@@ -13738,10 +13779,10 @@
   "_id": {
     "$oid": "607d8e976c413715d8a38290"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-19T14:07:19.952Z"
+    "$date": "2021-07-12T16:51:09.325Z"
   },
   "serial": "9810504",
   "state": "ACTIVE",
@@ -13777,7 +13818,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-19T14:19:52.787Z"
+    "$date": "2021-07-12T06:44:55.085Z"
   },
   "serial": "9801103",
   "state": "ACTIVE",
@@ -13795,7 +13836,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-19T14:56:21.343Z"
+    "$date": "2021-07-13T06:38:10.176Z"
   },
   "serial": "9832802",
   "state": "ACTIVE",
@@ -13810,10 +13851,10 @@
   "_id": {
     "$oid": "607d9c9e6c413715d8a3829c"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-19T15:07:10.541Z"
+    "$date": "2021-07-11T08:08:44.948Z"
   },
   "serial": "9813199",
   "state": "ACTIVE",
@@ -13865,7 +13906,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-20T13:53:35.051Z"
+    "$date": "2021-07-13T06:51:47.835Z"
   },
   "serial": "1500794",
   "state": "ACTIVE",
@@ -13898,10 +13939,10 @@
   "_id": {
     "$oid": "60802ba1ef2ca840106f1d49"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-21T13:41:53.293Z"
+    "$date": "2021-07-12T12:32:54.059Z"
   },
   "serial": "918188",
   "state": "ACTIVE",
@@ -13955,7 +13996,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-21T14:34:17.251Z"
+    "$date": "2021-07-08T18:05:26.474Z"
   },
   "serial": "9805296",
   "state": "ACTIVE",
@@ -13970,10 +14011,10 @@
   "_id": {
     "$oid": "6081775d6f56c827f002766f"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-22T13:17:17.087Z"
+    "$date": "2021-07-12T15:50:24.139Z"
   },
   "serial": "9815507",
   "state": "ACTIVE",
@@ -14027,7 +14068,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-22T14:29:00.725Z"
+    "$date": "2021-07-13T06:31:56.852Z"
   },
   "serial": "9816103",
   "state": "ACTIVE",
@@ -14125,7 +14166,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-29T13:16:37.398Z"
+    "$date": "2021-07-13T05:47:56.454Z"
   },
   "serial": "9800400",
   "state": "ACTIVE",
@@ -14197,7 +14238,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-27T14:41:17.473Z"
+    "$date": "2021-07-13T06:39:12.468Z"
   },
   "serial": "6303493",
   "state": "ACTIVE",
@@ -14251,7 +14292,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-04-29T14:23:09.511Z"
+    "$date": "2021-07-12T06:11:28.872Z"
   },
   "serial": "774990",
   "state": "ACTIVE",
@@ -14287,7 +14328,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-05-06T09:33:33.724Z"
+    "$date": "2021-07-13T06:32:13.586Z"
   },
   "serial": "20406",
   "state": "ACTIVE",
@@ -14305,7 +14346,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-05-06T13:35:08.881Z"
+    "$date": "2021-07-10T22:23:39.738Z"
   },
   "serial": "9311516",
   "state": "ACTIVE",
@@ -14320,10 +14361,10 @@
   "_id": {
     "$oid": "6093f90f66817e3d94e66fb4"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-05-06T14:11:27.768Z"
+    "$date": "2021-07-12T13:21:17.574Z"
   },
   "serial": "9322095",
   "state": "ACTIVE",
@@ -14341,7 +14382,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-05-06T14:16:21.320Z"
+    "$date": "2021-07-13T05:29:46.025Z"
   },
   "serial": "9322605",
   "state": "ACTIVE",
@@ -14359,7 +14400,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-05-10T10:26:09.850Z"
+    "$date": "2021-07-13T08:09:12.431Z"
   },
   "serial": "9808798",
   "state": "ACTIVE",
@@ -14374,10 +14415,10 @@
   "_id": {
     "$oid": "609bed7066817e3d94e66fd9"
   },
-  "inOut": true,
+  "inOut": false,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-05-12T15:46:53.798Z"
+    "$date": "2021-07-12T15:45:25.327Z"
   },
   "serial": "9346603",
   "state": "ACTIVE",
@@ -14395,7 +14436,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-06-17T10:16:11.573Z"
+    "$date": "2021-07-13T07:36:58.124Z"
   },
   "serial": "74189",
   "state": "ACTIVE",
@@ -14413,7 +14454,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-06-17T12:43:04.408Z"
+    "$date": "2021-07-12T20:11:10.346Z"
   },
   "serial": "6800291",
   "state": "ACTIVE",
@@ -14431,7 +14472,7 @@
   "inOut": true,
   "resources": [],
   "lastMovementDate": {
-    "$date": "2021-07-07T09:51:36.252Z"
+    "$date": "2021-07-13T07:16:15.948Z"
   },
   "serial": "9309005",
   "state": "ACTIVE",
@@ -14460,4 +14501,270 @@
   "__v": 0,
   "cardId": "04B0F21AE66C80",
   "cardNumber": "M0174"
+},{
+  "_id": {
+    "$oid": "60e8203b07e2c02d2c780eda"
+  },
+  "inOut": false,
+  "resources": [],
+  "lastMovementDate": {
+    "$date": "2021-07-12T09:20:06.336Z"
+  },
+  "serial": "1508795",
+  "state": "ACTIVE",
+  "name": "SAJ FZ Maurício Sousa",
+  "unit": "CN=M1508795,OU=USERS,OU=CCF-BAT2,OU=CCF,OU=Marinha,DC=marinha,DC=pt",
+  "type": "QP - ACTIVO",
+  "email": "mauricio.sousa@marinha.pt",
+  "__v": 0,
+  "cardId": "043DE21AE66C80",
+  "cardNumber": "M0356"
+},{
+  "_id": {
+    "$oid": "60e8216b07e2c02d2c780edc"
+  },
+  "inOut": false,
+  "resources": [],
+  "lastMovementDate": {
+    "$date": "2021-07-12T15:50:00.519Z"
+  },
+  "serial": "9810195",
+  "state": "ACTIVE",
+  "name": "CAB FZ Saro Miranda",
+  "unit": "CN=M9810195,OU=USERS,OU=CCF,OU=Marinha,DC=marinha,DC=pt",
+  "type": "QP - ACTIVO",
+  "email": "Saro.Miranda@marinha.pt",
+  "__v": 0,
+  "cardId": "046BE21AE66C80",
+  "cardNumber": "M0216"
+},{
+  "_id": {
+    "$oid": "60e821a607e2c02d2c780edf"
+  },
+  "inOut": true,
+  "resources": [],
+  "lastMovementDate": {
+    "$date": "2021-07-13T07:11:57.767Z"
+  },
+  "serial": "746286",
+  "state": "ACTIVE",
+  "name": "SCH FZ Guerreiro Lopes",
+  "unit": "CN=M746286,OU=USERS,OU=CCF,OU=Marinha,DC=marinha,DC=pt",
+  "type": "QP - ACTIVO",
+  "email": "guerreiro.lopes@marinha.pt",
+  "__v": 0,
+  "cardId": "04D69F1AE66C80",
+  "cardNumber": "M0341"
+},{
+  "_id": {
+    "$oid": "60e862d575a662144c31a35d"
+  },
+  "inOut": true,
+  "resources": [],
+  "lastMovementDate": {
+    "$date": "2021-07-13T07:10:43.564Z"
+  },
+  "serial": "9326998",
+  "state": "ACTIVE",
+  "name": "CAB TFH Semeano Marramaque",
+  "unit": "CN=M9326998,OU=USERS,OU=CCF,OU=Marinha,DC=marinha,DC=pt",
+  "type": "QP - ACTIVO",
+  "email": "semeano.marramaque@marinha.pt",
+  "__v": 0,
+  "cardId": "0417F61AE66C81",
+  "cardNumber": "M0214"
+},{
+  "_id": {
+    "$oid": "60e865c075a662144c31a367"
+  },
+  "inOut": false,
+  "resources": [],
+  "lastMovementDate": {
+    "$date": "2021-07-12T14:54:07.466Z"
+  },
+  "serial": "756990",
+  "state": "ACTIVE",
+  "name": "CAB FZ Barca do Carmo",
+  "unit": "CN=M756990,OU=USERS,OU=CCF,OU=Marinha,DC=marinha,DC=pt",
+  "type": "QP - ACTIVO",
+  "email": "barca.carmo@marinha.pt",
+  "__v": 0,
+  "cardId": "04D19A1AE66C80",
+  "cardNumber": "M0313"
+},{
+  "_id": {
+    "$oid": "60e8728875a662144c31a37a"
+  },
+  "inOut": true,
+  "resources": [],
+  "lastMovementDate": {
+    "$date": "2021-07-09T16:00:08.301Z"
+  },
+  "serial": "20110",
+  "state": "ACTIVE",
+  "name": "2TEN FZ Sousa Teles",
+  "unit": "CN=M20110,OU=USERS,OU=CCF-BAT2,OU=CCF,OU=Marinha,DC=marinha,DC=pt",
+  "type": "QP - ACTIVO",
+  "email": "sousa.teles@marinha.pt",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60eb206675a662144c31a43c"
+  },
+  "inOut": true,
+  "resources": [],
+  "lastMovementDate": {
+    "$date": "2021-07-11T16:46:30.461Z"
+  },
+  "serial": "9329719",
+  "state": "ACTIVE",
+  "name": "1GR Almeida Martins",
+  "unit": "CN=M9329719,OU=USERS,OU=ETNA,OU=Marinha,DC=marinha,DC=pt",
+  "type": "REGIME DE CONTRATO",
+  "email": "ruben.almeida.martins@marinha.pt",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60ec06e275a662144c31a633"
+  },
+  "inOut": true,
+  "resources": [],
+  "lastMovementDate": {
+    "$date": "2021-07-13T05:05:54.822Z"
+  },
+  "serial": "9306305",
+  "state": "ACTIVE",
+  "name": "CAB TFD Vicente Dias",
+  "unit": "CN=M9306305,OU=USERS,OU=CCF,OU=Marinha,DC=marinha,DC=pt",
+  "type": "QP - ACTIVO",
+  "email": "vicente.dias@marinha.pt",
+  "__v": 0,
+  "cardId": "041EFD1AE66C81",
+  "cardNumber": "M0165"
+},{
+  "_id": {
+    "$oid": "60ec08c675a662144c31a63e"
+  },
+  "inOut": true,
+  "resources": [],
+  "lastMovementDate": {
+    "$date": "2021-07-13T07:09:58.280Z"
+  },
+  "serial": "9816505",
+  "state": "ACTIVE",
+  "name": "1SAR FZ Marques Leitão",
+  "unit": "CN=M9816505,OU=USERS,OU=CCF,OU=Marinha,DC=marinha,DC=pt",
+  "type": "QP - ACTIVO",
+  "email": "marques.leitao@marinha.pt",
+  "__v": 0,
+  "cardId": "04399E1AE66C80",
+  "cardNumber": "M0235"
+},{
+  "_id": {
+    "$oid": "60ec0bf175a662144c31a652"
+  },
+  "inOut": true,
+  "resources": [],
+  "lastMovementDate": {
+    "$date": "2021-07-13T07:04:02.356Z"
+  },
+  "serial": "9803094",
+  "state": "ACTIVE",
+  "name": "SAJ FZ Jesus Almeida",
+  "unit": "CN=M9803094,OU=USERS,OU=CCF,OU=Marinha,DC=marinha,DC=pt",
+  "type": "QP - ACTIVO",
+  "email": "Jesus.Almeida@marinha.pt",
+  "__v": 0,
+  "cardId": "044AE21AE66C80",
+  "cardNumber": "M0241"
+},{
+  "_id": {
+    "$oid": "60ec0d9575a662144c31a65e"
+  },
+  "inOut": false,
+  "resources": [],
+  "lastMovementDate": {
+    "$date": "2021-07-12T14:34:36.963Z"
+  },
+  "serial": "917088",
+  "state": "ACTIVE",
+  "name": "CMOR TFD Belo Morujo",
+  "unit": "CN=M917088,OU=USERS,OU=CCF,OU=Marinha,DC=marinha,DC=pt",
+  "type": "QP - ACTIVO",
+  "email": "belo.morujo@marinha.pt",
+  "__v": 0,
+  "cardId": "047CF51AE66C80",
+  "cardNumber": "M0163"
+},{
+  "_id": {
+    "$oid": "60ec0dc275a662144c31a662"
+  },
+  "inOut": true,
+  "resources": [],
+  "lastMovementDate": {
+    "$date": "2021-07-13T07:15:19.055Z"
+  },
+  "serial": "9308599",
+  "state": "ACTIVE",
+  "name": "CAB TFD Cátia Susana Soares",
+  "unit": "CN=M9308599,OU=USERS,OU=CCF,OU=Marinha,DC=marinha,DC=pt",
+  "type": "QP - ACTIVO",
+  "email": "catia.susana.soares@marinha.pt",
+  "__v": 0,
+  "cardId": "04258D1AE66C80",
+  "cardNumber": "M0314"
+},{
+  "_id": {
+    "$oid": "60ec116475a662144c31a673"
+  },
+  "inOut": true,
+  "resources": [],
+  "lastMovementDate": {
+    "$date": "2021-07-12T09:54:44.756Z"
+  },
+  "serial": "394177",
+  "state": "ACTIVE",
+  "name": "CMG FZ RES Ferreira da Costa",
+  "unit": "CN=M394177,OU=USERS,OU=CCF,OU=Marinha,DC=marinha,DC=pt",
+  "type": "QP - RESERVA",
+  "email": "ferreira.costa@marinha.pt",
+  "__v": 0,
+  "cardId": "041D071AE66C85",
+  "cardNumber": "M0136"
+},{
+  "_id": {
+    "$oid": "60ec4ce975a662144c31a717"
+  },
+  "inOut": true,
+  "resources": [],
+  "lastMovementDate": {
+    "$date": "2021-07-13T07:23:01.170Z"
+  },
+  "serial": "710189",
+  "state": "ACTIVE",
+  "name": "1SAR FZ Sande Baptista",
+  "unit": "CN=M710189,OU=USERS,OU=CCF-DAE,OU=CCF,OU=Marinha,DC=marinha,DC=pt",
+  "type": "QP - ACTIVO",
+  "email": "sande.batista@marinha.pt",
+  "__v": 0,
+  "cardId": "041CF61AE66C81",
+  "cardNumber": "M0134"
+},{
+  "_id": {
+    "$oid": "60ec54dc75a662144c31a76a"
+  },
+  "inOut": false,
+  "resources": [],
+  "lastMovementDate": {
+    "$date": "2021-07-12T15:34:29.256Z"
+  },
+  "serial": "7100303",
+  "state": "ACTIVE",
+  "name": "CTEN MN Garnacha Constantino",
+  "unit": "CN=M7100303,OU=USERS,OU=CCF,OU=Marinha,DC=marinha,DC=pt",
+  "type": "QP - ACTIVO",
+  "email": "garnacha.constantino@marinha.pt",
+  "__v": 0,
+  "cardId": "043D9E1AE66C80",
+  "cardNumber": "M0132"
 }]
