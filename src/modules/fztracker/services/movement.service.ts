@@ -6,26 +6,30 @@ import { MovementModel } from '../models/movement.model';
 @Injectable()
 export class MovementService {
   constructor(
-    @InjectModel('Movement') private readonly cardModel: Model<MovementModel>,
+    @InjectModel('Movement') private readonly movementModel: Model<MovementModel>,
     private readonly logger: Logger
   ) {
     this.logger.setContext(MovementService.name);
   }
 
-  async find(filter: any): Promise<[MovementModel]> {
-    return this.cardModel.find(filter).exec();
+  async find(filter: any, sort?: any): Promise<[MovementModel]> {
+    return this.movementModel.find(filter).sort({movementDate: -1}).exec();
   }
 
   async findOne(filter: object): Promise<MovementModel> {
-    return this.cardModel.findOne(filter).exec();
+    return this.movementModel.findOne(filter).exec();
   }
 
   async add(data: MovementModel): Promise<MovementModel> {
-    const card = await this.cardModel(data);
+    const card = await this.movementModel(data);
     return card.save();
   }
 
   async updateOne(card: MovementModel): Promise<MovementModel> {
-    return this.cardModel.updateOne({ cardNumber: card.cardNumber }, card).exec();
+    return this.movementModel.updateOne({ cardNumber: card.cardNumber }, card).exec();
+  }
+
+  async findAndCount(filter: object): Promise<number> {
+    return this.movementModel.find(filter).count().exec();
   }
 }

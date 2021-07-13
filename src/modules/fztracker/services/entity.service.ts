@@ -28,4 +28,8 @@ export class EntityService {
   async updateOne(entity: EntityModel): Promise<EntityModel> {
     return this.entityModel.updateOne({ "serial": entity.serial }, entity).exec();
   }
+
+  async findAndCount(filter: object): Promise<number> {
+    return this.entityModel.find(filter).count().exec();
+  }
 }

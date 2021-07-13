@@ -5,6 +5,7 @@ import { AuthModule } from '../auth/auth.module';
 import { ExtractTokenMiddleware } from '../core/middleware/extract-token.middleware';
 import { AuthSchema } from '../core/schemas/auth.schema';
 import { MailSenderService } from '../core/services/mailsender.service';
+import { AnalyticsV1Controller } from './controllers/analytics-v1.controller';
 import { CardsV1Controller } from './controllers/cards-v1.controller';
 import { EntitiesV1Controller } from './controllers/entitities-v1.controller';
 import { LogsV1Controller } from './controllers/logs-v1.controller';
@@ -34,7 +35,7 @@ import { UserService } from './services/user.service';
     MongooseModule.forFeature([{ name: 'Log', schema: LogSchema }]),
     AuthModule
   ],
-  controllers: [CardsV1Controller, EntitiesV1Controller, LogsV1Controller, MovementsV1Controller, UsersV1Controller],
+  controllers: [CardsV1Controller, EntitiesV1Controller, LogsV1Controller, MovementsV1Controller, UsersV1Controller, AnalyticsV1Controller],
   providers: [MailSenderService, UserService, CardService, EntityService, ReadingService, MovementService, LogService, CsvParser, ParseService]
 })
 export class FZtrackerModule implements NestModule {
