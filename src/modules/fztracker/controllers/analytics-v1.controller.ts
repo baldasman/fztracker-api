@@ -39,18 +39,12 @@ export class AnalyticsV1Controller {
       sortDir = sortDir || 1;
       console.log(`getMovementsByDate: inOut=${inOut} from=${from}, sortBy=${sortBy}`);
 
-<<<<<<< HEAD
       /* let filter:any = {};
       filter.inOut = inOut || true; */
 
       let filter:any = {};
       filter.inOut = inOut && inOut.toLocaleLowerCase() === 'true' ? true : false;
       
-=======
-      let filter: any = {};
-      filter.inOut = inOut || true;
-
->>>>>>> 589c29e7207a5e3e2ea2cd239e3dabfb112af629
       if (from) {
         const dateFilter = moment(from).startOf('day');
         filter = { ...filter, movementDate: { $gte: dateFilter.toDate() } };
@@ -74,7 +68,7 @@ export class AnalyticsV1Controller {
   @ApiCreatedResponse({ description: 'Successfully returned movements', type: SuccessResponseModel })
   @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
   async getMovementsCountByDate(
-    @Query('inOut') inOut: boolean,
+    @Query('inOut') inOut: string,
     @Query('from') from: string,
    
     // Order by params
@@ -86,7 +80,7 @@ export class AnalyticsV1Controller {
       console.log(`getMovementsCountByDate: inOut=${inOut} from=${from}`);
 
       let filter: any = {};
-      filter.inOut = inOut || true;
+      filter.inOut = inOut && inOut.toLocaleLowerCase() === 'true' ? true : false;
 
       if (from) {
         const dateFilter = moment(from).startOf('day');
