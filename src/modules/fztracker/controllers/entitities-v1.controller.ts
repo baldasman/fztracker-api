@@ -205,10 +205,10 @@ export class EntitiesV1Controller {
         console.log('cardIdShort', movement.cardIdShort.toUpperCase(), e);
 
         if (!e) {
-
           throw 'CardShort not found2';
         }
         movement.cardNumber = e.cardNumber;
+
       }
 
       entity = await this.entityService.findOne({ 'cardNumber': movement.cardNumber });
@@ -220,18 +220,18 @@ export class EntitiesV1Controller {
 
       //sync entity data
       try {
-        console.log("chagui");
+      //  console.log("chagui");
         const updteEntity = await this.updateUser(entity.serial);
         if (updteEntity) {
           entity = updteEntity;
         }
-      console.log("depois", updteEntity);
+        //console.log("depois", updteEntity);
       } catch (error) {
 
       }
-      console.log("depois de  tudo mais nada");
+    //  console.log("depois de  tudo mais nada");
 
-    
+
       // Find card
       const card = await this.cardService.findOne({ cardNumber: entity.cardNumber });
       if (!card) {
