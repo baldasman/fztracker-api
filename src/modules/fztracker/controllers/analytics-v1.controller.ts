@@ -39,15 +39,21 @@ export class AnalyticsV1Controller {
       sortDir = sortDir || 1;
       console.log(`getMovementsByDate: inOut=${inOut} from=${from}, sortBy=${sortBy}`);
 
+<<<<<<< HEAD
       /* let filter:any = {};
       filter.inOut = inOut || true; */
 
       let filter:any = {};
       filter.inOut = inOut && inOut.toLocaleLowerCase() === 'true' ? true : false;
       
+=======
+      let filter: any = {};
+      filter.inOut = inOut || true;
+
+>>>>>>> 589c29e7207a5e3e2ea2cd239e3dabfb112af629
       if (from) {
         const dateFilter = moment(from).startOf('day');
-        filter = {...filter, movementDate: {$gte: dateFilter.toDate()}};
+        filter = { ...filter, movementDate: { $gte: dateFilter.toDate() } };
       }
 
       console.log('filter', filter);
@@ -60,6 +66,61 @@ export class AnalyticsV1Controller {
       return res.status(400).send({ error: error.errmsg });
     }
   }
+
+
+  @Get('movements/countbyDate')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Search movements by date' })
+  @ApiCreatedResponse({ description: 'Successfully returned movements', type: SuccessResponseModel })
+  @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
+  async getMovementsCountByDate(
+    @Query('inOut') inOut: boolean,
+    @Query('from') from: string,
+   
+    // Order by params
+    
+    @Res() res: Response
+  ): Promise<object> {
+    try {
+     
+      console.log(`getMovementsCountByDate: inOut=${inOut} from=${from}`);
+
+      let filter: any = {};
+      filter.inOut = inOut || true;
+
+      if (from) {
+        const dateFilter = moment(from).startOf('day');
+        const dataFilterEnd = moment(from).endOf('day');
+        filter = { ...filter, movementDate: { $gte: dateFilter.toDate() , $lte: dataFilterEnd.toDate() } };
+      }
+     
+
+      console.log('filter getMovementsCountByDate ', filter);
+      const count = await this.movementService.findAndCount(filter);
+
+      const response = getResponse(200, { data: { count } });
+      return res.status(200).send(response);
+    } catch (error) {
+      console.error(error);
+      return res.status(400).send({ error: error.errmsg });
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   @Get('entitesCountByState')
   @ApiBearerAuth()
@@ -75,11 +136,20 @@ export class AnalyticsV1Controller {
     try {
       console.log(`entitesCountByState: inOut=${inOut} local=${local} data=${from}`);
 
-      let filter:any = {};
+
+      //estou a forçar esta data, pois é a data em que o sistema oficialmete foi implementado. 
+      let date = new Date('2021-01-10T00:00:01.999Z');
+      from = date.toISOString();
+      console.log('by tfuzo:' , from);
+      let filter: any = {};
       filter.inOut = inOut && inOut.toLocaleLowerCase() === 'true' ? true : false;
-      
+
       if (local) {
-        filter = {...filter, lastlocal: local};
+        filter = { ...filter, lastlocal: local };
+      }
+
+      if (from) {
+        filter = { ...filter, lastMovementDate: { $gte: from } };
       }
       if (from) {
         const dateFilter = moment(from).startOf('day');
