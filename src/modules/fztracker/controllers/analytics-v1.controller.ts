@@ -128,11 +128,11 @@ export class AnalyticsV1Controller {
     @Res() res: Response
   ): Promise<object> {
     try {
-      console.log(`entitesCountByState: inOut=${inOut} local=${local} data=${from}`);
+      console.log(`contra nº entidades: inOut=${inOut} local=${local} data=${from}`);
 
 
       //estou a forçar esta data, pois é a data em que o sistema oficialmete foi implementado. 
-      let date = new Date('2021-01-10T00:00:01.999Z');
+      let date = new Date('2021-01-10');
       from = date.toISOString();
       console.log('by tfuzo:' , from);
       let filter: any = {};
@@ -143,11 +143,9 @@ export class AnalyticsV1Controller {
       }
 
       if (from) {
-        filter = { ...filter, lastMovementDate: { $gte: from } };
-      }
-      if (from) {
         const dateFilter = moment(from).startOf('day');
-        filter = {...filter, movementDate: {$gte: dateFilter.toDate()}};
+        const dataFilterEnd = moment().endOf('day');
+        filter = { ...filter, lastMovementDate: { $gte: dateFilter.toDate() , $lte: dataFilterEnd.toDate() } };
       }
 
       console.log('entitesCountByState: filter', filter);
