@@ -27,7 +27,7 @@ export class AnalyticsV1Controller {
   @ApiCreatedResponse({ description: 'Successfully returned movements', type: SuccessResponseModel })
   @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
   async getMovementsByDate(
-    @Query('inOut') inOut: boolean,
+    @Query('inOut') inOut: string,
     @Query('from') from: string,
     // Order by params
     @Query('sortBy') sortBy: string,
@@ -39,8 +39,11 @@ export class AnalyticsV1Controller {
       sortDir = sortDir || 1;
       console.log(`getMovementsByDate: inOut=${inOut} from=${from}, sortBy=${sortBy}`);
 
+      /* let filter:any = {};
+      filter.inOut = inOut || true; */
+
       let filter:any = {};
-      filter.inOut = inOut || true;
+      filter.inOut = inOut && inOut.toLocaleLowerCase() === 'true' ? true : false;
       
       if (from) {
         const dateFilter = moment(from).startOf('day');
@@ -66,16 +69,21 @@ export class AnalyticsV1Controller {
   async entitesCountByState(
     @Query('inOut') inOut: string,
     @Query('local') local: string,
+    @Query('from') from: string,
     @Res() res: Response
   ): Promise<object> {
     try {
-      console.log(`entitesCountByState: inOut=${inOut} local=${local}`);
+      console.log(`entitesCountByState: inOut=${inOut} local=${local} data=${from}`);
 
       let filter:any = {};
       filter.inOut = inOut && inOut.toLocaleLowerCase() === 'true' ? true : false;
       
       if (local) {
         filter = {...filter, lastlocal: local};
+      }
+      if (from) {
+        const dateFilter = moment(from).startOf('day');
+        filter = {...filter, movementDate: {$gte: dateFilter.toDate()}};
       }
 
       console.log('entitesCountByState: filter', filter);
