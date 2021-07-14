@@ -132,7 +132,7 @@ export class AnalyticsV1Controller {
 
 
       //estou a forçar esta data, pois é a data em que o sistema oficialmete foi implementado. 
-      let date = new Date('2021-01-10');
+      let date = moment().startOf('day');
       from = date.toISOString();
       console.log('by tfuzo:' , from);
       let filter: any = {};
@@ -143,7 +143,7 @@ export class AnalyticsV1Controller {
       }
 
       if (from) {
-        const dateFilter = moment(from).startOf('day');
+        const dateFilter = moment().startOf('day');
         const dataFilterEnd = moment().endOf('day');
         filter = { ...filter, lastMovementDate: { $gte: dateFilter.toDate() , $lte: dataFilterEnd.toDate() } };
       }
