@@ -131,37 +131,52 @@ export class EntitiesV1Controller {
         serial = 'm' + serial;
       }
 
-      const adUser = await this.adService.findUser(serial);
+      let adUser = null;
+      try {
+        adUser = await this.adService.findUser(serial);
+      } catch (error) {
+        console.error('Add error', error);
+      }
+
       let response;
 
-      if (!adUser) {
-        response = getResponse(HttpStatus.NOT_FOUND, { data: null });
-        return res.status(HttpStatus.NOT_FOUND).send(response);
-      }
+      let entity = null;
+      if (adUser) { // fetch info and update
+        // add to local DB
+        entity = await this.entityService.findOne({ 'serial': adUser.employeeID });
+        let update = true;
 
-      // add to local DB
-      let entity = await this.entityService.findOne({ 'serial': adUser.employeeID });
-      let update = true;
+        if (!entity) {
+          update = false;
+
+          // create new entity
+          entity = new EntityModel();
+          entity.serial = adUser.employeeID;
+        }
+
+        entity.state = EntityModel.STATE_ACTIVE;
+        entity.name = adUser.displayName;
+        entity.unit = adUser.dn;  // TODO: filter OU
+        entity.type = adUser.description;
+        entity.email = adUser.mail;
+        entity.resources = [];
+
+        if (update) {
+          await this.entityService.updateOne(entity);
+        } else {
+          await this.entityService.add(entity);
+        }
+      } else {  // try to find locally
+        if (serial.startsWith('m')) {
+          serial = serial.substring(1);
+        }
+        
+        entity = await this.entityService.findOne({ 'serial': serial });
+      }
 
       if (!entity) {
-        update = false;
-
-        // create new entity
-        entity = new EntityModel();
-        entity.serial = adUser.employeeID;
-      }
-
-      entity.state = EntityModel.STATE_ACTIVE;
-      entity.name = adUser.displayName;
-      entity.unit = adUser.dn;  // TODO: filter OU
-      entity.type = adUser.description;
-      entity.email = adUser.mail;
-      entity.resources = [];
-
-      if (update) {
-        await this.entityService.updateOne(entity);
-      } else {
-        await this.entityService.add(entity);
+        response = getResponse(HttpStatus.NOT_FOUND, { data: null });
+        return res.status(HttpStatus.NOT_FOUND).send(response);
       }
 
       response = getResponse(200, { data: entity });
@@ -220,7 +235,7 @@ export class EntitiesV1Controller {
 
       //sync entity data
       try {
-      //  console.log("chagui");
+        //  console.log("chagui");
         const updteEntity = await this.updateUser(entity.serial);
         if (updteEntity) {
           entity = updteEntity;
@@ -229,7 +244,7 @@ export class EntitiesV1Controller {
       } catch (error) {
 
       }
-    //  console.log("depois de  tudo mais nada");
+      //  console.log("depois de  tudo mais nada");
 
 
       // Find card

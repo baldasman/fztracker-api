@@ -147,6 +147,7 @@ export class AnalyticsV1Controller {
         const dataFilterEnd = moment().endOf('day');
         filter = { ...filter, lastMovementDate: { $gte: dateFilter.toDate() , $lte: dataFilterEnd.toDate() } };
       }
+      
 
       console.log('entitesCountByState: filter', filter);
       const count = await this.entitiesService.findAndCount(filter);
