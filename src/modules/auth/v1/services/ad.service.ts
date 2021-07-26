@@ -2,7 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { AdUser } from '../../../core/models/ad-user.model';
 
 const ActiveDirectory = require('activedirectory2');
-
+const fs = require("fs");
 @Injectable()
 export class AdService {
 
@@ -21,11 +21,15 @@ export class AdService {
     this.adminPassword = 'inform@20';
 
     this.config = {
-      url: 'ldap://AD-N-19-2.marinha.pt',
+      url: 'ldaps://10.45.0.5:636',
       //searchDN: 'CN=harbour,OU=DevSecurityGroups,DC=domatica,DC=local',
       baseDN: 'OU=Marinha,DC=marinha,DC=pt',
       username: this.adminUsername,
-      password: this.adminPassword
+      password: this.adminPassword,
+      tlsOptions: {
+        ca: [fs.readFileSync('d:\ad.cer')],
+        rejectUnauthorized: false 
+    }
     }
 
     this.ad = new ActiveDirectory(this.config);
