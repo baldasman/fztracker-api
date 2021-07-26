@@ -21,11 +21,14 @@ import { LogoutService } from './services/logout.service';
 import { SessionSchema } from './schemas/session.schema';
 import { AuthSchema } from '../../core/schemas/auth.schema';
 import { AdService } from './services/ad.service';
+import { EntitySchema } from './schemas/entity.schema';
+import { EntityService } from './services/entity.service';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: 'Session', schema: SessionSchema }]),
     MongooseModule.forFeature([{ name: 'Auth', schema: AuthSchema }]),
+    MongooseModule.forFeature([{ name: 'Entity', schema: EntitySchema }]),
   ],
   controllers: [
     AuthV1Controller
@@ -42,9 +45,13 @@ import { AdService } from './services/ad.service';
     SignUpService,
     SessionsService,
     VerifyTokenService,
-    AdService
+    AdService,
+    EntityService
   ],
-  exports: [AdService]
+  exports: [
+    AdService, 
+    EntityService
+  ]
 })
 export class AuthV1Module implements NestModule {
   configure(consumer: MiddlewareConsumer) {

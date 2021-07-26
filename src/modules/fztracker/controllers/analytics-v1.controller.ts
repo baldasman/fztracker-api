@@ -5,7 +5,7 @@ import moment = require('moment');
 import { AuthGuard } from '../../core/guards/auth.guard';
 import { getResponse } from '../../core/helpers/response.helper';
 import { SuccessResponseModel } from '../../core/models/success-response.model';
-import { EntityService } from '../services/entity.service';
+import { EntityService } from '../../auth/v1/services/entity.service';
 import { MovementService } from '../services/movement.service';
 
 @Controller('fztracker/analytics/v1')

@@ -18,6 +18,23 @@ export class EntityResource {
   }
 }
 
+export class Vehicle extends EntityResource {
+  plate: string;
+  brand: string;
+  model: string;
+  color: string;
+
+  constructor(plate: string, brand?: string, model?: string, color?: string) {
+    super(plate.replace(/-/g, ''), 'VEHICLE');
+
+    this.plate = plate;
+    this.brand = brand;
+    this.model = model;
+    this.color = color;
+  }
+
+}
+
 export class EntityLogModel {
   uid: string;
   logDate: Date;

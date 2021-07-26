@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import * as fs from 'fs';
 import { CsvParser } from 'nest-csv-parser';
-import { EntityImportModel } from '../models/entity.model';
+import { EntityImportModel } from '../../auth/v1/models/entity.model';
 import { CardImportModel } from '../models/card.model';
 
 

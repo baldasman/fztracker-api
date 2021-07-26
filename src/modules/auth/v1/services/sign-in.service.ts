@@ -17,12 +17,15 @@ import { SessionModel } from '../models/session.model';
 import { AdService } from './ad.service';
 import { AuthModel } from '../../../core/models/auth.model';
 import { AdUser } from '../../../core/models/ad-user.model';
+import { EntityService } from './entity.service';
+import { EntityModel } from '../models/entity.model';
 
 @Injectable()
 export class SignInService {
   constructor(
     @Inject(REQUEST) private readonly req: Request,
     private readonly authsService: AuthsService,
+    private readonly entityService: EntityService,
     private readonly logger: Logger,
     private readonly sessionService: SessionsService,
     private readonly adService: AdService
@@ -103,10 +106,21 @@ export class SignInService {
     // generate the sessionId
     const sessionId = uuidv1();
 
+    let externalId: string = '';
+    if (adUser?.sAMAccountName) {
+      externalId = adUser?.sAMAccountName;
+    } else {
+      const entity = await this.entityService.findOne({ email: auth.authId});
+      console.log('find entity by', { email: auth.authId}, entity);
+      if (entity?.serial) {
+        externalId = `M${entity?.serial}`;
+      }
+    }
+    
     // create the token
     const tokenModel = {
       authId: auth.authId,
-      externalId: adUser?.sAMAccountName,
+      externalId: externalId.toUpperCase(),
       sessionId,
       sessionType: body.sessionType,
       numberOfLogins: auth.numberOfLogins + 1,
@@ -116,7 +130,7 @@ export class SignInService {
     };
 
     const token = sign(tokenModel, environment.jwtPrivateKey, { algorithm: 'RS256' });
-
+    console.log('session token data', tokenModel);
     this.logger.log('Token generated, updating number of logins');
 
     // update the number of logins

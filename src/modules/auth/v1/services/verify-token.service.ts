@@ -58,12 +58,6 @@ export class VerifyTokenService {
       return getResponse(500);
     }
 
-
-
-
-
-  
-
     // find the session
     let session;
     try {

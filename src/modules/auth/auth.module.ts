@@ -5,7 +5,8 @@ import { AdService } from './v1/services/ad.service';
 
 @Module({
   imports: [
-    AuthV1Module
+    AuthV1Module,
+    
   ],
   exports: [
     AuthV1Module

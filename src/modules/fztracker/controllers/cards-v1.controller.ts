@@ -7,7 +7,7 @@ import { SuccessResponseModel } from '../../core/models/success-response.model';
 import { CardImportModel, CardModel, ImportCardRequest } from '../models/card.model';
 import { LogModel } from '../models/log.model';
 import { CardService } from '../services/card.service';
-import { EntityService } from '../services/entity.service';
+import { EntityService } from '../../auth/v1/services/entity.service';
 import { LogService } from '../services/log.service';
 import { ParseService } from '../services/parser.service';
 
