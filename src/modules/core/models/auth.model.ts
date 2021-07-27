@@ -10,6 +10,7 @@ export class AuthModel {
   deletedAt: number;
   isActive: boolean;
   isAdmin: boolean;
+  acessRank: boolean;
   isApi: boolean;
   activationToken: string;
 
@@ -24,6 +25,7 @@ export class AuthModel {
     this.deactivatedAt = data.deactivatedAt;
     this.deletedAt = data.deletedAt;
     this.isActive = data.isActive;
+    this.acessRank = data.acessRank;
     this.isAdmin = data.isAdmin;
     this.activationToken = data.activationToken;
   }

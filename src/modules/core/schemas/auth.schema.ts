@@ -56,5 +56,9 @@ export const AuthSchema = new Schema({
   deletedAt: {
     type: Number,
     required: false
+  },
+  acessRank: {
+    type: Boolean,
+    required: false
   }
 });
