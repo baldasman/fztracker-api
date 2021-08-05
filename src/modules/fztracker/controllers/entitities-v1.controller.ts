@@ -156,7 +156,7 @@ export class EntitiesV1Controller {
 
         entity.state = EntityModel.STATE_ACTIVE;
         entity.name = adUser.displayName;
-        entity.unit = adUser.dn;  // TODO: filter OU
+        entity.unit = adUser.dn; 
         entity.type = adUser.description;
         entity.email = adUser.mail;
         entity.resources = [];
@@ -206,7 +206,7 @@ export class EntitiesV1Controller {
       if (movement.cardId.length > 7) {
         const c = await this.cardService.findOne({ uid: movement.cardId.toUpperCase() });
 
-        console.log('cardId', movement.cardId.toUpperCase(), c);
+        console.log('cardId big', movement.cardId.toUpperCase(), c);
         if (!c) {
           throw 'Card not found2';
         }
