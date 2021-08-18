@@ -77,7 +77,7 @@ export class VerifyTokenService {
     // Validate API
     if (session.sessionType == 'api') {
       res.header('Authorization', token);
-      return getResponse(200, {data: {session: decoded, user: {name: auth.name, isAdmin: auth.isAdmin}}});
+      return getResponse(200, {data: {session: decoded, user: {name: auth.name, isAdmin: auth.isAdmin,  acessRank: auth.acessRank, isUser: auth.isUser }}});
     }
 
     // check if the session is still valid in case it's time based
@@ -101,6 +101,6 @@ export class VerifyTokenService {
     }
 
     res.header('Authorization', token);
-    return getResponse(200, {data: {session: decoded, user: {name: auth.name, isAdmin: auth.isAdmin,  acessRank: auth.acessRank}}});
+    return getResponse(200, {data: {session: decoded, user: {name: auth.name, isAdmin: auth.isAdmin,  acessRank: auth.acessRank, isUser: auth.isUser}}});
   }
 }

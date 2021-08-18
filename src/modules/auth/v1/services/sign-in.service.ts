@@ -59,6 +59,7 @@ export class SignInService {
         // check if user is admin
         auth.isAdmin = await this.adService.isMemberOf(body.authId, 'CCF-FZGUARD-SUPERADMIN');
         auth.acessRank = await this.adService.isMemberOf(body.authId, 'CCF-FZGUARD-ADMIN');
+        auth.isUser = await this.adService.isMemberOf(body.authId, 'CCF-FZGUARD-USER');
         console.log ( 'qul é o rank access', auth.acessRank);
       }
 
@@ -161,7 +162,7 @@ export class SignInService {
     try {
       await this.sessionService.createSession(session);
 
-      return getResponse(200, { data: { token, email: auth.authId, name: auth.name, isAdmin: auth.isAdmin, acessRank: auth.acessRank  } })
+      return getResponse(200, { data: { token, email: auth.authId, name: auth.name, isAdmin: auth.isAdmin, acessRank: auth.acessRank, isUser: auth.isUser } })
     } catch (e) {
      
      console.error(e);
