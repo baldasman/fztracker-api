@@ -60,7 +60,7 @@ export class SignInService {
         auth.isAdmin = await this.adService.isMemberOf(body.authId, 'CCF-FZGUARD-SUPERADMIN');
         auth.acessRank = await this.adService.isMemberOf(body.authId, 'CCF-FZGUARD-ADMIN');
         auth.isUser = await this.adService.isMemberOf(body.authId, 'CCF-FZGUARD-USER');
-        console.log ( 'qul é o rank access', auth.acessRank);
+        
       }
 
       if (!auth.isActive) {
@@ -162,7 +162,7 @@ export class SignInService {
     try {
       await this.sessionService.createSession(session);
 
-      return getResponse(200, { data: { token, email: auth.authId, name: auth.name, isAdmin: auth.isAdmin, acessRank: auth.acessRank, isUser: auth.isUser } })
+      return getResponse(200, { data: { token, externalId,  email: auth.authId, name: auth.name, isAdmin: auth.isAdmin, acessRank: auth.acessRank, isUser: auth.isUser } })
     } catch (e) {
      
      console.error(e);

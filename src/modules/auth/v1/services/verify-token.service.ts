@@ -48,6 +48,7 @@ export class VerifyTokenService {
         // check if user is admin
         auth.isAdmin = await this.adService.isMemberOf(decoded.externalId, 'CCF-FZGUARD-SUPERADMIN');
         auth.acessRank = await this.adService.isMemberOf(decoded.externalId, 'CCF-FZGUARD-ADMIN');
+        auth.isUser = await this.adService.isMemberOf(decoded.externalId, 'CCF-FZGUARD-USER');
         console.log ( 'qual é o rank access', auth.acessRank);
       }
 
