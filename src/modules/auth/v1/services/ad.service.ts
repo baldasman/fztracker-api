@@ -24,6 +24,7 @@ export class AdService {
 
       //implemenado protoco LDAPS a 26/07/2021 pelas 03:35
       url: 'ldaps://AD-N-19-2.marinha.pt:636',
+      //url: 'ldaps://10.45.0.5:636',
       baseDN: 'OU=Marinha,DC=marinha,DC=pt',
       username: this.adminUsername,
       password: this.adminPassword,
