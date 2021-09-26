@@ -12,6 +12,7 @@ export class MovementModel {
   entityType: string;
   cardId: string;
   cardIdShort: string;
+  lastlocal: string;
   cardNumber: string;
   plate: string;
   relatedMovements: string[];

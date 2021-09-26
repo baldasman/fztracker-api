@@ -65,6 +65,7 @@ export class EntityModel {
   lastMovementDate: Date;
   cardId: string;
   cardIdShort: string;
+  lastlocal:string;
   cardNumber: string;
   resources: EntityResource[];
 

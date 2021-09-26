@@ -278,11 +278,11 @@ export class EntitiesV1Controller {
       reading.sensor = movement.sensor;
       reading.movementId = movement.uid;
       reading.cardId = movement.cardId;
-
+      reading.lastlocal = movement.location;
       reading.cardNumber = movement.cardNumber;
       reading.manual = movement.manual;
 
-
+      
 
       // update entity data
       movement.entitySerial = entity.serial;
@@ -290,6 +290,7 @@ export class EntitiesV1Controller {
       movement.entityName = entity.name;
       movement.movementDate = reading.readingDate;
       entity.lastMovementDate = reading.readingDate;
+      entity.lastlocal =  reading.lastlocal;
       card.lastMovementDate = reading.readingDate;  // ->ver se isto esta OK
 
       // Save models

@@ -9,6 +9,7 @@ export class LogModel {
   entityType: string;
   cardId: string;
   cardIdShort: string;
+  lastlocal: string;
   cardNumber: string;
   userId: string;
 

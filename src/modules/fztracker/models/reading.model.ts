@@ -13,6 +13,7 @@ export class ReadingModel {
   manual?: boolean;
   cardId?: string;
   cardIdShort?: string;
+  lastlocal?: string;
 
   constructor() {
     this.uid = uuidv4();

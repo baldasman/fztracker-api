@@ -28,7 +28,8 @@ export const EntitySchema = new Schema({
   lastMovementDate: { type: Date, default: Date.now },
   cardId: { type: String },
   cardNumber: { type: String },
-  resources: [{}]
+  resources: [{}],
+  lastlocal: { type: String },
 });
 
 EntitySchema.index({ 'serial': 1, cardId: 1, cardNumber: true });

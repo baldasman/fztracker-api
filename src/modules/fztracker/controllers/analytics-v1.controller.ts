@@ -70,6 +70,8 @@ export class AnalyticsV1Controller {
   async getMovementsCountByDate(
     @Query('inOut') inOut: string,
     @Query('from') from: string,
+    @Query('local') local: string,
+   
    
     // Order by params
     
@@ -77,7 +79,7 @@ export class AnalyticsV1Controller {
   ): Promise<object> {
     try {
      
-      console.log(`getMovementsCountByDate: inOut=${inOut} from=${from}`);
+      console.log(`getMovementsCountByDate: inOut=${inOut} from=${from}  local=${local}`);
 
       let filter: any = {};
       filter.inOut = inOut && inOut.toLocaleLowerCase() === 'true' ? true : false;
@@ -88,6 +90,10 @@ export class AnalyticsV1Controller {
         filter = { ...filter, movementDate: { $gte: dateFilter.toDate() , $lte: dataFilterEnd.toDate() } };
       }
      
+      if (local) {
+        
+        filter = { ...filter, location: local };
+      }
 
       console.log('filter getMovementsCountByDate ', filter);
       const count = await this.movementService.findAndCount(filter);
