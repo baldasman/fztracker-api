@@ -4,32 +4,33 @@ import { Response } from 'express';
 import { AuthGuard } from '../../core/guards/auth.guard';
 import { getResponse } from '../../core/helpers/response.helper';
 import { SuccessResponseModel } from '../../core/models/success-response.model';
-import { CardImportModel, CardModel, ImportCardRequest } from '../models/card.model';
-import { LogModel } from '../models/log.model';
 import { CardService } from '../services/card.service';
 import { EntityService } from '../../auth/v1/services/entity.service';
 import { LogService } from '../services/log.service';
 import { ParseService } from '../services/parser.service';
+import { GunService } from '../services/gun.service';
+import { GunsModel } from '../models/guns.model';
 
 
-@Controller('fztracker/cards/v1')
+@Controller('fztracker/guns/v1')
 @ApiBearerAuth()
 @UseGuards(AuthGuard)
-@ApiTags('Cards')
-export class CardsV1Controller {
+@ApiTags('Guns')
+export class GunsV1Controller {
   constructor(
     private readonly logger: Logger,
     private readonly cardService: CardService,
     private readonly entityService: EntityService,
+    private readonly gunService: GunService,
     private readonly logService: LogService,
     private readonly parserService: ParseService) {
-    this.logger.log('Init Cards@1.0.0 controller', CardsV1Controller.name);
+    this.logger.log('Init Cards@1.0.0 controller', GunsV1Controller.name);
   }
 
   @Get('')
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Get all cards' })
-  @ApiCreatedResponse({ description: 'Successfully returned card list', type: SuccessResponseModel })
+  @ApiOperation({ summary: 'Get all guns' })
+  @ApiCreatedResponse({ description: 'Successfully returned gun list', type: SuccessResponseModel })
   @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
   async getCards(
     @Req() req: any,
@@ -37,11 +38,9 @@ export class CardsV1Controller {
   ): Promise<object> {
     try {
       const filter = {};
-      const cards = await this.cardService.find(filter);
-      console.log('cards', filter,cards );
-      // global['io'].emit('card', { uid: 'cardId' });
-
-      const response = getResponse(200, { data: { cards } });
+      const guns = await this.gunService.find(filter);
+      console.log('guns', filter,guns );
+      const response = getResponse(200, { data: { guns } });
       return res.status(200).send(response);
     } catch (error) {
       console.error(error);
@@ -50,27 +49,20 @@ export class CardsV1Controller {
   }
 
   @Post('')
-  @ApiOperation({ summary: 'Add new card' })
-  @ApiCreatedResponse({ description: 'Successfully created card', type: SuccessResponseModel })
+  @ApiOperation({ summary: 'Add new gun' })
+  @ApiCreatedResponse({ description: 'Successfully created gun', type: SuccessResponseModel })
   @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
-  async addCard(
-    @Body() card: CardModel,
+  async addGun(
+    @Body() gun: GunsModel,
     @Res() res: Response
   ):
     Promise<object> {
 
     try {
-      const newCard = await this.cardService.add(card);
+      const newGun = await this.gunService.add(gun);
 
       // Add log
-      const log = new LogModel();
-      log.action = LogModel.ACTION_CARD_CREATED;
-      log.obs = `${card.cardNumber}`;
-      this.logService.add(log);
-
-      const response = getResponse(200, { data: { card: newCard } });
-
-      return res.status(200).send(response);
+     
     } catch (error) {
       console.error(error);
 
@@ -82,8 +74,13 @@ export class CardsV1Controller {
     }
   }
 
-  @Post('import')
-  @ApiOperation({ summary: 'Import cards from CSV' })
+
+
+
+
+
+ /*  @Post('import')
+  @ApiOperation({ summary: 'Import guns from CSV' })
   @ApiCreatedResponse({ description: 'Successfully imported cards from csv', type: SuccessResponseModel })
   @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
   async importCards(
@@ -160,5 +157,5 @@ export class CardsV1Controller {
       // return res.status(200).send(response);
       return res.status(400).send({ error: e, message: 'Failed to import cards.' });
     }
-  }
+  } */
 }

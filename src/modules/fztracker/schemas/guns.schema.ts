@@ -3,7 +3,7 @@ import { Schema } from 'mongoose';
 
 
 export const GunsSchema = new Schema({
-  place: { type: String, required: true, unique: true },
+  ArmeiroId: { type: String, required: true, unique: true },
   state: { type: String, required: true },
   guns: [{}],
   lastChangeDate: { type: Date, default: Date.now },

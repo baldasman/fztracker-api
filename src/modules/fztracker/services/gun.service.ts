@@ -1,36 +1,36 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { CardModel } from '../models/card.model';
+import { GunsModel } from '../models/guns.model';
 
 
 @Injectable()
-export class CardService {
+export class GunService {
   constructor(
-      @InjectModel('Card') private readonly cardModel: Model<CardModel>,
+      @InjectModel('Gun') private readonly gunModel: Model<GunsModel>,
       private readonly logger: Logger) {
-    this.logger.setContext(CardService.name);
+    this.logger.setContext(GunService.name);
   }
 
-  async find(filter: any): Promise<[CardModel]> {
-    return this.cardModel.find(filter).exec();
+  async find(filter: any): Promise<[GunsModel]> {
+    return this.gunModel.find(filter).exec();
   }
 
-  async findOne(filter: object): Promise<CardModel> {
+  async findOne(filter: object): Promise<GunsModel> {
 
  
 
 
 
-    return this.cardModel.findOne(filter).exec();
+    return this.gunModel.findOne(filter).exec();
   }
 
-  async add(data: CardModel): Promise<CardModel> {
-    const card = await this.cardModel(data);
+  async add(data: GunsModel): Promise<GunsModel> {
+    const card = await this.gunModel(data);
     return card.save();
   }
 
-  async updateOne(card: CardModel): Promise<CardModel> {
-    return this.cardModel.updateOne({cardNumber: card.cardNumber}, card).exec();
+  async updateOne(card: GunsModel): Promise<GunsModel> {
+    return this.gunModel.updateOne().exec();
   }
 }
