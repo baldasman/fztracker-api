@@ -22,23 +22,25 @@ import { MovementService } from './services/movement.service';
 import { ParseService } from './services/parser.service';
 import { ReadingService } from './services/reading.service';
 import { UserService } from './services/user.service';
-
+import { GunsV1Controller } from './controllers/guns-v1.controller';
+import { GunService } from './services/gun.service';
+import { GunsSchema } from './schemas/guns.schema';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: 'Auth', schema: AuthSchema }]),
     MongooseModule.forFeature([{ name: 'Card', schema: CardSchema }]),
-    //MongooseModule.forFeature([{ name: 'Entity', schema: EntitySchema }]),
+    MongooseModule.forFeature([{ name: 'Gun', schema: GunsSchema }]),
     MongooseModule.forFeature([{ name: 'Movement', schema: MovementSchema }]),
     MongooseModule.forFeature([{ name: 'Reading', schema: ReadingSchema }]),
     MongooseModule.forFeature([{ name: 'Log', schema: LogSchema }]),
     AuthModule
   ],
-  controllers: [CardsV1Controller, EntitiesV1Controller, LogsV1Controller, MovementsV1Controller, UsersV1Controller, AnalyticsV1Controller],
-  providers: [MailSenderService, UserService, CardService, ReadingService, MovementService, LogService, CsvParser, ParseService]
+  controllers: [CardsV1Controller, EntitiesV1Controller, LogsV1Controller, MovementsV1Controller, UsersV1Controller, AnalyticsV1Controller, ],
+  providers: [MailSenderService, UserService, CardService, ReadingService, MovementService, LogService, CsvParser, ParseService, ]
 })
 export class FZtrackerModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(ExtractTokenMiddleware).forRoutes(CardsV1Controller, EntitiesV1Controller, LogsV1Controller, MovementsV1Controller, UsersV1Controller);
+    consumer.apply(ExtractTokenMiddleware).forRoutes(CardsV1Controller, EntitiesV1Controller, LogsV1Controller, MovementsV1Controller, UsersV1Controller,GunsV1Controller );
   }
 }

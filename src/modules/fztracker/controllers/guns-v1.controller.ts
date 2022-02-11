@@ -24,7 +24,7 @@ export class GunsV1Controller {
     private readonly gunService: GunService,
     private readonly logService: LogService,
     private readonly parserService: ParseService) {
-    this.logger.log('Init Cards@1.0.0 controller', GunsV1Controller.name);
+    this.logger.log('Init Guns@1.0.0 controller', GunsV1Controller.name);
   }
 
   @Get('')
@@ -32,7 +32,7 @@ export class GunsV1Controller {
   @ApiOperation({ summary: 'Get all guns' })
   @ApiCreatedResponse({ description: 'Successfully returned gun list', type: SuccessResponseModel })
   @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
-  async getCards(
+  async getGun(
     @Req() req: any,
     @Res() res: Response
   ): Promise<object> {

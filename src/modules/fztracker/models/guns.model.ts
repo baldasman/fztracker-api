@@ -1,19 +1,19 @@
 import * as uuidv4 from 'uuid/v4'; // random ids
 
 export class GunsModel {
-  uid: string;
+  ArmeiroId: string;
   place: string;
   lastChangeDate: Date;
   state: string;  
   guns: [{}];
   entitySerial: string;
-  entityName: string;
+  entitydesc: string;
 
 
 
 
 
   constructor() {
-    this.uid = uuidv4();
+    this.ArmeiroId = uuidv4();
   }
 }
