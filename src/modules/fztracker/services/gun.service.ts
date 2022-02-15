@@ -18,9 +18,6 @@ export class GunService {
 
   async findOne(filter: object): Promise<GunsModel> {
 
- 
-
-
 
     return this.gunModel.findOne(filter).exec();
   }

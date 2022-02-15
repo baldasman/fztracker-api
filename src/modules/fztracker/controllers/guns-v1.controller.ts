@@ -1,13 +1,9 @@
-import { Body, Controller, Get, Logger, Post, Query, Req, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Logger, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiCreatedResponse, ApiOperation, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { Response } from 'express';
 import { AuthGuard } from '../../core/guards/auth.guard';
 import { getResponse } from '../../core/helpers/response.helper';
 import { SuccessResponseModel } from '../../core/models/success-response.model';
-import { CardService } from '../services/card.service';
-import { EntityService } from '../../auth/v1/services/entity.service';
-import { LogService } from '../services/log.service';
-import { ParseService } from '../services/parser.service';
 import { GunService } from '../services/gun.service';
 import { GunsModel } from '../models/guns.model';
 
@@ -19,11 +15,7 @@ import { GunsModel } from '../models/guns.model';
 export class GunsV1Controller {
   constructor(
     private readonly logger: Logger,
-    private readonly cardService: CardService,
-    private readonly entityService: EntityService,
-    private readonly gunService: GunService,
-    private readonly logService: LogService,
-    private readonly parserService: ParseService) {
+    private readonly gunService: GunService) {
     this.logger.log('Init Guns@1.0.0 controller', GunsV1Controller.name);
   }
 
@@ -48,7 +40,7 @@ export class GunsV1Controller {
     }
   }
 
-  @Post('')
+  @Post('addgun')
   @ApiOperation({ summary: 'Add new gun' })
   @ApiCreatedResponse({ description: 'Successfully created gun', type: SuccessResponseModel })
   @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
