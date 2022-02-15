@@ -33,7 +33,7 @@ export default function getRoutesTree(): Route[] {
     },
     {
       'name': 'FZtracker',
-      'description': 'All methods related to FZtracker',
+      'description': 'All methods related to FzGuard',
       'children': [
         {
           'name': 'FZtracker',
