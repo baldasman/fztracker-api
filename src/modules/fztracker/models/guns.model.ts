@@ -1,8 +1,9 @@
-import * as uuidv4 from 'uuid/v4'; // random ids
+import { IsNotEmpty } from 'class-validator';
 
 export class GunsModel {
-  ArmeiroId: string;
-  place: string;
+  @IsNotEmpty() ArmeiroId: string;
+  @IsNotEmpty() place: string;
+  
   lastChangeDate: Date;
   state: string;  
   guns: [{}];
@@ -14,6 +15,6 @@ export class GunsModel {
 
 
   constructor() {
-    this.ArmeiroId = uuidv4();
+
   }
 }
