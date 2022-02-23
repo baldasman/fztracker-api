@@ -30,6 +30,7 @@ export const EntitySchema = new Schema({
   cardNumber: { type: String },
   resources: [{}],
   lastlocal: { type: String },
+  armer: {type: String},
 });
 
 EntitySchema.index({ 'serial': 1, cardId: 1, cardNumber: true });

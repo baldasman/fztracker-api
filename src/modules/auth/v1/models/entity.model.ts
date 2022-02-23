@@ -67,6 +67,7 @@ export class EntityModel {
   cardIdShort: string;
   lastlocal:string;
   cardNumber: string;
+  armer: String;
   resources: EntityResource[];
 
   constructor() {

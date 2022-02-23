@@ -23,11 +23,12 @@ export class GunService {
   }
 
   async add(data: GunsModel): Promise<GunsModel> {
-    const card = await this.gunModel(data);
-    return card.save();
+    const gun = await this.gunModel(data);
+    
+    return gun.save();
   }
 
-  async updateOne(card: GunsModel): Promise<GunsModel> {
-    return this.gunModel.updateOne().exec();
+  async updateOne(gun: GunsModel): Promise<GunsModel> {
+    return this.gunModel.updateOne({ArmeiroId: gun.ArmeiroId}, gun).exec();
   }
 }

@@ -2,11 +2,11 @@ import { IsNotEmpty } from 'class-validator';
 
 export class GunsModel {
   @IsNotEmpty() ArmeiroId: string;
-  @IsNotEmpty() place: string;
+  place: string;
   
   lastChangeDate: Date;
   state: string;  
-  guns: [{}];
+  guns: unknown; // [{}]
   entitySerial: string;
   entitydesc: string;
 

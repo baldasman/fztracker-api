@@ -18,6 +18,7 @@ import { MovementService } from '../services/movement.service';
 import { ParseService } from '../services/parser.service';
 import { ReadingService } from '../services/reading.service';
 import moment = require('moment');
+import { GunService } from '../services/gun.service';
 
 @Controller('fztracker/entities/v1')
 @ApiBearerAuth()
@@ -28,6 +29,7 @@ export class EntitiesV1Controller {
     private readonly logger: Logger,
     private readonly cardService: CardService,
     private readonly entityService: EntityService,
+    private readonly gunService: GunService,
     private readonly adService: AdService,
     private readonly mailSender: MailSenderService,
     private readonly readingService: ReadingService,
@@ -514,8 +516,8 @@ export class EntitiesV1Controller {
   }
 
   @Post(':entitySerial/remove-card')
-  @ApiOperation({ summary: 'Add new entity movement' })
-  @ApiCreatedResponse({ description: 'Successfully created entity movement', type: SuccessResponseModel })
+  @ApiOperation({ summary: 'remove card' })
+  @ApiCreatedResponse({ description: 'Successfully remove the card', type: SuccessResponseModel })
   @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
   async removeCard(
     @Param('entitySerial') entitySerial: string,
@@ -617,4 +619,98 @@ export class EntitiesV1Controller {
     return entity;
 
   }
+
+
+
+
+
+  @Post(':entitySerial/add-armer-to-user')
+  @ApiOperation({ summary: 'Add armer to user' })
+  @ApiCreatedResponse({ description: 'Successfully add armer to user', type: SuccessResponseModel })
+  @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
+  async addArmertoUser(
+    @Param('entitySerial') entitySerial: string,
+    @Body('armer') armer: string,
+    @Req() req: any,
+    @Res() res: Response
+  ):
+    Promise<object> {
+    console.log('Entity Serial & armer:', entitySerial, armer);
+
+    if (entitySerial && entitySerial.toUpperCase().startsWith('M')) {
+      entitySerial = entitySerial.substring(1);
+    }
+
+    let entity: EntityModel;
+    entity = await this.entityService.findOne({ 'serial': entitySerial });
+    if (!entity) {
+      throw new NotFoundException(`Entity '${entitySerial}' not found.`);
+    }
+
+    // Find armer
+    let find = await this.gunService.findOne({ armer });
+    if (!find) {
+      throw new NotFoundException(`Armer '${armer}' not found.`);
+    }
+
+    // TODO - Check if entity already has an active armer
+    if (entity.armer && entity.armer.trim().length > 0) {
+     
+    }
+
+    
+
+    // TODO Check if armer is already in a different entity
+    if (entity.armer && entity.armer.trim().length > 0 && find.ArmeiroId  !== entity.armer) {
+      throw new BadRequestException(`Card '${find.ArmeiroId }' already assigned to Entity '${find.entitySerial}'.`);
+    }
+
+    try {
+  
+
+      // TODO  Update entity armer
+     
+
+      // Save models
+      await this.entityService.updateOne(entity);
+
+
+     
+
+
+
+
+      const response = getResponse(200, { data: { armer, entity } });
+      return res.status(200).send(response);
+    } catch (error) {
+      console.error(error);
+
+      if (error.code == 11000) {
+        return res.status(400).send({ error: error.errmsg });
+      }
+
+      return res.status(400).send({ error: error });
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
 }

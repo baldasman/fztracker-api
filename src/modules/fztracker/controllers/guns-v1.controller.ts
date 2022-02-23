@@ -1,6 +1,6 @@
-import { Body, Controller, Get, Logger, Post, Req, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Logger, Post, Req, Res,Query, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiCreatedResponse, ApiOperation, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
-import { Response } from 'express';
+import { query, Response } from 'express';
 import { AuthGuard } from '../../core/guards/auth.guard';
 import { getResponse } from '../../core/helpers/response.helper';
 import { SuccessResponseModel } from '../../core/models/success-response.model';
@@ -19,7 +19,7 @@ export class GunsV1Controller {
     this.logger.log('Init Guns@1.0.0 controller', GunsV1Controller.name);
   }
 
-  @Get('')
+  @Get('getAllGuns')
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Get all guns' })
   @ApiCreatedResponse({ description: 'Successfully returned gun list', type: SuccessResponseModel })
@@ -31,13 +31,73 @@ export class GunsV1Controller {
     try {
       const filter = {};
       const guns = await this.gunService.find(filter);
-      console.log('guns', filter,guns );
+      //const myGunGuns = guns[0].guns as {name:string, serial:string}[];
+      //console.log('guns', filter,guns, myGunGuns[0].name, myGunGuns[0].serial );
+
       const response = getResponse(200, { data: { guns } });
       return res.status(200).send(response);
     } catch (error) {
       console.error(error);
       return res.status(400).send({ error: error.errmsg });
     }
+  }
+
+  @Get('getAllArmerGuns')
+  @ApiOperation({ summary: 'Add new gun to armer' })
+  @ApiCreatedResponse({ description: 'Successfully created gun', type: SuccessResponseModel })
+  @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
+  async getAllArmerGuns(
+    @Query('ArmeiroId') ArmeiroId: string,
+ //  @Body() armerModel: GunsModel,
+    @Res() res: Response
+  ):
+    Promise<object> {
+
+    try {
+      console.log("add guns to armer", ArmeiroId);
+    // const filter = {ArmeiroId: "12"};
+     // const filter = {ArmeiroId: armerModel.ArmeiroId};
+      const armer = await this.gunService.findOne({ArmeiroId: ArmeiroId});
+      console.log("armerr", armer);
+      // if no armer return
+
+   /*    const gunsInArmer = armer.guns as {name:string, serial:string}[];
+
+      const gunsToAdd = armerModel.guns as {name:string, serial:string}[];
+      gunsToAdd.forEach(gun => {
+        if (gun.serial) {
+          const idx = gunsInArmer.findIndex(gunInArmer => gunInArmer.serial === gun.serial);
+          console.log("find", idx, gun.serial);
+          if (idx < 0) {
+            // add missing gun
+            gunsInArmer.push(gun);
+            console.log("add gun", gun, gunsInArmer);
+            // to remove remove
+            // gunsInArmer.splice(idx, 1);
+          }
+          
+        }
+        
+      }); */
+      
+      // Update armer
+    /*  armer.guns = gunsInArmer;
+      const armerChanges = await this.gunService.updateOne(armer);
+      console.log("armerr", armerChanges);
+      const response = getResponse(200, { data: armerChanges }); */
+      const response = getResponse(200, { data: { armer } });
+      return res.status(200).send(response);
+    } catch (error) {
+      console.error(error);
+
+      if (error.code == 11000) {
+        return res.status(400).send({ error: error.errmsg });
+      }
+
+      return res.status(400).send({ error: error });
+    }
+
+
   }
 
   @Post('addgun')
@@ -51,10 +111,11 @@ export class GunsV1Controller {
     Promise<object> {
 
     try {
+      console.log("add gun", gun);
       const newGun = await this.gunService.add(gun);
 
       // Add log
-     
+      return res.status(200).send({ data: newGun });
     } catch (error) {
       console.error(error);
 
@@ -64,90 +125,119 @@ export class GunsV1Controller {
 
       return res.status(400).send({ error: error });
     }
+
+
   }
 
-
-
-
-
-
- /*  @Post('import')
-  @ApiOperation({ summary: 'Import guns from CSV' })
-  @ApiCreatedResponse({ description: 'Successfully imported cards from csv', type: SuccessResponseModel })
+  @Post('addguntoarmer')
+  @ApiOperation({ summary: 'Add new gun to armer' })
+  @ApiCreatedResponse({ description: 'Successfully created gun', type: SuccessResponseModel })
   @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
-  async importCards(
-    @Body() body: ImportCardRequest,
+  async addGunsToArmer(
+    @Body() armerModel: GunsModel,
     @Res() res: Response
-  ): Promise<object> {
-    console.log('file', body.file);
+  ):
+    Promise<object> {
+
     try {
-      // Parse csv file
-      const headers = [
-        'uid', 'uidShort', 'cardNumber', 'state', 'cardType'
-      ];
+      console.log("add guns to armer", armerModel);
 
-      let successCounter = 0;
-      let data;
-      // const dataFile = join(__dirname, '../../../assets', 'import', file);
-      const dataFile = body.file;
-      console.log(dataFile, dataFile);
+      const filter = {ArmeiroId: armerModel.ArmeiroId};
+      const armer = await this.gunService.findOne(filter);
+      console.log("armerr", armer);
+      // if no armer return
 
-      data = await this.parserService.parseCards(dataFile, headers, ';');
+      const gunsInArmer = armer.guns as {name:string, serial:string}[];
 
-      if (data) {
-        for (let i = 0; i < data.list.length; i++) {
-          const cardToImport: CardImportModel = data.list[i];
-
-          if (!cardToImport.uid) {
-            console.log('Ignore: uid is null', cardToImport);
-            continue;
+      const gunsToAdd = armerModel.guns as {name:string, serial:string}[];
+      gunsToAdd.forEach(gun => {
+        if (gun.serial) {
+          const idx = gunsInArmer.findIndex(gunInArmer => gunInArmer.serial === gun.serial);
+          console.log("find", idx, gun.serial);
+          if (idx < 0) {
+            // add missing gun
+            gunsInArmer.push(gun);
+            console.log("add gun", gun, gunsInArmer);
+            // to remove remove
+            // gunsInArmer.splice(idx, 1);
           }
-
-          // console.log(cardToImport);
-
-          // Find entity by serial
-          let card = await this.cardService.findOne({ uid: cardToImport.uid });
-          let update = true;
-
-          if (!card) {
-            update = false;
-
-            // create new entity
-            card = new CardModel();
-            card.uid = cardToImport.uid;
-          }
-
-          card.cardNumber = cardToImport.cardNumber;
-          if (cardToImport.state.toLowerCase() == 'active') {
-            card.state = CardModel.STATE_ACTIVE;
-          } else {
-            card.state = CardModel.STATE_INACTIVE;
-          }
-
-          card.entityType = cardToImport.cardType;
-          card.uidShort = cardToImport.uidShort;
-
-          try {
-            if (update) {
-              await this.cardService.updateOne(card);
-            } else {
-              await this.cardService.add(card);
-            }
-
-            successCounter++;
-          } catch (e) {
-            console.error('Failed to import card #' + i, cardToImport, e);
-          }
+          
         }
+        
+      });
+      
+      // Update armer
+      armer.guns = gunsInArmer;
+      const armerChanges = await this.gunService.updateOne(armer);
+      console.log("armerr", armerChanges);
+      const response = getResponse(200, { data: armerChanges });
+      return res.status(200).send(response);
+    } catch (error) {
+      console.error(error);
+
+      if (error.code == 11000) {
+        return res.status(400).send({ error: error.errmsg });
       }
 
-      const response = { message: `${successCounter}/${data.total} cards imported.` }
-      return res.status(200).send(response);
-    } catch (e) {
-      console.error('Failed to import cards.', e);
-
-      // return res.status(200).send(response);
-      return res.status(400).send({ error: e, message: 'Failed to import cards.' });
+      return res.status(400).send({ error: error });
     }
-  } */
+
+
+  }
+
+  @Post('removeguntoarmer')
+  @ApiOperation({ summary: 'Add new gun to armer' })
+  @ApiCreatedResponse({ description: 'Successfully created gun', type: SuccessResponseModel })
+  @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
+  async removeGunsToArmer(
+    @Body() armerModel: GunsModel,
+    @Res() res: Response
+  ):
+    Promise<object> {
+
+    try {
+      console.log("add guns to armer", armerModel);
+
+      const filter = {ArmeiroId: armerModel.ArmeiroId};
+      const armer = await this.gunService.findOne(filter);
+      console.log("armer", armer);
+      // if no armer return
+
+      const gunsInArmer = armer.guns as {name:string, serial:string}[];
+
+      const gunsToAdd = armerModel.guns as {name:string, serial:string}[];
+      gunsToAdd.forEach(gun => {
+        if (gun.serial) {
+          const idx = gunsInArmer.findIndex(gunInArmer => gunInArmer.serial === gun.serial);
+          console.log("find", idx, gun.serial);
+          if (idx >= 0) {
+            // add missing gun
+            
+            console.log("remove gun", gun, gunsInArmer);
+            // to remove remove
+            gunsInArmer.splice(idx, 1);
+          }  
+        }
+        
+      });
+      
+      // Update armer
+      armer.guns = gunsInArmer;
+      const armerChanges = await this.gunService.updateOne(armer);
+      console.log("armerr", armerChanges);
+      const response = getResponse(200, { data: armerChanges });
+      return res.status(200).send(response);
+    } catch (error) {
+      console.error(error);
+
+      if (error.code == 11000) {
+        return res.status(400).send({ error: error.errmsg });
+      }
+
+      return res.status(400).send({ error: error });
+    }
+
+
+  }
+
 }

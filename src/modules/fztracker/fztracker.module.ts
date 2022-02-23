@@ -36,11 +36,11 @@ import { GunsSchema } from './schemas/guns.schema';
     MongooseModule.forFeature([{ name: 'Log', schema: LogSchema }]),
     AuthModule
   ],
-  controllers: [CardsV1Controller, EntitiesV1Controller, LogsV1Controller, MovementsV1Controller, UsersV1Controller, AnalyticsV1Controller,  ],
-  providers: [MailSenderService, UserService, CardService, ReadingService, MovementService, LogService, CsvParser, ParseService, ]
+  controllers: [CardsV1Controller, EntitiesV1Controller, LogsV1Controller, MovementsV1Controller, UsersV1Controller, AnalyticsV1Controller, GunsV1Controller  ],
+  providers: [MailSenderService, UserService, CardService, ReadingService, MovementService, LogService, CsvParser, ParseService, GunService ]
 })
 export class FZtrackerModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(ExtractTokenMiddleware).forRoutes(CardsV1Controller, EntitiesV1Controller, LogsV1Controller, MovementsV1Controller, UsersV1Controller,GunsV1Controller );
+    consumer.apply(ExtractTokenMiddleware).forRoutes(CardsV1Controller, EntitiesV1Controller, LogsV1Controller, MovementsV1Controller, UsersV1Controller, GunsV1Controller );
   }
 }
