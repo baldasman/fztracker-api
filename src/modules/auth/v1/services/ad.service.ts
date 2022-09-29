@@ -18,12 +18,12 @@ export class AdService {
 
     // TODO: create env variables
     this.adminUsername = 'm0x74951@marinha.pt';
-    this.adminPassword = 'inform@20';
+    this.adminPassword = 'inform@19';
 
     this.config = {
 
       //implemenado protoco LDAPS a 26/07/2021 pelas 03:35
-      url: 'ldaps://AD-N-19-2.marinha.pt:636',
+      url: 'ldaps://s-ad-1.marinha.pt:636',
       //url: 'ldaps://10.45.0.5:636',
       baseDN: 'OU=Marinha,DC=marinha,DC=pt',
       username: this.adminUsername,
@@ -74,6 +74,8 @@ export class AdService {
 
         if (!user) {
           console.log('AD User: ' + username + ' not found.');
+          
+
 
           reject({ message: 'User: ' + username + ' not found.' });
         } else {
