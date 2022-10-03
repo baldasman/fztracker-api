@@ -69,7 +69,7 @@ export class MovementsV1Controller {
         filter = { ...filter, entitySerial: search };
       }
 
-      const fromDate = moment(searchFrom).startOf("day");
+      const fromDate = searchFrom ? moment(searchFrom).startOf("day") : moment().subtract(1, 'day').startOf("day");
       const toDate = moment(searchTo).endOf("day");
 
       filter["movementDate"] = {
