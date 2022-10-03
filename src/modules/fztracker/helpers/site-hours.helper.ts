@@ -14,8 +14,6 @@ const toSiteHours = (
     from,
     to,
     sites: {},
-    lastOut: null,
-    lastIn: null,
   };
 
   const sites = {};
@@ -155,22 +153,29 @@ const toSiteHours = (
       lastOut: sites[l].lastOut,
       lastIn: sites[l].lastIn,
       days: [],
+      totalHours: 0,
+      avgHoursDay: 0,
+      totalDays: days
     };
 
     // convert days
-    // {date: string, hours: number}
     const cDate = moment(fromDate);
     let key = cDate.format('YYYY-MMM-DD');
-    siteHours.sites[l].days.push({ date: key, hours: Math.round(sites[l].days[key]*100)/100 });
-    // [d.format('YYYY-MMM-DD')] = 0;
+    let hours = Math.round(sites[l].days[key]*100)/100;
+
+    siteHours.sites[l].days.push({ date: key, hours: hours });
+    siteHours.sites[l].totalHours += hours;
 
     for (let i = 1; i < days; i++) {
       cDate.add(1, "day");
-      let key = cDate.format('YYYY-MMM-DD');
-      siteHours.sites[l].days.push({ date: key, hours: Math.round(sites[l].days[key]*100)/100 });
+      key = cDate.format('YYYY-MMM-DD');
+      hours = Math.round(sites[l].days[key]*100)/100;
+
+      siteHours.sites[l].days.push({ date: key, hours });
+      siteHours.sites[l].totalHours += hours;
     }
 
-    console.log(siteHours.sites[l]);
+    siteHours.sites[l].avgHoursDay += Math.round(siteHours.sites[l].totalHours / siteHours.sites[l].totalDays * 100) / 100;
   }
 
   return siteHours;
