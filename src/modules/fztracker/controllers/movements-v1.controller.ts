@@ -19,6 +19,7 @@ import {
 import { Response } from "express";
 import moment = require("moment");
 import { environment, Environment } from "../../../config/environment";
+import { EntityService } from '../../auth/v1/services/entity.service';
 import { AuthGuard } from "../../core/guards/auth.guard";
 import { getResponse } from "../../core/helpers/response.helper";
 import { SuccessResponseModel } from "../../core/models/success-response.model";
@@ -32,7 +33,8 @@ import { MovementService } from "../services/movement.service";
 export class MovementsV1Controller {
   constructor(
     private readonly logger: Logger,
-    private readonly movementService: MovementService
+    private readonly movementService: MovementService,
+    private readonly entityService: EntityService
   ) {
     this.logger.log(
       "Init Movements@1.0.0 controller",
@@ -106,6 +108,11 @@ export class MovementsV1Controller {
         return res.status(400).send({ error: "Missing entitySerial" });
       }
 
+      const entity = await this.entityService.findOne({ 'serial': entitySerial });
+      if (!entity) {
+        return res.status(404).send({ error: `Entity '${entitySerial}' not fouund.` });
+      }
+
       let filter = {};
       filter = { ...filter, entitySerial };
 
@@ -125,7 +132,7 @@ export class MovementsV1Controller {
       const movements = await this.movementService.find(filter, {movementDate: 1});
 
       // Convert movements into site hours by day
-      const siteHours = toSiteHours(entitySerial, fromDate.toString(), toDate.toString(), movements, environment.locations);
+      const siteHours = toSiteHours(entity, fromDate.toString(), toDate.toString(), movements, environment.locations);
 
       const response = getResponse(200, { data: { siteHours } });
       return res.status(200).send(response);

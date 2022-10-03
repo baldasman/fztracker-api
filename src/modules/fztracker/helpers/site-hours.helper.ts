@@ -1,15 +1,16 @@
 import moment = require("moment");
+import { EntityModel } from '../../auth/v1/models/entity.model';
 import { MovementModel } from "../models/movement.model";
 
 const toSiteHours = (
-  entitySerial: string,
+  entity: EntityModel,
   from: string,
   to: string,
   movements: MovementModel[],
   locations: string[]
 ) => {
   const siteHours = {
-    entitySerial,
+    entitySerial: entity.serial,
     from,
     to,
     sites: {},
@@ -28,13 +29,14 @@ const toSiteHours = (
   const toDate = moment(to).startOf("day");
   const days = toDate.diff(fromDate, "day") + 1;
 
-  console.log("sites", fromDate, toDate, locations, days);
+  console.log("toSiteHours", fromDate, toDate, locations, days);
 
+  // Initialize sites from Locations
   locations.forEach((site) => {
     if (!sites[site]) {
       sites[site] = {
         name: site,
-        in: false,
+        in: entity.inOut,
         lastMovement: null,
         days: {},
       };
@@ -47,15 +49,12 @@ const toSiteHours = (
         const d = cDate.add(1, "day");
         sites[site].days[d.format('YYYY-MMM-DD')] = 0;
       }
-
-      console.log(site, sites[site].days);
     }
   });
 
   for (const movement of movements) {
     // Get site
     const site = sites[movement.location];
-
     if (!site) {
       continue;
     }
@@ -63,7 +62,7 @@ const toSiteHours = (
     const mDate = moment(movement.movementDate);
 
     if (!site.lastMovement) {
-      site.lastMovement = mDate;
+      site.lastMovement = moment(entity.lastMovementDate);
     }
 
     if (movement.inOut === false) {
