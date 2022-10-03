@@ -58,10 +58,5 @@ usar TTL diferente para os leitores: infinito
 mudar para node 10.16.3
 
 ```javascript
-const output = execFileSync(`${join(environment.repoPath, 'distributions', 'parsers', Constants.serialToSeedIdBin)}`, [serialNumber]);
-  const outVariables = output.toString().split(/\r?\n/);
 
-  if (!outVariables || outVariables.length < 1) {
-    return Constants.INVALID_SEED_ID;
-  }
 ```
