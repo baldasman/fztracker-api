@@ -13,7 +13,7 @@ export class MovementService {
   }
 
   async find(filter: any, sort?: any): Promise<[MovementModel]> {
-    return this.movementModel.find(filter).sort({movementDate: -1}).exec();
+    return this.movementModel.find(filter).sort(sort || {movementDate: -1}).exec();
   }
 
   async findOne(filter: object): Promise<MovementModel> {

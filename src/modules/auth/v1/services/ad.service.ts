@@ -1,38 +1,41 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { AdUser } from '../../../core/models/ad-user.model';
+import { Injectable, Logger } from "@nestjs/common";
+import { AdUser } from "../../../core/models/ad-user.model";
 
-const ActiveDirectory = require('activedirectory2');
+const ActiveDirectory = require("activedirectory2");
 const fs = require("fs");
 @Injectable()
 export class AdService {
-
   private adminUsername;
   private adminPassword;
   private config;
   private ad;
+  private certificate;
 
-  constructor(
-    private readonly logger: Logger
-  ) {
+  constructor(private readonly logger: Logger) {
     this.logger.setContext(AdService.name);
 
     // TODO: create env variables
-    this.adminUsername = 'm0x74951@marinha.pt';
-    this.adminPassword = 'inform@19';
+    this.adminUsername = "m0x74951@marinha.pt";
+    this.adminPassword = "inform@19";
+
+    try {
+      this.certificate = fs.readFileSync("d:ad.cer");
+    } catch (ex) {
+      console.warn("Certificate file 'd:ad.cer' was not found.");
+    }
 
     this.config = {
-
       //implemenado protoco LDAPS a 26/07/2021 pelas 03:35
-      url: 'ldaps://s-ad-1.marinha.pt:636',
+      url: "ldaps://s-ad-1.marinha.pt:636",
       //url: 'ldaps://10.45.0.5:636',
-      baseDN: 'OU=Marinha,DC=marinha,DC=pt',
+      baseDN: "OU=Marinha,DC=marinha,DC=pt",
       username: this.adminUsername,
       password: this.adminPassword,
       tlsOptions: {
-        ca: [fs.readFileSync('d:\ad.cer')],
-        rejectUnauthorized: false 
-    }
-    }
+        ca: [this.certificate],
+        rejectUnauthorized: false,
+      },
+    };
 
     this.ad = new ActiveDirectory(this.config);
   }
@@ -40,50 +43,46 @@ export class AdService {
   async authenticate(username: string, password: string): Promise<boolean> {
     const thatAd = this.ad;
 
-    return new Promise(function (resolve, reject) {
-      thatAd.authenticate(username, password, function (err, auth) {
+    return new Promise(function(resolve, reject) {
+      thatAd.authenticate(username, password, function(err, auth) {
         if (err) {
-          console.error('ERROR: ' + JSON.stringify(err));
+          console.error("ERROR: " + JSON.stringify(err));
           reject(err);
           return;
         }
 
         if (auth) {
           resolve(true);
-        }
-        else {
-          console.error('AD Authentication failed!');
-          reject({ message: 'Authentication failed!' });
+        } else {
+          console.error("AD Authentication failed!");
+          reject({ message: "Authentication failed!" });
         }
       });
-
     });
   }
 
   async findUser(username: string): Promise<AdUser> {
     const thatAd = this.ad;
 
-    return new Promise(function (resolve, reject) {
+    return new Promise(function(resolve, reject) {
       // window.onload = resolve;
-      thatAd.findUser(username, function (err, user) {
+      thatAd.findUser(username, function(err, user) {
         if (err) {
-          console.error('ERROR: ' + JSON.stringify(err));
+          console.error("ERROR: " + JSON.stringify(err));
           reject(err);
           return;
         }
 
         if (!user) {
-          console.log('AD User: ' + username + ' not found.');
-          
+          console.log("AD User: " + username + " not found.");
 
-
-          reject({ message: 'User: ' + username + ' not found.' });
+          reject({ message: "User: " + username + " not found." });
         } else {
-          console.log('detalhes' + JSON.stringify(user));
+          console.log("detalhes" + JSON.stringify(user));
 
-        //  thatAd.getGroupMembershipForUser(username, function (err, groups) {
-       //     console.log(JSON.stringify(groups));
-         // });
+          //  thatAd.getGroupMembershipForUser(username, function (err, groups) {
+          //     console.log(JSON.stringify(groups));
+          // });
 
           const adUser = new AdUser(user);
           resolve(adUser);
@@ -101,13 +100,10 @@ export class AdService {
 
   async isMemberOf(username: string, groupName: string): Promise<boolean> {
     const thatAd = this.ad;
-    return new Promise(function (resolve, reject) {
-
-      thatAd.isUserMemberOf(username, groupName, function (err, isMember) {
+    return new Promise(function(resolve, reject) {
+      thatAd.isUserMemberOf(username, groupName, function(err, isMember) {
         resolve(isMember);
       });
-    })
-  };
-
+    });
+  }
 }
-

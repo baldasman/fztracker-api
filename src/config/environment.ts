@@ -19,6 +19,7 @@ export class Environment {
   smtpHost: string;
   smtpEmail: string;
   smtpPassword: string;
+  locations: string[];
 }
 
 export const environment: Environment = {
@@ -36,4 +37,5 @@ export const environment: Environment = {
   smtpHost: process.env.SMTP_HOST,
   smtpEmail: process.env.SMTP_EMAIL,
   smtpPassword: process.env.SMTP_PASSWORD,
+  locations: (process.env.LOCATIONS || '').split(';')
 };
