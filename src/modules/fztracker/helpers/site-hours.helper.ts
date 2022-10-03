@@ -1,5 +1,5 @@
 import moment = require("moment");
-import { EntityModel } from '../../auth/v1/models/entity.model';
+import { EntityModel } from "../../auth/v1/models/entity.model";
 import { MovementModel } from "../models/movement.model";
 
 const toSiteHours = (
@@ -41,11 +41,11 @@ const toSiteHours = (
 
       // Add start
       const cDate = moment(fromDate);
-      sites[site].days[cDate.format('YYYY-MMM-DD')] = 0;
+      sites[site].days[cDate.format("YYYY-MMM-DD")] = 0;
 
       for (let i = 1; i < days; i++) {
         const d = cDate.add(1, "day");
-        sites[site].days[d.format('YYYY-MMM-DD')] = 0;
+        sites[site].days[d.format("YYYY-MMM-DD")] = 0;
       }
     }
   });
@@ -80,26 +80,28 @@ const toSiteHours = (
           const hours = mDate.diff(site.lastMovement, "hour", true);
 
           console.log(
-            `     add ${hours} working hours to ${mDate.format('YYYY-MMM-DD')}`
+            `     add ${hours} working hours to ${mDate.format("YYYY-MMM-DD")}`
           );
 
-          site.days[mDate.format('YYYY-MMM-DD')] += hours;
+          site.days[mDate.format("YYYY-MMM-DD")] += hours;
         } else {
           console.log("   in and different days");
 
-          let hours = moment(site.lastMovement).endOf('day').diff(moment(site.lastMovement), "hour", true);
-          site.days[site.lastMovement.format('YYYY-MMM-DD')] += hours;
+          let hours = moment(site.lastMovement)
+            .endOf("day")
+            .diff(moment(site.lastMovement), "hour", true);
+          site.days[site.lastMovement.format("YYYY-MMM-DD")] += hours;
 
           let cDate = moment(site.lastMovement);
           for (let i = 1; i < days - 1; i++) {
             const d = cDate.add(1, "day");
 
-            sites[site].days[d.format('YYYY-MMM-DD')] = { d, hours: 24 };
+            site.days[d.format("YYYY-MMM-DD")] = { d, hours: 24 };
           }
 
           const lDay = cDate.add(1, "day");
           hours = lDay.diff(lDay.startOf("day"), "hour", true);
-          site.days[lDay.format('YYYY-MMM-DD')] += hours;
+          site.days[lDay.format("YYYY-MMM-DD")] += hours;
         }
       } else {
         // Already outside
@@ -128,12 +130,12 @@ const toSiteHours = (
           let cDate = moment(site.lastMovement);
           for (let i = 1; i < days - 1; i++) {
             const d = cDate.add(1, "day");
-            sites[site].days[d.format('YYYY-MMM-DD')] = { d, hours: 24 };
+            site.days[d.format("YYYY-MMM-DD")] = { d, hours: 24 };
           }
 
           const lDay = cDate.add(1, "day");
           const hours = lDay.diff(lDay.startOf("day"), "hour", true);
-          site.days[lDay.format('YYYY-MMM-DD')] += hours;
+          site.days[lDay.format("YYYY-MMM-DD")] += hours;
         }
       }
 
@@ -155,27 +157,30 @@ const toSiteHours = (
       days: [],
       totalHours: 0,
       avgHoursDay: 0,
-      totalDays: days
+      totalDays: days,
     };
 
     // convert days
     const cDate = moment(fromDate);
-    let key = cDate.format('YYYY-MMM-DD');
-    let hours = Math.round(sites[l].days[key]*100)/100;
+    let key = cDate.format("YYYY-MMM-DD");
+    let hours = Math.round(sites[l].days[key] * 100) / 100;
 
     siteHours.sites[l].days.push({ date: key, hours: hours });
     siteHours.sites[l].totalHours += hours;
 
     for (let i = 1; i < days; i++) {
       cDate.add(1, "day");
-      key = cDate.format('YYYY-MMM-DD');
-      hours = Math.round(sites[l].days[key]*100)/100;
+      key = cDate.format("YYYY-MMM-DD");
+      hours = Math.round(sites[l].days[key] * 100) / 100;
 
       siteHours.sites[l].days.push({ date: key, hours });
       siteHours.sites[l].totalHours += hours;
     }
 
-    siteHours.sites[l].avgHoursDay += Math.round(siteHours.sites[l].totalHours / siteHours.sites[l].totalDays * 100) / 100;
+    siteHours.sites[l].avgHoursDay +=
+      Math.round(
+        (siteHours.sites[l].totalHours / siteHours.sites[l].totalDays) * 100
+      ) / 100;
   }
 
   return siteHours;
