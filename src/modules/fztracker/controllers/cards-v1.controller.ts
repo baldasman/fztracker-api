@@ -161,4 +161,28 @@ export class CardsV1Controller {
       return res.status(400).send({ error: e, message: 'Failed to import cards.' });
     }
   }
+
+  @Get('stats')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Get cards statistics' })
+  @ApiCreatedResponse({ description: 'Successfully returned card statistics', type: SuccessResponseModel })
+  @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
+  async getCardsStats(
+    @Query('location') location: string,
+    @Req() req: any,
+    @Res() res: Response
+  ): Promise<object> {
+    try {
+      const cardsIn = await this.entityService.findAndCount({cardId: {$exists: true}, inOut: true, lastlocal: location});
+      const cardsOut = await this.entityService.findAndCount({cardId: {$exists: true}, inOut: false, lastlocal: location});
+
+      console.log(`location=${location} cardsIn=${cardsIn} cardsOut=${cardsOut}`);
+
+      const response = getResponse(200, { data: { cardsIn, cardsOut } });
+      return res.status(200).send(response);
+    } catch (error) {
+      console.error(error);
+      return res.status(400).send({ error: error.errmsg });
+    }
+  }
 }

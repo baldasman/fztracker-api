@@ -76,6 +76,7 @@ export class MovementsV1Controller {
         $gte: fromDate.toDate(),
         $lte: toDate.toDate(),
       };
+
       console.log("filter", filter);
       const movements = await this.movementService.find(filter);
 

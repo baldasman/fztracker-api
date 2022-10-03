@@ -302,6 +302,7 @@ export class EntitiesV1Controller {
 
       const response = getResponse(200, { data: { movement } });
 
+      console.log('Publish event!!!!', { movement, entity });
       global['io'].emit(`movement`, { movement, entity });
 
       return res.status(200).send(response);
@@ -587,7 +588,13 @@ export class EntitiesV1Controller {
       nii = 'm' + nii;
     }
 
-    const adUser = await this.adService.findUser(nii);
+    let adUser = null;
+    try {
+      adUser = await this.adService.findUser(nii);
+    } catch (error) {
+      console.error('AD ERROR', error);
+    }
+    
     if (!adUser) {
       return null;
     }

@@ -33,4 +33,8 @@ export class CardService {
   async updateOne(card: CardModel): Promise<CardModel> {
     return this.cardModel.updateOne({cardNumber: card.cardNumber}, card).exec();
   }
+
+  async findAndCount(filter: any): Promise<number> {
+    return this.cardModel.find(filter).count().exec();
+  }
 }
