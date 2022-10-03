@@ -90,6 +90,9 @@ const toSiteHours = (
         } else {
           console.log("   in and different days");
 
+          let hours = moment(site.lastMovement).endOf('day').diff(moment(site.lastMovement), "hour");
+          site.days[site.lastMovement.format('YYYY-MMM-DD')] += hours;
+
           let cDate = moment(site.lastMovement);
           for (let i = 1; i < days - 1; i++) {
             const d = cDate.add(1, "day");
@@ -98,7 +101,7 @@ const toSiteHours = (
           }
 
           const lDay = cDate.add(1, "day");
-          const hours = lDay.diff(lDay.startOf("day"), "hour");
+          hours = lDay.diff(lDay.startOf("day"), "hour");
           site.days[lDay.format('YYYY-MMM-DD')] += hours;
         }
       } else {
