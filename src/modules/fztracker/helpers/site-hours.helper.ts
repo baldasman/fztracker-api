@@ -79,7 +79,7 @@ const toSiteHours = (
         if (days === 0) {
           console.log("   in and out same day");
 
-          const hours = mDate.diff(site.lastMovement, "hour");
+          const hours = mDate.diff(site.lastMovement, "hour", true);
 
           console.log(
             `     add ${hours} working hours to ${mDate.format('YYYY-MMM-DD')}`
@@ -89,7 +89,7 @@ const toSiteHours = (
         } else {
           console.log("   in and different days");
 
-          let hours = moment(site.lastMovement).endOf('day').diff(moment(site.lastMovement), "hour");
+          let hours = moment(site.lastMovement).endOf('day').diff(moment(site.lastMovement), "hour", true);
           site.days[site.lastMovement.format('YYYY-MMM-DD')] += hours;
 
           let cDate = moment(site.lastMovement);
@@ -100,7 +100,7 @@ const toSiteHours = (
           }
 
           const lDay = cDate.add(1, "day");
-          hours = lDay.diff(lDay.startOf("day"), "hour");
+          hours = lDay.diff(lDay.startOf("day"), "hour", true);
           site.days[lDay.format('YYYY-MMM-DD')] += hours;
         }
       } else {
@@ -134,7 +134,7 @@ const toSiteHours = (
           }
 
           const lDay = cDate.add(1, "day");
-          const hours = lDay.diff(lDay.startOf("day"), "hour");
+          const hours = lDay.diff(lDay.startOf("day"), "hour", true);
           site.days[lDay.format('YYYY-MMM-DD')] += hours;
         }
       }
@@ -161,13 +161,13 @@ const toSiteHours = (
     // {date: string, hours: number}
     const cDate = moment(fromDate);
     let key = cDate.format('YYYY-MMM-DD');
-    siteHours.sites[l].days.push({ date: key, hours: sites[l].days[key] });
+    siteHours.sites[l].days.push({ date: key, hours: Math.round(sites[l].days[key]*100)/100 });
     // [d.format('YYYY-MMM-DD')] = 0;
 
     for (let i = 1; i < days; i++) {
       cDate.add(1, "day");
       let key = cDate.format('YYYY-MMM-DD');
-      siteHours.sites[l].days.push({ date: key, hours: sites[l].days[key] });
+      siteHours.sites[l].days.push({ date: key, hours: Math.round(sites[l].days[key]*100)/100 });
     }
 
     console.log(siteHours.sites[l]);
