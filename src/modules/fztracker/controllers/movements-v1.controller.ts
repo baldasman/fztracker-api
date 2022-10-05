@@ -77,7 +77,6 @@ export class MovementsV1Controller {
         $lte: toDate.toDate(),
       };
 
-      console.log("filter", filter);
       const movements = await this.movementService.find(filter);
 
       const response = getResponse(200, { data: { movements } });
@@ -98,12 +97,12 @@ export class MovementsV1Controller {
   @ApiUnauthorizedResponse({ description: "Invalid credentials" })
   async getSiteHours(
     @Query("entitySerial") entitySerial: string,
-    @Query("from") searchFrom: string,
-    @Query("to") searchTo: string,
+    @Query("from") searchFrom: number,
+    @Query("to") searchTo: number,
     @Res() res: Response
   ): Promise<object> {
     try {
-      console.log("Input filter", entitySerial, searchFrom, searchTo);
+      this.logger.debug(`Input filter: entitySerial=${entitySerial} | searchFrom=${searchFrom} | searchTo=${searchTo}`, 'site-hours');
 
       if (!entitySerial) {
         return res.status(400).send({ error: "Missing entitySerial" });
@@ -121,19 +120,18 @@ export class MovementsV1Controller {
         filter = { ...filter, location: { $in: environment.locations } };
       }
 
-      const fromDate = moment(searchFrom);
-      const toDate = moment(searchTo);
+      const fromDate = moment(Number(searchFrom)*1000);
+      const toDate = moment(Number(searchTo)*1000);
 
       filter["movementDate"] = {
         $gte: fromDate.startOf('day').toDate(),
         $lte: toDate.endOf('day').toDate(),
       };
 
-      console.log("Query filter", filter);
       const movements = await this.movementService.find(filter, {movementDate: 1});
 
       // Convert movements into site hours by day
-      const siteHours = toSiteHours(entity, fromDate.toString(), toDate.toString(), movements, environment.locations);
+      const siteHours = toSiteHours(entity, fromDate.unix()*1000, toDate.unix()*1000, movements, environment.locations);
 
       const response = getResponse(200, { data: { siteHours } });
       return res.status(200).send(response);

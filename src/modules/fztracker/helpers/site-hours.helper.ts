@@ -4,8 +4,8 @@ import { MovementModel } from "../models/movement.model";
 
 const toSiteHours = (
   entity: EntityModel,
-  from: string,
-  to: string,
+  from: number,
+  to: number,
   movements: MovementModel[],
   locations: string[]
 ) => {
@@ -63,8 +63,8 @@ const toSiteHours = (
       site.lastMovement = moment(entity.lastMovementDate);
     }
 
-    if (movement.inOut === false) {
-      // Found OUT
+    
+    if (movement.inOut === false) { // Found OUT
       console.log(`Out from ${site.name} at ${movement.movementDate}`);
 
       if (site.in === true) {
@@ -72,10 +72,35 @@ const toSiteHours = (
         console.log(" was inside");
 
         // Get days
-        const days = site.lastMovement.diff(mDate, "day");
+        const days = mDate.diff(site.lastMovement, "day", true);
 
-        if (days === 0) {
-          console.log("   in and out same day");
+        if (days > 1) {
+          console.log("   in and out on different days", days);
+
+          // Add time from entry till end of day of entrance
+          let hours = moment(site.lastMovement)
+            .endOf("day")
+            .diff(moment(site.lastMovement), "hour", true);
+          site.days[site.lastMovement.format("YYYY-MMM-DD")] += hours;
+
+          console.log(`     add ${hours} on entry day ${site.lastMovement.format("YYYY-MMM-DD")}`);
+
+          // Loop full days before exit and add 24h
+          let cDate = moment(site.lastMovement).startOf('day');
+          for (let i = 0; i < days - 1; i++) {
+            cDate.add(1, "day");
+
+            site.days[cDate.format("YYYY-MMM-DD")] += 24;
+            console.log(`     add 24h on ${cDate.format("YYYY-MMM-DD")}`);
+          }
+
+          cDate.add(1, "day");
+          hours = mDate.diff(cDate.startOf("day"), "hour", true);
+          site.days[cDate.format("YYYY-MMM-DD")] += hours;
+
+          console.log(`     add ${hours} on exit day ${cDate.format("YYYY-MMM-DD")}`);
+        } else {
+          console.log("   in and out same day", days);
 
           const hours = mDate.diff(site.lastMovement, "hour", true);
 
@@ -84,24 +109,6 @@ const toSiteHours = (
           );
 
           site.days[mDate.format("YYYY-MMM-DD")] += hours;
-        } else {
-          console.log("   in and different days");
-
-          let hours = moment(site.lastMovement)
-            .endOf("day")
-            .diff(moment(site.lastMovement), "hour", true);
-          site.days[site.lastMovement.format("YYYY-MMM-DD")] += hours;
-
-          let cDate = moment(site.lastMovement);
-          for (let i = 1; i < days - 1; i++) {
-            const d = cDate.add(1, "day");
-
-            site.days[d.format("YYYY-MMM-DD")] = { d, hours: 24 };
-          }
-
-          const lDay = cDate.add(1, "day");
-          hours = lDay.diff(lDay.startOf("day"), "hour", true);
-          site.days[lDay.format("YYYY-MMM-DD")] += hours;
         }
       } else {
         // Already outside
