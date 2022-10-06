@@ -127,7 +127,7 @@ export class MovementsV1Controller {
         $lte: toDate.endOf("day").toDate(),
       };
 
-      // Convert movements into site hours by day
+      // Initialize response object
       const siteHours = {
         entitySerial: entity.serial,
         from: moment(fromDate.unix() * 1000),
@@ -210,21 +210,25 @@ export class MovementsV1Controller {
           // convert days
           for (let i = 0; i < daysInWindow; i++) {
             const key = cDate.format("YYYY-MMM-DD");
-            const hours = Math.round(site.daysMap[key] * 100) / 100;
-
-            siteHours.sites[l].days.push({ date: key, hours: hours });
-            siteHours.sites[l].totalHours += hours;
+            let hours = Math.round(site.daysMap[key] * 100) / 100;
 
             // Sanity check
-            if (siteHours.sites[l].totalHours < 0) {
-              console.warn(`Invalid negative hours [${siteHours.sites[l].totalHours}] fix to 0.`);
-              siteHours.sites[l].totalHours = 0;
+            if (hours < 0) {
+              console.warn(
+                `Invalid negative hours [${hours} => ${key}] fix to 0.`
+              );
+              hours = 0;
             }
 
-            if (siteHours.sites[l].totalHours > 24) {
-              console.warn(`Invalid hours on 1 day [${siteHours.sites[l].totalHours}] fix to 24.`);
-              siteHours.sites[l].totalHours = 24;
+            if (hours > 24) {
+              console.warn(
+                `Invalid hours on 1 day [${hours} => ${key}] fix to 24.`
+              );
+              hours = 24;
             }
+
+            siteHours.sites[l].days.push({ date: key, hours });
+            siteHours.sites[l].totalHours += hours;
 
             // Advance clock 1 day
             cDate.add(1, "day");
@@ -235,6 +239,8 @@ export class MovementsV1Controller {
               (siteHours.sites[l].totalHours / siteHours.sites[l].totalDays) *
                 100
             ) / 100;
+
+          delete site.daysMap;
         }
       }
 
