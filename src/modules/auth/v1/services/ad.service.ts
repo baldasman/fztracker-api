@@ -10,6 +10,7 @@ export class AdService {
   private config;
   private ad;
   private certificate;
+  private available = true;
 
   constructor(private readonly logger: Logger) {
     this.logger.setContext(AdService.name);
@@ -20,8 +21,10 @@ export class AdService {
 
     try {
       this.certificate = fs.readFileSync("d:ad.cer");
+      this.available = true;
     } catch (ex) {
       console.warn("Certificate file 'd:ad.cer' was not found.");
+      this.available = false;
     }
 
     this.config = {
@@ -41,6 +44,14 @@ export class AdService {
   }
 
   async authenticate(username: string, password: string): Promise<boolean> {
+    if (!this.available) {
+      return new Promise(function(resolve, reject) {
+        reject(
+          "ERROR: AD is not available. Please configure certificate file 'd:ad.cer'"
+        );
+      });
+    }
+
     const thatAd = this.ad;
 
     return new Promise(function(resolve, reject) {
@@ -62,32 +73,44 @@ export class AdService {
   }
 
   async findUser(username: string): Promise<AdUser> {
+    if (!this.available) {
+      return new Promise(function(resolve, reject) {
+        reject(
+          "ERROR: AD is not available. Please configure certificate file 'd:ad.cer'"
+        );
+      });
+    }
+
     const thatAd = this.ad;
 
     return new Promise(function(resolve, reject) {
-      // window.onload = resolve;
-      thatAd.findUser(username, function(err, user) {
-        if (err) {
-          console.error("ERROR: " + JSON.stringify(err));
-          reject(err);
-          return;
-        }
+      try {
+        // window.onload = resolve;
+        thatAd.findUser(username, function(err, user) {
+          if (err) {
+            console.error("ERROR: " + JSON.stringify(err));
+            reject(err);
+            return;
+          }
 
-        if (!user) {
-          console.log("AD User: " + username + " not found.");
+          if (!user) {
+            console.log("AD User: " + username + " not found.");
 
-          reject({ message: "User: " + username + " not found." });
-        } else {
-          console.log("detalhes" + JSON.stringify(user));
+            reject({ message: "User: " + username + " not found." });
+          } else {
+            console.log("detalhes" + JSON.stringify(user));
 
-          //  thatAd.getGroupMembershipForUser(username, function (err, groups) {
-          //     console.log(JSON.stringify(groups));
-          // });
+            //  thatAd.getGroupMembershipForUser(username, function (err, groups) {
+            //     console.log(JSON.stringify(groups));
+            // });
 
-          const adUser = new AdUser(user);
-          resolve(adUser);
-        }
-      });
+            const adUser = new AdUser(user);
+            resolve(adUser);
+          }
+        });
+      } catch (error) {
+        reject({ message: "AD ERROR: " + error });
+      }
 
       // var query = 'OU=CCF';
 
@@ -99,7 +122,16 @@ export class AdService {
   }
 
   async isMemberOf(username: string, groupName: string): Promise<boolean> {
+    if (!this.available) {
+      return new Promise(function(resolve, reject) {
+        reject(
+          "ERROR: AD is not available. Please configure certificate file 'd:ad.cer'"
+        );
+      });
+    }
+
     const thatAd = this.ad;
+
     return new Promise(function(resolve, reject) {
       thatAd.isUserMemberOf(username, groupName, function(err, isMember) {
         resolve(isMember);

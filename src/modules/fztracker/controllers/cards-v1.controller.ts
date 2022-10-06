@@ -32,14 +32,17 @@ export class CardsV1Controller {
   @ApiCreatedResponse({ description: 'Successfully returned card list', type: SuccessResponseModel })
   @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
   async getCards(
+    @Query('search') search: string,
     @Req() req: any,
     @Res() res: Response
   ): Promise<object> {
     try {
-      const filter = {};
+      let filter = {};
+      if (search) {
+        filter = { ...filter, entitySerial: search };
+      }
+
       const cards = await this.cardService.find(filter);
-      console.log('cards', filter,cards );
-      // global['io'].emit('card', { uid: 'cardId' });
 
       const response = getResponse(200, { data: { cards } });
       return res.status(200).send(response);
