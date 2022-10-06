@@ -1,30 +1,20 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Logger,
-  Post,
-  Query,
-  Req,
-  Res,
-  UseGuards,
-} from "@nestjs/common";
+import { Controller, Get, Logger, Query, Res, UseGuards } from "@nestjs/common";
 import {
   ApiBearerAuth,
   ApiCreatedResponse,
   ApiOperation,
   ApiTags,
-  ApiUnauthorizedResponse,
+  ApiUnauthorizedResponse
 } from "@nestjs/swagger";
 import { Response } from "express";
-import moment = require("moment");
-import { environment, Environment } from "../../../config/environment";
-import { EntityService } from '../../auth/v1/services/entity.service';
+import { environment } from "../../../config/environment";
+import { EntityService } from "../../auth/v1/services/entity.service";
 import { AuthGuard } from "../../core/guards/auth.guard";
 import { getResponse } from "../../core/helpers/response.helper";
 import { SuccessResponseModel } from "../../core/models/success-response.model";
-import toSiteHours from '../helpers/site-hours.helper';
+import toSiteHours from "../helpers/site-hours.helper";
 import { MovementService } from "../services/movement.service";
+import moment = require("moment");
 
 @Controller("fztracker/movements/v1")
 @ApiBearerAuth()
@@ -69,7 +59,11 @@ export class MovementsV1Controller {
         filter = { ...filter, entitySerial: search };
       }
 
-      const fromDate = searchFrom ? moment(searchFrom).startOf("day") : moment().subtract(1, 'day').startOf("day");
+      const fromDate = searchFrom
+        ? moment(searchFrom).startOf("day")
+        : moment()
+            .subtract(1, "day")
+            .startOf("day");
       const toDate = moment(searchTo).endOf("day");
 
       filter["movementDate"] = {
@@ -102,15 +96,20 @@ export class MovementsV1Controller {
     @Res() res: Response
   ): Promise<object> {
     try {
-      this.logger.debug(`Input filter: entitySerial=${entitySerial} | searchFrom=${searchFrom} | searchTo=${searchTo}`, 'site-hours');
+      this.logger.debug(
+        `Input filter: entitySerial=${entitySerial} | searchFrom=${searchFrom} | searchTo=${searchTo}`,
+        "site-hours"
+      );
 
       if (!entitySerial) {
         return res.status(400).send({ error: "Missing entitySerial" });
       }
 
-      const entity = await this.entityService.findOne({ 'serial': entitySerial });
+      const entity = await this.entityService.findOne({ serial: entitySerial });
       if (!entity) {
-        return res.status(404).send({ error: `Entity '${entitySerial}' not fouund.` });
+        return res
+          .status(404)
+          .send({ error: `Entity '${entitySerial}' not fouund.` });
       }
 
       let filter = {};
@@ -120,18 +119,124 @@ export class MovementsV1Controller {
         filter = { ...filter, location: { $in: environment.locations } };
       }
 
-      const fromDate = moment(Number(searchFrom)*1000);
-      const toDate = moment(Number(searchTo)*1000);
+      const fromDate = moment(Number(searchFrom) * 1000);
+      const toDate = moment(Number(searchTo) * 1000);
 
       filter["movementDate"] = {
-        $gte: fromDate.startOf('day').toDate(),
-        $lte: toDate.endOf('day').toDate(),
+        $gte: fromDate.startOf("day").toDate(),
+        $lte: toDate.endOf("day").toDate(),
       };
 
-      const movements = await this.movementService.find(filter, {movementDate: 1});
-
       // Convert movements into site hours by day
-      const siteHours = toSiteHours(entity, fromDate.unix()*1000, toDate.unix()*1000, movements, environment.locations);
+      const siteHours = {
+        entitySerial: entity.serial,
+        from: moment(fromDate.unix() * 1000),
+        to: moment(toDate.unix() * 1000),
+        sites: {},
+      };
+
+      const daysInWindow =
+        moment(toDate.unix() * 1000)
+          .startOf("day")
+          .diff(moment(fromDate.unix() * 1000).startOf("day"), "day", true) + 1;
+
+      // Loop locations
+      if (environment.locations && environment.locations.length > 0) {
+        // Initialize sites
+        for (const location of environment.locations) {
+          siteHours.sites[location] = {
+            name: location,
+            in: false,
+            lastMovement: null,
+            lastOut: null,
+            lastIn: null,
+            daysMap: {},
+            days: [],
+            totalHours: 0,
+            avgHoursDay: 0,
+            totalDays: daysInWindow,
+          };
+
+          // Get lastMovement before window of search
+          const lastMovFilter = {
+            entitySerial: entity.serial,
+            location: location,
+            movementDate: {
+              $lt: fromDate.startOf("day").toDate(),
+            },
+          };
+
+          const lastMovement = await this.movementService.findOneWithSort(
+            lastMovFilter,
+            { movementDate: -1 }
+          );
+
+          if (lastMovement) {
+            siteHours.sites[location].in = lastMovement.inOut
+              ? lastMovement.inOut
+              : false;
+            siteHours.sites[location].lastMovement = lastMovement.movementDate
+              ? moment(lastMovement.movementDate)
+              : null;
+          } else {
+            siteHours.sites[location].in = false;
+            siteHours.sites[location].lastMovement = moment(
+              fromDate.unix() * 1000
+            ).startOf("day");
+          }
+
+          const cDate = moment(fromDate.unix() * 1000).startOf("day");
+          for (let i = 0; i < daysInWindow; i++) {
+            siteHours.sites[location].daysMap[cDate.format("YYYY-MMM-DD")] = 0;
+            cDate.add(1, "day");
+          }
+        }
+
+        // Replay movements to calculate on site hours
+        for (const location of environment.locations) {
+          filter["location"] = location;
+          const movements = await this.movementService.find(filter, {
+            movementDate: 1,
+          });
+
+          toSiteHours(siteHours.sites[location], entity, movements);
+        }
+
+        // Convert days map to array
+        for (const l in siteHours.sites) {
+          const site = siteHours.sites[l];
+          const cDate = moment(fromDate.unix() * 1000).startOf("day");
+
+          // convert days
+          for (let i = 0; i < daysInWindow; i++) {
+            const key = cDate.format("YYYY-MMM-DD");
+            const hours = Math.round(site.daysMap[key] * 100) / 100;
+
+            siteHours.sites[l].days.push({ date: key, hours: hours });
+            siteHours.sites[l].totalHours += hours;
+
+            // Sanity check
+            if (siteHours.sites[l].totalHours < 0) {
+              console.warn(`Invalid negative hours [${siteHours.sites[l].totalHours}] fix to 0.`);
+              siteHours.sites[l].totalHours = 0;
+            }
+
+            if (siteHours.sites[l].totalHours > 24) {
+              console.warn(`Invalid hours on 1 day [${siteHours.sites[l].totalHours}] fix to 24.`);
+              siteHours.sites[l].totalHours = 24;
+            }
+
+            // Advance clock 1 day
+            cDate.add(1, "day");
+          }
+
+          site.avgHoursDay +=
+            Math.round(
+              (siteHours.sites[l].totalHours / siteHours.sites[l].totalDays) *
+                100
+            ) / 100;
+        }
+      }
 
       const response = getResponse(200, { data: { siteHours } });
       return res.status(200).send(response);

@@ -16,8 +16,12 @@ export class MovementService {
     return this.movementModel.find(filter).sort(sort || {movementDate: -1}).exec();
   }
 
-  async findOne(filter: object): Promise<MovementModel> {
+  async findOne(filter: object, sort?: any): Promise<MovementModel> {
     return this.movementModel.findOne(filter).exec();
+  }
+  
+  async findOneWithSort(filter: object, sort: object): Promise<MovementModel> {
+    return this.movementModel.findOne(filter).sort(sort).exec();
   }
 
   async add(data: MovementModel): Promise<MovementModel> {
