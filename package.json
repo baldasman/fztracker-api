@@ -27,7 +27,7 @@
     "@nestjs/common": "^6.11.11",
     "@nestjs/core": "^6.11.11",
     "@nestjs/mongoose": "^6.4.0",
-    "@nestjs/platform-express": "^6.11.11",
+    "@nestjs/platform-express": "^9.2.1",
     "@nestjs/terminus": "^7.0.1",
     "@types/socket.io": "^2.1.11",
     "@types/sqlite3": "^3.1.6",
